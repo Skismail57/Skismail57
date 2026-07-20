@@ -36,7 +36,7 @@
 
 ## 👨‍💻 About Me
 
-I'm a passionate  specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
+I'm a passionate **Senior Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
 
 - 🚀 **Software Engineering**: Building high-performance, scalable systems
 - 🤖 **AI/ML**: Developing intelligent solutions and MLOps pipelines
@@ -95,35 +95,57 @@ I'm a passionate  specializing in **Artificial Intelligence and Machine Learning
 
 ---
 
-## 🧠 AI / ML Expertise
-
-| Domain | Proficiency | Details |
-|--------|-------------|---------|
-| Machine Learning | Expert | Supervised/Unsupervised Learning, Feature Engineering, Model Evaluation |
-| Deep Learning | Advanced | CNNs, RNNs, Transformers, Transfer Learning |
-| MLOps | Advanced | ML Pipeline, Experiment Tracking, Model Deployment |
-| Natural Language Processing | Advanced | Text Classification, NER, Sentiment Analysis, LLMs |
-| Computer Vision | Intermediate | Image Classification, Object Detection, Image Segmentation |
-
----
-
 ## 🚀 Featured Projects
 
 <details>
-<summary><h3>Internship DevOps Project</h3></summary>
+<summary><h3><a href="https://github.com/Skismail57/NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform">Owner avatar - NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform</a></h3></summary>
 
-A complete hands-on DevOps project covering CI/CD, infrastructure provisioning, containerization, and configuration management.
+- Developed a production-ready full-stack e-commerce platform using Next.js 14 for the frontend, Core Java 17 for the monolith backend, and Spring Boot Microservices for scalable services
+- Implemented AI-powered features including personalized product recommendations, NEXA AI chatbot, and voice assistant integration
+- Built advanced security features such as real-time fraud detection and price history analysis
+</details>
 
-| Metric | Details |
-|--------|---------|
-| **Stack** | Jenkins, Terraform, Docker, Ansible, AWS |
-| **Scale** | Multi-environment deployment (Dev/Staging/Prod) |
-| **Performance** | Reduced deployment time by 70% |
-| **Security** | IAM policies, encrypted secrets, secure pipelines |
-| **Impact** | Production-ready infrastructure automation |
-| **Repository** | [InternshipProject](https://github.com/Skismail57/InternshipProject) |
+<details>
+<summary><h3><a href="https://github.com/Skismail57/AI-Powered-Student-Management-System">AI-Powered-Student-Management-System</a></h3></summary>
 
-This project implements a robust DevOps workflow with automated build, test, and deployment pipelines, infrastructure as code using Terraform, containerization with Docker, and configuration management with Ansible.
+- Designed and developed a full-stack AI-powered student management platform with role-based access control
+- Implemented distinct portals for admin, faculty, students, and parents with tailored features
+- Built comprehensive modules including attendance tracking, performance analytics, GPA monitoring, curriculum management, report generation, and real-time notifications
+</details>
+
+<details>
+<summary><h3><a href="https://github.com/Skismail57/Health-Stack-System">Health-Stack-System</a></h3></summary>
+
+- Created a comprehensive Django-based hospital and clinic management platform
+- Developed core modules for patient management, appointment scheduling, admissions tracking, electronic health records (EHR), prescription/PDF generation, pharmacy management, and billing systems
+- Implemented role-based dashboards, real-time chat functionality, Celery task queues for background processing, and DRF APIs documented with drf-spectacular
+- Integrated SSLCommerz payment gateway for secure online transactions
+</details>
+
+<details>
+<summary><h3><a href="https://github.com/Skismail57/Django-To-Do-List_with_User_Authentication">Django-To-Do-List_with_User_Authentication</a></h3></summary>
+
+- Built a secure Django-based To-Do List application with user authentication and task management features
+- Implemented user registration, login/logout functionality, and full CRUD operations for tasks
+- Created responsive design with HTML5 and CSS3
+- Added support for both SQLite and PostgreSQL databases
+- Prepared for containerized deployment using Docker
+</details>
+
+<details>
+<summary><h3><a href="https://github.com/Skismail57/UPI_Fraud_Detection_Using_Machine_Learning">UPI_Fraud_Detection_Using_Machine_Learning</a></h3></summary>
+
+- Developed an advanced UPI Fraud Detection System leveraging machine learning and deep learning techniques
+- Implemented real-time transaction monitoring and multi-model ensemble detection for improved accuracy
+- Created an interactive dashboard for data visualization and monitoring
+</details>
+
+<details>
+<summary><h3><a href="https://github.com/Skismail57/BLOCKELECT-BlockchainVoting-System">BLOCKELECT-BlockchainVoting-System</a></h3></summary>
+
+- Designed and built a web3 voting system on the Ethereum blockchain
+- Implemented secure voter authentication using cryptographic methods
+- Ensured immutability of votes and transparent, real-time election results using smart contracts
 </details>
 
 ---
@@ -161,24 +183,20 @@ This project implements a robust DevOps workflow with automated build, test, and
 
 ## 📜 Certifications
 
-### AWS
-<p align="left">
-  <img src="https://img.shields.io/badge/AWS%20Certified-FF9900?style=flat-square&logo=amazon-aws&logoColor=white" alt="AWS Certified">
-</p>
-
-### Oracle
-<p align="left">
-  <img src="https://img.shields.io/badge/Oracle-F80000?style=flat-square&logo=oracle&logoColor=white" alt="Oracle">
-</p>
-
-### NPTEL
-<p align="left">
-  <img src="https://img.shields.io/badge/NPTEL-0066CC?style=flat-square&logoColor=white" alt="NPTEL">
-</p>
-
-### Cisco
-<p align="left">
-  <img src="https://img.shields.io/badge/Cisco-1BA0D7?style=flat-square&logo=cisco&logoColor=white" alt="Cisco">
+<p align="center">
+  <img src="Advance Java Programming.jpg" alt="Advance Java Programming" width="300"/>
+  <img src="AI- DevOps-Engineer-Training-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="300"/>
+  <img src="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="300"/>
+  <img src="AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="300"/>
+  <img src="Certificate 2.jpg" alt="Certificate 2" width="300"/>
+  <img src="Certificate 4.jpg" alt="Certificate 4" width="300"/>
+  <img src="Certificate 5.jpg" alt="Certificate 5" width="300"/>
+  <img src="Certificate 6 - Copy.jpg" alt="Certificate 6 - Copy" width="300"/>
+  <img src="Certificate 6.jpg" alt="Certificate 6" width="300"/>
+  <img src="Certificate 7 - Copy.jpg" alt="Certificate 7 - Copy" width="300"/>
+  <img src="Certificate 7.jpg" alt="Certificate 7" width="300"/>
+  <img src="IBM-Certificate.jpg" alt="IBM Certificate" width="300"/>
+  <img src="On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="300"/>
 </p>
 
 ---
