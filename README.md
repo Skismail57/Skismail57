@@ -168,18 +168,17 @@ A web3 voting system that ensures secure voter authentication, immutability of v
 ## 📜 Certifications
 
 <p align="center">
-  <a href="assets/certificates/Certificate%20of%20Completion%20Advance%20Java%20Programing%20Certificate.jpg"><img src="assets/certificates/Certificate%20of%20Completion%20Advance%20Java%20Programing%20Certificate.jpg" alt="Advance Java Programming" width="200"/></a>
-  <a href="assets/certificates/AI-%20DevOps-Engineer%20Internship%20-Certificate.jpg"><img src="assets/certificates/AI-%20DevOps-Engineer%20Internship%20-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="200"/></a>
-  <a href="assets/certificates/AI-DevOps-Engineer-Internship-Certificate.jpg"><img src="assets/certificates/AI-DevOps-Engineer-Internship-Certificate.jpg" alt="AI DevOps Engineer Internship Certificate" width="200"/></a>
-  <a href="assets/certificates/Marksheet%20of%20AI-DevOps-Engineer%20Internship%20Certificate.jpg"><img src="assets/certificates/Marksheet%20of%20AI-DevOps-Engineer%20Internship%20Certificate.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="200"/></a>
-  <a href="assets/certificates/AIML-internship-Ethical-Byte.jpg"><img src="assets/certificates/AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="200"/></a>
-  <a href="assets/certificates/Certificate%20of%20Completion%20Of%20Python%20Data%20Structures.jpg"><img src="assets/certificates/Certificate%20of%20Completion%20Of%20Python%20Data%20Structures.jpg" alt="Python Data Structures" width="200"/></a>
-  <a href="assets/certificates/Certificate%20of%20Completion%20of%20Applications%20of%20AI.jpg"><img src="assets/certificates/Certificate%20of%20Completion%20of%20Applications%20of%20AI.jpg" alt="Applications of AI" width="200"/></a>
-  <a href="assets/certificates/Certificate%20of%20Completion%20of%20Machine%20Learning.jpg"><img src="assets/certificates/Certificate%20of%20Completion%20of%20Machine%20Learning.jpg" alt="Machine Learning" width="200"/></a>
-  <a href="assets/certificates/Certificate%20of%20Completion%20of%20Software%20Testing.jpg"><img src="assets/certificates/Certificate%20of%20Completion%20of%20Software%20Testing.jpg" alt="Software Testing" width="200"/></a>
-  <a href="assets/certificates/Cloud-Native%20Application%20Development%20with%20IBM%20cloud%20and%20%20Kubernets%20Certificate.jpg"><img src="assets/certificates/Cloud-Native%20Application%20Development%20with%20IBM%20cloud%20and%20%20Kubernets%20Certificate.jpg" alt="Cloud Native IBM" width="200"/></a>
-  <a href="assets/certificates/Rooman%20Technologies%20Certificate%20of%20Completion%20of%20Life%20Skills.jpg"><img src="assets/certificates/Rooman%20Technologies%20Certificate%20of%20Completion%20of%20Life%20Skills.jpg" alt="Life Skills" width="200"/></a>
-  <a href="assets/certificates/On-Job-Training-Certificate.jpg"><img src="assets/certificates/On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="200"/></a>
+  <a href="assets/assets/certificates/Certificate%20of%20Completion%20Advance%20Java%20Programing%20Certificate.jpg"><img src="assets/assets/certificates/Certificate%20of%20Completion%20Advance%20Java%20Programing%20Certificate.jpg" alt="Advance Java Programming" width="200"/></a>
+  <a href="assets/assets/certificates/AI-DevOps-Engineer-Internship-Certificate.jpg"><img src="assets/assets/certificates/AI-DevOps-Engineer-Internship-Certificate.jpg" alt="AI DevOps Engineer Internship Certificate" width="200"/></a>
+  <a href="assets/assets/certificates/AIML-internship-Ethical-Byte.jpg"><img src="assets/assets/certificates/AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="200"/></a>
+  <a href="assets/assets/certificates/Certificate%20of%20Completion%20Of%20Python%20Data%20Structures.jpg"><img src="assets/assets/certificates/Certificate%20of%20Completion%20Of%20Python%20Data%20Structures.jpg" alt="Python Data Structures" width="200"/></a>
+  <a href="assets/assets/certificates/Certificate%20of%20Completion%20of%20Applications%20of%20AI.jpg"><img src="assets/assets/certificates/Certificate%20of%20Completion%20of%20Applications%20of%20AI.jpg" alt="Applications of AI" width="200"/></a>
+  <a href="assets/assets/certificates/Certificate%20of%20Completion%20of%20Machine%20Learning.jpg"><img src="assets/assets/certificates/Certificate%20of%20Completion%20of%20Machine%20Learning.jpg" alt="Machine Learning" width="200"/></a>
+  <a href="assets/assets/certificates/Certificate%20of%20Completion%20of%20Software%20Testing.jpg"><img src="assets/assets/certificates/Certificate%20of%20Completion%20of%20Software%20Testing.jpg" alt="Software Testing" width="200"/></a>
+  <a href="assets/assets/certificates/Cloud-Native%20Application%20Development%20with%20IBM%20cloud%20and%20Kubernetes%20Certificate.jpg"><img src="assets/assets/certificates/Cloud-Native%20Application%20Development%20with%20IBM%20cloud%20and%20Kubernetes%20Certificate.jpg" alt="Cloud Native IBM" width="200"/></a>
+  <a href="assets/assets/certificates/Marksheet%20of%20AI-DevOps-Engineer%20Internship%20Certificate.jpg"><img src="assets/assets/certificates/Marksheet%20of%20AI-DevOps-Engineer%20Internship%20Certificate.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="200"/></a>
+  <a href="assets/assets/certificates/On-Job-Training-Certificate.jpg"><img src="assets/assets/certificates/On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="200"/></a>
+  <a href="assets/assets/certificates/Rooman%20Technologies%20Certificate%20of%20Completion%20of%20Life%20Skills.jpg"><img src="assets/assets/certificates/Rooman%20Technologies%20Certificate%20of%20Completion%20of%20Life%20Skills.jpg" alt="Life Skills" width="200"/></a>
 </p>
 
 ---
