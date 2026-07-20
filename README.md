@@ -222,13 +222,7 @@ A web3 voting system that ensures secure voter authentication, immutability of v
 
 ---
 
-## 🐍 Contribution Snake
 
-<p align="center">
-  <img src="https://github.com/Skismail57/Skismail57/blob/output/github-contribution-grid-snake.svg" alt="Contribution Snake">
-</p>
-
----
 
 ## 🎯 Current Focus
 
