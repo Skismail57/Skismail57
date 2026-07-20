@@ -36,7 +36,7 @@
 
 ## 👨‍💻 About Me
 
-I'm a passionate **Senior Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
+I'm a passionate ** Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
 
 - 🚀 **Software Engineering**: Building high-performance, scalable systems
 - 🤖 **AI/ML**: Developing intelligent solutions and MLOps pipelines
