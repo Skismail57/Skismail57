@@ -1,4 +1,6 @@
-![GitHub Banner](dark.svg)
+<p align="center">
+  <img src="github-banner.png" alt="GitHub Banner" width="100%">
+</p>
 
 <p align="center">
   <a href="https://github.com/Skismail57">
