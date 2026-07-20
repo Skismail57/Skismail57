@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/Skismail57">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=7C3AED&background=0F172A&center=true&vCenter=true&width=600&lines=Senior+Software+Engineer;AI%2FML+Engineer;Full+Stack+Developer;Open+Source+Contributor" alt="Typing SVG">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=7C3AED&background=0F172A&center=true&vCenter=true&width=600&lines=Software+Engineer;Backend+Developer;AI%2FML+Engineer;Open+Source+Contributor" alt="Typing SVG">
   </a>
 </p>
 
@@ -36,17 +36,16 @@
 
 ## 👨‍💻 About Me
 
-I'm a passionate **Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
+I'm a passionate **Software Engineer** and **Backend Developer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on building robust backend systems and scalable cloud-native applications.
 
-- 🚀 **Software Engineering**: Building high-performance, scalable systems
+- 🚀 **Backend Development**: Building high-performance, scalable systems
 - 🤖 **AI/ML**: Developing intelligent solutions and MLOps pipelines
-- 🌐 **Full Stack**: End-to-end application development
 - 💡 **Product Mindset**: Delivering impactful, user-centric solutions
 
 ### Open To
 - Software Engineering Roles
+- Backend Developer Positions
 - AI/ML Engineer Positions
-- Full Stack Development Opportunities
 - Open Source Collaborations
 
 ---
@@ -169,20 +168,20 @@ A web3 voting system that ensures secure voter authentication, immutability of v
 ## 📜 Certifications
 
 <p align="center">
-  <a href="Advance Java Programming.jpg"><img src="Advance Java Programming.jpg" alt="Advance Java Programming" width="300"/></a>
-  <a href="AI- DevOps-Engineer-Training-Certificate.jpg"><img src="AI- DevOps-Engineer-Training-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="300"/></a>
-  <a href="AI-DevOps-Engineer-Internship-Certificate.jpg"><img src="AI-DevOps-Engineer-Internship-Certificate.jpg" alt="AI DevOps Engineer Internship Certificate" width="300"/></a>
-  <a href="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg"><img src="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="300"/></a>
-  <a href="AIML-internship-Ethical-Byte.jpg"><img src="AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="300"/></a>
-  <a href="Certificate 2.jpg"><img src="Certificate 2.jpg" alt="Certificate 2" width="300"/></a>
-  <a href="Certificate 4.jpg"><img src="Certificate 4.jpg" alt="Certificate 4" width="300"/></a>
-  <a href="Certificate 5.jpg"><img src="Certificate 5.jpg" alt="Certificate 5" width="300"/></a>
-  <a href="Certificate 6 - Copy.jpg"><img src="Certificate 6 - Copy.jpg" alt="Certificate 6 - Copy" width="300"/></a>
-  <a href="Certificate 6.jpg"><img src="Certificate 6.jpg" alt="Certificate 6" width="300"/></a>
-  <a href="Certificate 7 - Copy.jpg"><img src="Certificate 7 - Copy.jpg" alt="Certificate 7 - Copy" width="300"/></a>
-  <a href="Certificate 7.jpg"><img src="Certificate 7.jpg" alt="Certificate 7" width="300"/></a>
-  <a href="IBM-Certificate.jpg"><img src="IBM-Certificate.jpg" alt="IBM Certificate" width="300"/></a>
-  <a href="On-Job-Training-Certificate.jpg"><img src="On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="300"/></a>
+  <a href="Advance Java Programming.jpg"><img src="Advance Java Programming.jpg" alt="Advance Java Programming" width="200"/></a>
+  <a href="AI- DevOps-Engineer-Training-Certificate.jpg"><img src="AI- DevOps-Engineer-Training-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="200"/></a>
+  <a href="AI-DevOps-Engineer-Internship-Certificate.jpg"><img src="AI-DevOps-Engineer-Internship-Certificate.jpg" alt="AI DevOps Engineer Internship Certificate" width="200"/></a>
+  <a href="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg"><img src="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="200"/></a>
+  <a href="AIML-internship-Ethical-Byte.jpg"><img src="AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="200"/></a>
+  <a href="Certificate 2.jpg"><img src="Certificate 2.jpg" alt="Certificate 2" width="200"/></a>
+  <a href="Certificate 4.jpg"><img src="Certificate 4.jpg" alt="Certificate 4" width="200"/></a>
+  <a href="Certificate 5.jpg"><img src="Certificate 5.jpg" alt="Certificate 5" width="200"/></a>
+  <a href="Certificate 6 - Copy.jpg"><img src="Certificate 6 - Copy.jpg" alt="Certificate 6 - Copy" width="200"/></a>
+  <a href="Certificate 6.jpg"><img src="Certificate 6.jpg" alt="Certificate 6" width="200"/></a>
+  <a href="Certificate 7 - Copy.jpg"><img src="Certificate 7 - Copy.jpg" alt="Certificate 7 - Copy" width="200"/></a>
+  <a href="Certificate 7.jpg"><img src="Certificate 7.jpg" alt="Certificate 7" width="200"/></a>
+  <a href="IBM-Certificate.jpg"><img src="IBM-Certificate.jpg" alt="IBM Certificate" width="200"/></a>
+  <a href="On-Job-Training-Certificate.jpg"><img src="On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="200"/></a>
 </p>
 
 ---
