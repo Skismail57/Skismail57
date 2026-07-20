@@ -1,12 +1,8 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="light.svg">
-  <img alt="GitHub Banner" src="dark.svg" width="100%">
-</picture>
+![GitHub Banner](dark.svg)
 
 <p align="center">
   <a href="https://github.com/Skismail57">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=7C3AED&background=00000000&center=true&vCenter=true&width=600&lines=Senior+Software+Engineer;AI%2FML+Engineer;Full+Stack+Developer;Open+Source+Contributor" alt="Typing SVG">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=7C3AED&background=0F172A&center=true&vCenter=true&width=600&lines=Senior+Software+Engineer;AI%2FML+Engineer;Full+Stack+Developer;Open+Source+Contributor" alt="Typing SVG">
   </a>
 </p>
 
@@ -17,7 +13,7 @@
 
 <p align="center">
   <a href="https://github.com/Skismail57">
-    <img src="https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio">
+    <img src="https://img.shields.io/badge/Portfolio-0F172A?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio">
   </a>
   <a href="https://www.linkedin.com/in/s-k-ismail-b5ba942b7">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
@@ -26,7 +22,7 @@
     <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail">
   </a>
   <a href="https://github.com/Skismail57">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+    <img src="https://img.shields.io/badge/GitHub-0F172A?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
 </p>
 
@@ -40,7 +36,7 @@
 
 ## 👨‍💻 About Me
 
-I'm a passionate  Software Engineer specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
+I'm a passionate **Senior Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
 
 - 🚀 **Software Engineering**: Building high-performance, scalable systems
 - 🤖 **AI/ML**: Developing intelligent solutions and MLOps pipelines
@@ -285,7 +281,7 @@ Open To:
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
   <a href="https://github.com/Skismail57">
-    <img src="https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio">
+    <img src="https://img.shields.io/badge/Portfolio-0F172A?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio">
   </a>
 </p>
 
