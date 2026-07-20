@@ -36,7 +36,7 @@
 
 ## 👨‍💻 About Me
 
-I'm a passionate ** Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
+I'm a passionate **Software Engineer** specializing in **Artificial Intelligence and Machine Learning** with a strong focus on full-stack development and product engineering. My expertise spans from building scalable ML pipelines to designing robust cloud-native applications.
 
 - 🚀 **Software Engineering**: Building high-performance, scalable systems
 - 🤖 **AI/ML**: Developing intelligent solutions and MLOps pipelines
@@ -98,54 +98,39 @@ I'm a passionate ** Software Engineer** specializing in **Artificial Intelligenc
 ## 🚀 Featured Projects
 
 <details>
-<summary><h3><a href="https://github.com/Skismail57/NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform">Owner avatar - NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform</a></h3></summary>
+<summary><h3><a href="https://github.com/Skismail57/NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform">NEXTCART_Full-_Stack_AI-Powered_E-Commerce_Platform</a></h3></summary>
 
-- Developed a production-ready full-stack e-commerce platform using Next.js 14 for the frontend, Core Java 17 for the monolith backend, and Spring Boot Microservices for scalable services
-- Implemented AI-powered features including personalized product recommendations, NEXA AI chatbot, and voice assistant integration
-- Built advanced security features such as real-time fraud detection and price history analysis
+A complete, production-ready full-stack e-commerce platform built with Next.js 14 (frontend), Core Java 17 (monolith backend), and Spring Boot Microservices (scalable backend). Features AI-powered recommendations, NEXA AI chatbot, voice assistant, fraud detection, price history analysis, and more!
 </details>
 
 <details>
 <summary><h3><a href="https://github.com/Skismail57/AI-Powered-Student-Management-System">AI-Powered-Student-Management-System</a></h3></summary>
 
-- Designed and developed a full-stack AI-powered student management platform with role-based access control
-- Implemented distinct portals for admin, faculty, students, and parents with tailored features
-- Built comprehensive modules including attendance tracking, performance analytics, GPA monitoring, curriculum management, report generation, and real-time notifications
+A full-stack AI-powered student management platform with role-based portals for admin, faculty, students, and parents, featuring attendance, analytics, GPA tracking, curriculum management, reports, notifications, and academic support tools.
 </details>
 
 <details>
 <summary><h3><a href="https://github.com/Skismail57/Health-Stack-System">Health-Stack-System</a></h3></summary>
 
-- Created a comprehensive Django-based hospital and clinic management platform
-- Developed core modules for patient management, appointment scheduling, admissions tracking, electronic health records (EHR), prescription/PDF generation, pharmacy management, and billing systems
-- Implemented role-based dashboards, real-time chat functionality, Celery task queues for background processing, and DRF APIs documented with drf-spectacular
-- Integrated SSLCommerz payment gateway for secure online transactions
+Comprehensive Django-based hospital and clinic management platform. Manages patients, appointments, admissions, EHR, prescriptions/PDFs, pharmacy and billing. Includes role-based dashboards, real-time chat, Celery tasks, DRF APIs documented with drf‑spectacular, and SSLCommerz payments.
 </details>
 
 <details>
 <summary><h3><a href="https://github.com/Skismail57/Django-To-Do-List_with_User_Authentication">Django-To-Do-List_with_User_Authentication</a></h3></summary>
 
-- Built a secure Django-based To-Do List application with user authentication and task management features
-- Implemented user registration, login/logout functionality, and full CRUD operations for tasks
-- Created responsive design with HTML5 and CSS3
-- Added support for both SQLite and PostgreSQL databases
-- Prepared for containerized deployment using Docker
+A secure Django-based To-Do List application with user authentication, task management, and responsive design. Features include user registration, login/logout, CRUD operations for tasks, and custom error pages. Built with Django 5.0, HTML5, CSS3, and SQLite/PostgreSQL support. Ready for deployment with Docker.
 </details>
 
 <details>
 <summary><h3><a href="https://github.com/Skismail57/UPI_Fraud_Detection_Using_Machine_Learning">UPI_Fraud_Detection_Using_Machine_Learning</a></h3></summary>
 
-- Developed an advanced UPI Fraud Detection System leveraging machine learning and deep learning techniques
-- Implemented real-time transaction monitoring and multi-model ensemble detection for improved accuracy
-- Created an interactive dashboard for data visualization and monitoring
+Advanced UPI Fraud Detection System using machine learning and deep learning techniques. Features real-time transaction monitoring, multi-model ensemble detection, and interactive dashboard Visualization.
 </details>
 
 <details>
 <summary><h3><a href="https://github.com/Skismail57/BLOCKELECT-BlockchainVoting-System">BLOCKELECT-BlockchainVoting-System</a></h3></summary>
 
-- Designed and built a web3 voting system on the Ethereum blockchain
-- Implemented secure voter authentication using cryptographic methods
-- Ensured immutability of votes and transparent, real-time election results using smart contracts
+A web3 voting system that ensures secure voter authentication, immutability of votes, and transparent, real-time election results using cryptographic methods and smart contracts on the Ethereum blockchain.
 </details>
 
 ---
@@ -184,19 +169,20 @@ I'm a passionate ** Software Engineer** specializing in **Artificial Intelligenc
 ## 📜 Certifications
 
 <p align="center">
-  <img src="Advance Java Programming.jpg" alt="Advance Java Programming" width="300"/>
-  <img src="AI- DevOps-Engineer-Training-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="300"/>
-  <img src="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="300"/>
-  <img src="AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="300"/>
-  <img src="Certificate 2.jpg" alt="Certificate 2" width="300"/>
-  <img src="Certificate 4.jpg" alt="Certificate 4" width="300"/>
-  <img src="Certificate 5.jpg" alt="Certificate 5" width="300"/>
-  <img src="Certificate 6 - Copy.jpg" alt="Certificate 6 - Copy" width="300"/>
-  <img src="Certificate 6.jpg" alt="Certificate 6" width="300"/>
-  <img src="Certificate 7 - Copy.jpg" alt="Certificate 7 - Copy" width="300"/>
-  <img src="Certificate 7.jpg" alt="Certificate 7" width="300"/>
-  <img src="IBM-Certificate.jpg" alt="IBM Certificate" width="300"/>
-  <img src="On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="300"/>
+  <a href="Advance Java Programming.jpg"><img src="Advance Java Programming.jpg" alt="Advance Java Programming" width="300"/></a>
+  <a href="AI- DevOps-Engineer-Training-Certificate.jpg"><img src="AI- DevOps-Engineer-Training-Certificate.jpg" alt="AI DevOps Engineer Training Certificate" width="300"/></a>
+  <a href="AI-DevOps-Engineer-Internship-Certificate.jpg"><img src="AI-DevOps-Engineer-Internship-Certificate.jpg" alt="AI DevOps Engineer Internship Certificate" width="300"/></a>
+  <a href="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg"><img src="Marksheet-of-AI-DevOps-Engineer-Certificate - Copy.jpg" alt="Marksheet of AI DevOps Engineer Certificate" width="300"/></a>
+  <a href="AIML-internship-Ethical-Byte.jpg"><img src="AIML-internship-Ethical-Byte.jpg" alt="AIML Internship Ethical Byte" width="300"/></a>
+  <a href="Certificate 2.jpg"><img src="Certificate 2.jpg" alt="Certificate 2" width="300"/></a>
+  <a href="Certificate 4.jpg"><img src="Certificate 4.jpg" alt="Certificate 4" width="300"/></a>
+  <a href="Certificate 5.jpg"><img src="Certificate 5.jpg" alt="Certificate 5" width="300"/></a>
+  <a href="Certificate 6 - Copy.jpg"><img src="Certificate 6 - Copy.jpg" alt="Certificate 6 - Copy" width="300"/></a>
+  <a href="Certificate 6.jpg"><img src="Certificate 6.jpg" alt="Certificate 6" width="300"/></a>
+  <a href="Certificate 7 - Copy.jpg"><img src="Certificate 7 - Copy.jpg" alt="Certificate 7 - Copy" width="300"/></a>
+  <a href="Certificate 7.jpg"><img src="Certificate 7.jpg" alt="Certificate 7" width="300"/></a>
+  <a href="IBM-Certificate.jpg"><img src="IBM-Certificate.jpg" alt="IBM Certificate" width="300"/></a>
+  <a href="On-Job-Training-Certificate.jpg"><img src="On-Job-Training-Certificate.jpg" alt="On Job Training Certificate" width="300"/></a>
 </p>
 
 ---
