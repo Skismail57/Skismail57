@@ -136,8 +136,8 @@ A web3 voting system that ensures secure voter authentication, immutability of v
 
 ## 💼 Experience
 
-### Software Engineer Intern
-**Tech Company** | Jan 2024 - Present
+### AI DevOps Engineer Intern
+**Rooman Technologies and  Collaboration with IBM ** | SEP 2024 - FEB 2025
 
 - Designed and implemented CI/CD pipelines using Jenkins
 - Provisioned and managed cloud infrastructure on AWS using Terraform
@@ -204,27 +204,15 @@ A web3 voting system that ensures secure voter authentication, immutability of v
 
 ## 📊 GitHub Analytics
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Skismail57&show_icons=true&theme=radical&hide_border=true" alt="GitHub Stats">
-</p>
 
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Skismail57&theme=radical&hide_border=true" alt="GitHub Streak">
 </p>
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Skismail57&layout=compact&theme=radical&hide_border=true" alt="Top Languages">
-</p>
 
----
 
-## 🏅 GitHub Trophies
 
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&margin-w=15&margin-h=15" alt="GitHub Trophies">
-</p>
 
----
 
 ## 📈 Contribution Activity
 
