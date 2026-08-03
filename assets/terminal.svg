@@ -1,12 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-label="Live Terminal">
   <defs>
     <linearGradient id="titleg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#22d3ee">
-        <animate attributeName="stop-color" values="#22d3ee;#8b5cf6;#22d3ee" dur="7s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#8b5cf6">
-        <animate attributeName="stop-color" values="#8b5cf6;#22d3ee;#8b5cf6" dur="7s" repeatCount="indefinite"/>
-      </stop>
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
     </linearGradient>
     <linearGradient id="termg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0c1728"/>
@@ -98,7 +94,6 @@
       <tspan fill="#8b5cf6" font-weight="bold">~</tspan>
       <tspan fill="#6b7b8f">$ </tspan>
       <tspan fill="#c9d1d9" font-weight="bold">▊</tspan>
-      <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
     </g>
   </g>
 
