@@ -62,6 +62,31 @@ I enjoy solving complex engineering challenges by combining software development
       <stop offset="0%" stop-color="#0b0f1a"/>
       <stop offset="100%" stop-color="#060811"/>
     </linearGradient>
+    <style>
+      .t{font-family:Consolas,'Courier New',monospace;font-size:15px;opacity:0}
+      @keyframes f0{0%,11%{opacity:0}12%,100%{opacity:1}}
+      @keyframes f1{0%,20%{opacity:0}21%,100%{opacity:1}}
+      @keyframes f2{0%,28%{opacity:0}29%,100%{opacity:1}}
+      @keyframes f3{0%,34%{opacity:0}35%,100%{opacity:1}}
+      @keyframes f4{0%,40%{opacity:0}41%,100%{opacity:1}}
+      @keyframes f5{0%,46%{opacity:0}47%,100%{opacity:1}}
+      @keyframes f6{0%,52%{opacity:0}53%,100%{opacity:1}}
+      @keyframes f7{0%,58%{opacity:0}59%,100%{opacity:1}}
+      @keyframes f8{0%,64%{opacity:0}65%,100%{opacity:1}}
+      @keyframes f9{0%,70%{opacity:0}71%,100%{opacity:1}}
+      @keyframes bk{0%,49%{opacity:1}50%,100%{opacity:0}}
+      .l0{animation:f0 8s ease-in-out 0s infinite forwards}
+      .l1{animation:f1 8s ease-in-out 0s infinite forwards}
+      .l2{animation:f2 8s ease-in-out 0s infinite forwards}
+      .l3{animation:f3 8s ease-in-out 0s infinite forwards}
+      .l4{animation:f4 8s ease-in-out 0s infinite forwards}
+      .l5{animation:f5 8s ease-in-out 0s infinite forwards}
+      .l6{animation:f6 8s ease-in-out 0s infinite forwards}
+      .l7{animation:f7 8s ease-in-out 0s infinite forwards}
+      .l8{animation:f8 8s ease-in-out 0s infinite forwards}
+      .l9{animation:f9 8s ease-in-out 0s infinite forwards}
+      .cur{animation:bk 0.9s step-end 0s infinite}
+    </style>
   </defs>
 
   <rect width="760" height="330" rx="14" fill="url(#tbg_lt)" stroke="#1c2b4a" stroke-width="1.4"/>
@@ -73,47 +98,23 @@ I enjoy solving complex engineering challenges by combining software development
   <circle cx="68" cy="17" r="6" fill="#28c840"/>
   <text x="380" y="21" text-anchor="middle" font-family="Consolas,monospace" font-size="12" fill="#8aa4d1">ismail@backend: ~</text>
 
-  <g font-family="Consolas,'Courier New',monospace" font-size="15">
-    <text x="24" y="68" fill="#39ff88">$ whoami
-      <animate attributeName="opacity" values="1;1;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="96" fill="#8fe8ff" opacity="0">S K Ismail — Backend Developer
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.1;0.12;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="124" fill="#8fe8ff" opacity="0">AI/ML Engineer · Cloud &amp; DevOps Enthusiast
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.18;0.2;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="156" fill="#39ff88" opacity="0">$ ./deploy.sh --stack production
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.28;0.3;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="182" fill="#9fb6d9" opacity="0">Building scalable backend systems...
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.36;0.38;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="206" fill="#9fb6d9" opacity="0">Deploying Docker containers...
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.42;0.44;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="230" fill="#9fb6d9" opacity="0">Starting Kubernetes cluster...
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.48;0.5;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="254" fill="#9fb6d9" opacity="0">Loading FastAPI &amp; Spring Boot services...
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.54;0.56;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="278" fill="#9fb6d9" opacity="0">AI models ready...
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.6;0.62;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-    <text x="24" y="304" font-weight="700" fill="#39ff88" opacity="0">System healthy ✔
-      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.68;0.7;0.95;0.98;1" dur="8s" begin="0s" repeatCount="indefinite"/>
-    </text>
-  </g>
+  <text class="t l0" x="24" y="68" fill="#39ff88" style="opacity:1">$ whoami</text>
+  <text class="t l1" x="24" y="96" fill="#8fe8ff">S K Ismail — Backend Developer</text>
+  <text class="t l2" x="24" y="124" fill="#8fe8ff">AI/ML Engineer · Cloud &amp; DevOps Enthusiast</text>
+  <text class="t l3" x="24" y="156" fill="#39ff88">$ ./deploy.sh --stack production</text>
+  <text class="t l4" x="24" y="182" fill="#9fb6d9">Building scalable backend systems...</text>
+  <text class="t l5" x="24" y="206" fill="#9fb6d9">Deploying Docker containers...</text>
+  <text class="t l6" x="24" y="230" fill="#9fb6d9">Starting Kubernetes cluster...</text>
+  <text class="t l7" x="24" y="254" fill="#9fb6d9">Loading FastAPI &amp; Spring Boot services...</text>
+  <text class="t l8" x="24" y="278" fill="#9fb6d9">AI models ready...</text>
+  <text class="t l9" x="24" y="304" font-weight="700" fill="#39ff88">System healthy ✔</text>
 
-  <rect x="270" y="292" width="9" height="16" fill="#39ff88">
-    <animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>
-  </rect>
+  <rect class="cur" x="270" y="292" width="9" height="16" fill="#39ff88"/>
 </svg>
 </div>
 
 <div align="center" style="display:none">
-<img src="./assets/terminal.svg?v=6" alt="terminal status animated fallback" width="90%"/>
+<img src="./assets/terminal.svg?v=7" alt="terminal status animated fallback" width="90%"/>
 </div>
 
 <br/>
@@ -187,6 +188,60 @@ I enjoy solving complex engineering challenges by combining software development
 </td>
 <td align="center" width="72px">
 <a title="Ansible — Configuration management"><img src="https://skillicons.dev/icons?i=ansible" alt="Ansible" width="42"/></a><br/><sub>Ansible</sub>
+</td>
+</tr>
+</table>
+</div>
+
+**AI, ML & Data Science**
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="72px">
+<a title="TensorFlow — AI & Deep learning framework"><img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow" width="42"/></a><br/><sub>TensorFlow</sub>
+</td>
+<td align="center" width="72px">
+<a title="PyTorch — AI research & Neural networks"><img src="https://skillicons.dev/icons?i=pytorch" alt="PyTorch" width="42"/></a><br/><sub>PyTorch</sub>
+</td>
+<td align="center" width="72px">
+<a title="Scikit-learn — ML algorithms & modeling"><img src="https://skillicons.dev/icons?i=sklearn" alt="Scikit-learn" width="42"/></a><br/><sub>Scikit-learn</sub>
+</td>
+<td align="center" width="72px">
+<a title="Pandas — Data Science / data wrangling"><img src="https://skillicons.dev/icons?i=pandas" alt="Pandas" width="42"/></a><br/><sub>Pandas</sub>
+</td>
+<td align="center" width="72px">
+<a title="NumPy — Data Science / numerical computing"><img src="https://skillicons.dev/icons?i=numpy" alt="NumPy" width="42"/></a><br/><sub>NumPy</sub>
+</td>
+<td align="center" width="72px">
+<a title="Jupyter — Data Science & ML notebooks"><img src="https://skillicons.dev/icons?i=jupyter" alt="Jupyter" width="42"/></a><br/><sub>Jupyter</sub>
+</td>
+</tr>
+</table>
+</div>
+
+**Data Analyst & BI**
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="72px">
+<a title="Tableau — Business Intelligence & dashboards"><img src="https://skillicons.dev/icons?i=tableau" alt="Tableau" width="42"/></a><br/><sub>Tableau</sub>
+</td>
+<td align="center" width="72px">
+<a title="Power BI — Business Intelligence & reporting"><img src="https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" alt="Power BI" width="68" height="42"/></a><br/><sub>Power BI</sub>
+</td>
+<td align="center" width="72px">
+<a title="Excel — Data Analyst spreadsheets & analysis"><img src="https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white" alt="Excel" width="68" height="42"/></a><br/><sub>Excel</sub>
+</td>
+<td align="center" width="72px">
+<a title="Looker — Business Intelligence & analytics"><img src="https://img.shields.io/badge/Looker-4285F4?style=for-the-badge&logo=looker&logoColor=white" alt="Looker" width="68" height="42"/></a><br/><sub>Looker (BI)</sub>
+</td>
+<td align="center" width="72px">
+<a title="MongoDB — NoSQL document database"><img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="42"/></a><br/><sub>MongoDB</sub>
+</td>
+<td align="center" width="72px">
+<a title="Hadoop — Big Data distributed processing"><img src="https://skillicons.dev/icons?i=hadoop" alt="Hadoop" width="42"/></a><br/><sub>Hadoop</sub>
 </td>
 </tr>
 </table>
