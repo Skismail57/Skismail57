@@ -1,7 +1,15 @@
 <div align="center">
 
-<!-- ✨ Animated Banner ✨ -->
-<img src="./banner.svg?v=1" alt="S K Ismail — Backend Developer" width="100%"/>
+<img src="./assets/banner.svg?v=1" alt="S K Ismail banner" width="100%"/>
+
+<img src="https://readme-typing-svg.demolab.com?font=Consolas&weight=600&size=22&duration=3000&pause=900&color=00EAFF&center=true&vCenter=true&width=650&lines=Backend+Developer;AI%2FML+Engineer;Cloud+Native+Developer;Building+scalable+systems...;Deploying+containers+%F0%9F%9A%80" alt="Typing SVG"/>
+
+<br/>
+
+[![](https://img.shields.io/badge/GitHub-Skismail57-0d1117?style=for-the-badge&logo=github&logoColor=00eaff&labelColor=060a12)](https://github.com/Skismail57)
+[![](https://img.shields.io/badge/Email-shaikhmismail66%40gmail.com-0d1117?style=for-the-badge&logo=gmail&logoColor=00eaff&labelColor=060a12)](mailto:shaikhmismail66@gmail.com)
+[![](https://komarev.com/ghpvc/?username=Skismail57&style=for-the-badge&color=00eaff&labelColor=060a12&label=PROFILE+VIEWS)](https://github.com/Skismail57)
+[![](https://img.shields.io/github/followers/Skismail57?style=for-the-badge&color=00eaff&labelColor=060a12&logo=github&logoColor=white)](https://github.com/Skismail57?tab=followers)
 
 </div>
 
@@ -59,6 +67,36 @@ I enjoy solving complex engineering challenges by combining software development
 
 <br/>
 
+## `$` live-terminal
+
+<div align="center">
+<img src="./assets/terminal.svg?v=1" alt="terminal status" width="90%"/>
+</div>
+
+<br/>
+
+## `$` tech-stack
+
+**Languages & Frameworks**
+
+<div align="center">
+<img src="https://skillicons.dev/icons?i=python,tensorflow,pytorch,fastapi,js,nodejs,react,ts,java,spring,mysql,postgresql&theme=dark" alt="languages"/>
+</div>
+
+**DevOps & Cloud**
+
+<div align="center">
+<img src="https://skillicons.dev/icons?i=docker,kubernetes,aws,jenkins,terraform,ansible&theme=dark" alt="devops"/>
+</div>
+
+**Tools & Platforms**
+
+<div align="center">
+<img src="https://skillicons.dev/icons?i=git,github,linux,vscode&theme=dark" alt="tools"/>
+</div>
+
+<br/>
+
 <div align="center">
 
 ### 📊 GitHub Stats & Graphs
@@ -82,23 +120,18 @@ I enjoy solving complex engineering challenges by combining software development
 
 <br/><br/>
 
-### 🐍 Watch the snake eat my contributions
+</div>
 
-<img src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-snake-dark.svg" alt="Contribution snake"/>
+## `$` contribution-graph
 
-<br/><br/>
+<div align="center">
+<img src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/snake-dark.svg" alt="contribution snake animation" width="100%"/>
+</div>
 
-### 📫 Let's Connect
+> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` — it renders on the `output` branch after your first push/scheduled run.
 
-<a href="mailto:shaikhmismail66@gmail.com"><img src="https://img.shields.io/badge/Email-06b6d4?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
-<a href="https://github.com/Skismail57"><img src="https://img.shields.io/badge/GitHub-1e293b?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+<br/>
 
-<br/><br/>
-
-<img src="https://komarev.com/ghpvc/?username=Skismail57&color=22d3ee&style=for-the-badge&label=PROFILE+VIEWS" alt="Profile views"/>
-
-<br/><br/>
-
-*⚡ Shipping code, training models, deploying clusters.*
-
+<div align="center">
+<img src="./assets/footer.svg?v=1" alt="footer" width="100%"/>
 </div>
