@@ -274,22 +274,25 @@ I enjoy solving complex engineering challenges by combining software development
 
 ### 📊 GitHub Stats & Graphs
 
-<img src="./stats.svg?v=1" alt="GitHub Stats" height="185"/>
-<img src="./langs.svg?v=1" alt="Top Languages" height="185"/>
+<!-- Live stats pulled from Skismail57 account — includes commits, PRs, issues, stars, repos, followers, rank -->
+<img src="https://github-readme-stats.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=86400" alt="Live GitHub Stats (Commits / Stars / Repos / Followers / Rank)" height="190"/>
+<!-- Live top languages used across all public repos -->
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=86400" alt="Live Most Used Languages" height="190"/>
 
 <br/><br/>
 
-<img src="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa" alt="GitHub Streak"/>
+<!-- Live current / longest commit streak -->
+<img src="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=86400" alt="Live GitHub Commit Streak (Current & Longest)"/>
 
 <br/><br/>
 
-<!-- 📈 Contribution Activity Graph -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Skismail57&bg_color=0a1424&color=22d3ee&line=8b5cf6&point=60a5fa&area=true&area_color=22d3ee&hide_border=true&custom_title=Contribution%20Graph%20⚡" alt="Contribution graph" width="95%"/>
+<!-- Live 365-day contribution activity graph with line/area -->
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Skismail57&bg_color=0a1424&color=22d3ee&line=8b5cf6&point=60a5fa&area=true&area_color=22d3ee&hide_border=true&custom_title=Live%20Contribution%20Graph%20%E2%9A%A1&cache_seconds=86400" alt="Live Contribution Activity Graph" width="95%"/>
 
 <br/><br/>
 
-<!-- 🏆 Trophies (local animated SVG — always loads) -->
-<img src="./trophies.svg?v=1" alt="Trophies" width="95%"/>
+<!-- Live GitHub profile trophies pulled from real achievements -->
+<img src="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=86400" alt="Live GitHub Trophies & Achievements" width="95%"/>
 
 <br/><br/>
 
