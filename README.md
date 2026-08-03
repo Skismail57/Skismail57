@@ -56,7 +56,104 @@ I enjoy solving complex engineering challenges by combining software development
 ## `$` live-terminal
 
 <div align="center">
-<img src="./assets/terminal.svg?v=3" alt="terminal status" width="90%"/>
+<img src="./assets/terminal.svg?v=4" alt="terminal status" width="90%"/>
+</div>
+
+<br/>
+
+## `$` tech-stack
+
+**Languages & Frameworks**
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="72px">
+<a title="Python — AI/ML scripting & backend"><img src="https://skillicons.dev/icons?i=python" alt="Python" width="42"/></a><br/><sub>Python</sub>
+</td>
+<td align="center" width="72px">
+<a title="TensorFlow — Deep learning models"><img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow" width="42"/></a><br/><sub>TensorFlow</sub>
+</td>
+<td align="center" width="72px">
+<a title="PyTorch — Neural networks"><img src="https://skillicons.dev/icons?i=pytorch" alt="PyTorch" width="42"/></a><br/><sub>PyTorch</sub>
+</td>
+<td align="center" width="72px">
+<a title="FastAPI — High-performance APIs"><img src="https://skillicons.dev/icons?i=fastapi" alt="FastAPI" width="42"/></a><br/><sub>FastAPI</sub>
+</td>
+<td align="center" width="72px">
+<a title="JavaScript — Frontend scripting"><img src="https://skillicons.dev/icons?i=js" alt="JavaScript" width="42"/></a><br/><sub>JavaScript</sub>
+</td>
+<td align="center" width="72px">
+<a title="Node.js — JS runtime"><img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" width="42"/></a><br/><sub>Node.js</sub>
+</td>
+<td align="center" width="72px">
+<a title="React — UI library"><img src="https://skillicons.dev/icons?i=react" alt="React" width="42"/></a><br/><sub>React</sub>
+</td>
+<td align="center" width="72px">
+<a title="TypeScript — Typed JS"><img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" width="42"/></a><br/><sub>TypeScript</sub>
+</td>
+<td align="center" width="72px">
+<a title="Java — Enterprise backend"><img src="https://skillicons.dev/icons?i=java" alt="Java" width="42"/></a><br/><sub>Java</sub>
+</td>
+<td align="center" width="72px">
+<a title="Spring Boot — Java framework"><img src="https://skillicons.dev/icons?i=spring" alt="Spring" width="42"/></a><br/><sub>Spring</sub>
+</td>
+<td align="center" width="72px">
+<a title="MySQL — Relational DB"><img src="https://skillicons.dev/icons?i=mysql" alt="MySQL" width="42"/></a><br/><sub>MySQL</sub>
+</td>
+<td align="center" width="72px">
+<a title="PostgreSQL — Advanced SQL DB"><img src="https://skillicons.dev/icons?i=postgresql" alt="PostgreSQL" width="42"/></a><br/><sub>PostgreSQL</sub>
+</td>
+</tr>
+</table>
+</div>
+
+**DevOps & Cloud**
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="72px">
+<a title="Docker — Containerization"><img src="https://skillicons.dev/icons?i=docker" alt="Docker" width="42"/></a><br/><sub>Docker</sub>
+</td>
+<td align="center" width="72px">
+<a title="Kubernetes — Container orchestration"><img src="https://skillicons.dev/icons?i=kubernetes" alt="Kubernetes" width="42"/></a><br/><sub>Kubernetes</sub>
+</td>
+<td align="center" width="72px">
+<a title="AWS — Cloud infrastructure"><img src="https://skillicons.dev/icons?i=aws" alt="AWS" width="42"/></a><br/><sub>AWS</sub>
+</td>
+<td align="center" width="72px">
+<a title="Jenkins — CI/CD automation"><img src="https://skillicons.dev/icons?i=jenkins" alt="Jenkins" width="42"/></a><br/><sub>Jenkins</sub>
+</td>
+<td align="center" width="72px">
+<a title="Terraform — IaC"><img src="https://skillicons.dev/icons?i=terraform" alt="Terraform" width="42"/></a><br/><sub>Terraform</sub>
+</td>
+<td align="center" width="72px">
+<a title="Ansible — Configuration management"><img src="https://skillicons.dev/icons?i=ansible" alt="Ansible" width="42"/></a><br/><sub>Ansible</sub>
+</td>
+</tr>
+</table>
+</div>
+
+**Tools & Platforms**
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="72px">
+<a title="Git — Version control"><img src="https://skillicons.dev/icons?i=git" alt="Git" width="42"/></a><br/><sub>Git</sub>
+</td>
+<td align="center" width="72px">
+<a title="GitHub — Code hosting & CI/CD"><img src="https://skillicons.dev/icons?i=github" alt="GitHub" width="42"/></a><br/><sub>GitHub</sub>
+</td>
+<td align="center" width="72px">
+<a title="Linux — OS & servers"><img src="https://skillicons.dev/icons?i=linux" alt="Linux" width="42"/></a><br/><sub>Linux</sub>
+</td>
+<td align="center" width="72px">
+<a title="VS Code — IDE"><img src="https://skillicons.dev/icons?i=vscode" alt="VS Code" width="42"/></a><br/><sub>VS Code</sub>
+</td>
+</tr>
+</table>
 </div>
 
 <br/>
