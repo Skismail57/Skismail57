@@ -208,13 +208,13 @@ I enjoy solving complex engineering challenges by combining software development
 <a title="Scikit-learn — ML algorithms & modeling"><img src="https://skillicons.dev/icons?i=sklearn" alt="Scikit-learn" width="42"/></a><br/><sub>Scikit-learn</sub>
 </td>
 <td align="center" width="72px">
-<a title="Pandas — Data Science / data wrangling"><img src="https://skillicons.dev/icons?i=pandas" alt="Pandas" width="42"/></a><br/><sub>Pandas</sub>
+<a title="Pandas — Data Science / data wrangling"><img src="./assets/icons/pandas.svg?v=1" alt="Pandas" width="42" height="42"/></a><br/><sub>Pandas</sub>
 </td>
 <td align="center" width="72px">
-<a title="NumPy — Data Science / numerical computing"><img src="https://skillicons.dev/icons?i=numpy" alt="NumPy" width="42"/></a><br/><sub>NumPy</sub>
+<a title="NumPy — Data Science / numerical computing"><img src="./assets/icons/numpy.svg?v=1" alt="NumPy" width="42" height="42"/></a><br/><sub>NumPy</sub>
 </td>
 <td align="center" width="72px">
-<a title="Jupyter — Data Science & ML notebooks"><img src="https://skillicons.dev/icons?i=jupyter" alt="Jupyter" width="42"/></a><br/><sub>Jupyter</sub>
+<a title="Jupyter — Data Science & ML notebooks"><img src="./assets/icons/jupyter.svg?v=1" alt="Jupyter" width="42" height="42"/></a><br/><sub>Jupyter</sub>
 </td>
 </tr>
 </table>
@@ -226,22 +226,22 @@ I enjoy solving complex engineering challenges by combining software development
 <table>
 <tr>
 <td align="center" width="72px">
-<a title="Tableau — Business Intelligence & dashboards"><img src="https://skillicons.dev/icons?i=tableau" alt="Tableau" width="42"/></a><br/><sub>Tableau</sub>
+<a title="Tableau — Business Intelligence & dashboards"><img src="./assets/icons/tableau.svg?v=1" alt="Tableau" width="42" height="42"/></a><br/><sub>Tableau</sub>
 </td>
 <td align="center" width="72px">
-<a title="Power BI — Business Intelligence & reporting"><img src="https://cdn.simpleicons.org/powerbi/F2C811/0d1117" alt="Power BI" width="42"/></a><br/><sub>Power BI</sub>
+<a title="Power BI — Business Intelligence & reporting"><img src="./assets/icons/powerbi.svg?v=1" alt="Power BI" width="42" height="42"/></a><br/><sub>Power BI</sub>
 </td>
 <td align="center" width="72px">
-<a title="Excel — Data Analyst spreadsheets & analysis"><img src="https://cdn.simpleicons.org/microsoftexcel/217346/0d1117" alt="Excel" width="42"/></a><br/><sub>Excel</sub>
+<a title="Excel — Data Analyst spreadsheets & analysis"><img src="./assets/icons/microsoftexcel.svg?v=1" alt="Excel" width="42" height="42"/></a><br/><sub>Excel</sub>
 </td>
 <td align="center" width="72px">
-<a title="Looker — Business Intelligence & analytics"><img src="https://cdn.simpleicons.org/looker/4285F4/0d1117" alt="Looker" width="42"/></a><br/><sub>Looker (BI)</sub>
+<a title="Looker — Business Intelligence & analytics"><img src="./assets/icons/looker.svg?v=1" alt="Looker" width="42" height="42"/></a><br/><sub>Looker (BI)</sub>
 </td>
 <td align="center" width="72px">
 <a title="MongoDB — NoSQL document database"><img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="42"/></a><br/><sub>MongoDB</sub>
 </td>
 <td align="center" width="72px">
-<a title="Hadoop — Big Data distributed processing"><img src="https://skillicons.dev/icons?i=hadoop" alt="Hadoop" width="42"/></a><br/><sub>Hadoop</sub>
+<a title="Hadoop — Big Data distributed processing"><img src="./assets/icons/apachehadoop.svg?v=1" alt="Hadoop" width="42" height="42"/></a><br/><sub>Hadoop</sub>
 </td>
 </tr>
 </table>
@@ -274,25 +274,25 @@ I enjoy solving complex engineering challenges by combining software development
 
 ### 📊 GitHub Stats & Graphs
 
-<!-- Live stats pulled from Skismail57 account — includes commits, PRs, issues, stars, repos, followers, rank -->
-<img src="https://github-readme-stats.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=86400" alt="Live GitHub Stats (Commits / Stars / Repos / Followers / Rank)" height="190"/>
+<!-- Live stats — uses stable rho-five fork + date cache-bust to bypass GitHub camo proxy caching -->
+<img src="https://github-readme-stats-rho-five.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=1800&rank_icon=github&_v=20260803" alt="Live GitHub Stats (Commits / Stars / Repos / Followers / Rank)" height="190"/>
 <!-- Live top languages used across all public repos -->
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=86400" alt="Live Most Used Languages" height="190"/>
+<img src="https://github-readme-stats-rho-five.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=1800&_v=20260803" alt="Live Most Used Languages" height="190"/>
 
 <br/><br/>
 
-<!-- Live current / longest commit streak -->
-<img src="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=86400" alt="Live GitHub Commit Streak (Current & Longest)"/>
+<!-- Live current / longest commit streak — demolab deployment is the most reliable -->
+<img src="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=1800&_v=20260803" alt="Live GitHub Commit Streak (Current & Longest)"/>
 
 <br/><br/>
 
-<!-- Live 365-day contribution activity graph with line/area -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Skismail57&bg_color=0a1424&color=22d3ee&line=8b5cf6&point=60a5fa&area=true&area_color=22d3ee&hide_border=true&custom_title=Live%20Contribution%20Graph%20%E2%9A%A1&cache_seconds=86400" alt="Live Contribution Activity Graph" width="95%"/>
+<!-- 52-week contribution heatmap — ghchart.rshah.org directly reads GitHub profile data (no API rate limits!) -->
+<img src="https://ghchart.rshah.org/8b5cf6/Skismail57?_v=20260803" alt="Live GitHub Contribution Heatmap" width="95%"/>
 
 <br/><br/>
 
 <!-- Live GitHub profile trophies pulled from real achievements -->
-<img src="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=86400" alt="Live GitHub Trophies & Achievements" width="95%"/>
+<img src="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=1800&_v=20260803" alt="Live GitHub Trophies & Achievements" width="95%"/>
 
 <br/><br/>
 
