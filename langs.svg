@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 232" width="500" height="232" role="img" aria-label="Top Languages">
+  <defs>
+    <style><![CDATA[
+      text{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
+      @keyframes fadeSlide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+      @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+      @keyframes shineX{0%{transform:translateX(-160px) skewX(-15deg)}60%,100%{transform:translateX(560px) skewX(-15deg)}}
+      @keyframes growBar{from{width:0}to{width:var(--w)}}
+      .row{opacity:0;animation:fadeSlide .5s ease forwards}
+      .sh{animation:shineX 4.5s ease-in-out 2.4s infinite}
+    ]]></style>
+    <linearGradient id="tg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"><animate attributeName="stop-color" values="#22d3ee;#8b5cf6;#22d3ee" dur="6s" repeatCount="indefinite"/></stop>
+      <stop offset="100%"><animate attributeName="stop-color" values="#8b5cf6;#22d3ee;#8b5cf6" dur="6s" repeatCount="indefinite"/></stop>
+    </linearGradient>
+    <linearGradient id="shg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".07"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="cc"><rect x="1" y="1" width="498" height="230" rx="14"/></clipPath>
+  </defs>
+  <rect x="1" y="1" width="498" height="230" rx="14" fill="#0a1424" stroke="url(#tg)" stroke-width="1.5"/>
+  <text x="24" y="38" font-size="16" font-weight="bold" fill="url(#tg)">⚡ Most Used Languages</text>
+
+  <g class="row" style="animation-delay:0.50s">
+    <circle cx="32" cy="66" r="6" fill="#f89820"/>
+    <text x="48" y="70" font-size="13" fill="#c9d1d9">Java</text>
+    <text x="430" y="70" text-anchor="end" font-size="13" font-weight="bold" fill="#f89820">35%</text>
+    <rect x="24" y="80" width="452" height="6" rx="3" fill="#1c2b3d"/>
+    <rect x="24" y="80" width="158" height="6" rx="3" fill="#f89820"/>
+  </g>
+
+  <g class="row" style="animation-delay:0.72s">
+    <circle cx="32" cy="102" r="6" fill="#3572A5"/>
+    <text x="48" y="106" font-size="13" fill="#c9d1d9">Python</text>
+    <text x="430" y="106" text-anchor="end" font-size="13" font-weight="bold" fill="#3572A5">30%</text>
+    <rect x="24" y="116" width="452" height="6" rx="3" fill="#1c2b3d"/>
+    <rect x="24" y="116" width="136" height="6" rx="3" fill="#3572A5"/>
+  </g>
+
+  <g class="row" style="animation-delay:0.94s">
+    <circle cx="32" cy="138" r="6" fill="#6DB33F"/>
+    <text x="48" y="142" font-size="13" fill="#c9d1d9">Spring Boot</text>
+    <text x="430" y="142" text-anchor="end" font-size="13" font-weight="bold" fill="#6DB33F">15%</text>
+    <rect x="24" y="152" width="452" height="6" rx="3" fill="#1c2b3d"/>
+    <rect x="24" y="152" width="68" height="6" rx="3" fill="#6DB33F"/>
+  </g>
+
+  <g class="row" style="animation-delay:1.16s">
+    <circle cx="32" cy="174" r="6" fill="#4479A1"/>
+    <text x="48" y="178" font-size="13" fill="#c9d1d9">SQL / MySQL</text>
+    <text x="430" y="178" text-anchor="end" font-size="13" font-weight="bold" fill="#4479A1">10%</text>
+    <rect x="24" y="188" width="452" height="6" rx="3" fill="#1c2b3d"/>
+    <rect x="24" y="188" width="45" height="6" rx="3" fill="#4479A1"/>
+  </g>
+
+  <g class="row" style="animation-delay:1.38s">
+    <circle cx="32" cy="210" r="6" fill="#8b5cf6"/>
+    <text x="48" y="214" font-size="13" fill="#c9d1d9">JavaScript / TypeScript</text>
+    <text x="430" y="214" text-anchor="end" font-size="13" font-weight="bold" fill="#8b5cf6">10%</text>
+    <rect x="24" y="224" width="452" height="4" rx="2" fill="#1c2b3d"/>
+  </g>
+
+  <g clip-path="url(#cc)" style="pointer-events:none">
+    <rect class="sh" x="0" y="0" width="160" height="232" fill="url(#shg)"/>
+  </g>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 660" width="420" height="660" role="img" aria-label="S K Ismail ID card lanyard">
+<title>S K Ismail — swinging ID badge</title>
+<defs>
+<style type="text/css"><![CDATA[
+text{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
+@keyframes settle{0%{transform:rotate(0deg) translateY(-660px)}18%{transform:rotate(0deg) translateY(0)}30%{transform:rotate(13deg)}46%{transform:rotate(-9deg)}62%{transform:rotate(6deg)}78%{transform:rotate(-3.5deg)}92%{transform:rotate(1.5deg)}100%{transform:rotate(0deg)}}
+@keyframes sway{0%,100%{transform:rotate(-3.2deg)}50%{transform:rotate(3.2deg)}}
+@keyframes cardWobble{0%,100%{transform:rotate(1.6deg)}50%{transform:rotate(-1.6deg)}}
+@keyframes shine{0%{transform:translateX(-340px) skewX(-18deg)}55%,100%{transform:translateX(420px) skewX(-18deg)}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1)}}
+@keyframes pulseNode{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.3);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.settle{transform-origin:210px 6px;animation:settle 3.4s cubic-bezier(.34,1.1,.5,1) forwards}
+.sway{transform-origin:210px 6px;animation:sway 4.2s ease-in-out 3.4s infinite}
+.wob{transform-origin:210px 300px;animation:cardWobble 4.2s ease-in-out 3.4s infinite}
+.shine{animation:shine 4.5s ease-in-out 3.6s infinite}
+.tw{transform-box:fill-box;transform-origin:center;animation:twinkle 2.8s ease-in-out infinite}
+.hb{transform-box:fill-box;transform-origin:center;animation:pulseNode 2.4s ease-in-out infinite}
+]]></style>
+<linearGradient id="strapg" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#1471a8"/><stop offset="50%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#1471a8"/>
+</linearGradient>
+<linearGradient id="cardg" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0%" stop-color="#0c1728"/><stop offset="100%" stop-color="#080f1c"/>
+</linearGradient>
+<linearGradient id="cardborder" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0%"><animate attributeName="stop-color" values="#22d3ee;#60a5fa;#8b5cf6;#22d3ee" dur="6s" repeatCount="indefinite"/></stop>
+  <stop offset="100%"><animate attributeName="stop-color" values="#8b5cf6;#22d3ee;#60a5fa;#8b5cf6" dur="6s" repeatCount="indefinite"/></stop>
+</linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stop-color="#c8ccd6"/><stop offset="45%" stop-color="#8a90a0"/><stop offset="55%" stop-color="#6a7080"/><stop offset="100%" stop-color="#9aa0b0"/>
+</linearGradient>
+<linearGradient id="shineg" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#fff" stop-opacity="0"/><stop offset="50%" stop-color="#fff" stop-opacity=".14"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="nameg2" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%"><animate attributeName="stop-color" values="#22d3ee;#60a5fa;#22d3ee" dur="5s" repeatCount="indefinite"/></stop>
+  <stop offset="100%"><animate attributeName="stop-color" values="#60a5fa;#22d3ee;#60a5fa" dur="5s" repeatCount="indefinite"/></stop>
+</linearGradient>
+<radialGradient id="lglow"><stop offset="0%" stop-color="#22d3ee" stop-opacity=".16"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+<filter id="glow2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
+<clipPath id="cardclip"><rect x="82" y="298" width="256" height="330" rx="20"/></clipPath>
+</defs>
+
+<circle cx="210" cy="440" r="230" fill="url(#lglow)"><animate attributeName="r" values="230;250;230" dur="5s" repeatCount="indefinite"/></circle>
+
+<g class="tw" style="animation-delay:.5s"><path d="M60 200l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#67e8f9"/></g>
+<g class="tw" style="animation-delay:1.6s"><path d="M372 300l2.4 6.4 6.4 2.4-6.4 2.4-2.4 6.4-2.4-6.4-6.4-2.4 6.4-2.4z" fill="#22d3ee"/></g>
+<g class="tw" style="animation-delay:2.7s"><path d="M52 480l2.4 6.4 6.4 2.4-6.4 2.4-2.4 6.4-2.4-6.4-6.4-2.4 6.4-2.4z" fill="#8b5cf6"/></g>
+<g class="hb" style="animation-delay:1s"><circle cx="368" cy="480" r="8" fill="none" stroke="#22d3ee" stroke-width="2" opacity=".85" filter="url(#glow2)"/><circle cx="368" cy="480" r="2.6" fill="#22d3ee"/></g>
+
+<!-- pendulum: settle then sway -->
+<g class="settle"><g class="sway">
+
+  <!-- Strap -->
+  <g>
+    <path d="M191 -6 L229 -6 L226 236 L194 236 Z" fill="url(#strapg)"/>
+    <line x1="196" y1="0" x2="198.5" y2="234" stroke="#fff" stroke-opacity=".55" stroke-width="1" stroke-dasharray="4 3"/>
+    <line x1="224" y1="0" x2="221.5" y2="234" stroke="#fff" stroke-opacity=".55" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="0" y="0" font-size="10.5" font-weight="bold" fill="#fff" opacity=".92" letter-spacing="2" transform="translate(214,18) rotate(90)">ISMAIL.DEV ⚡ BUILD ⚡ ISMAIL.DEV</text>
+  </g>
+
+  <!-- Clasp + ring -->
+  <rect x="188" y="232" width="44" height="26" rx="6" fill="url(#metal)" stroke="#4a4f5c" stroke-width="1"/>
+  <rect x="199" y="238" width="22" height="7" rx="3.5" fill="#3c414e"/>
+  <circle cx="210" cy="272" r="14" fill="none" stroke="url(#metal)" stroke-width="5.5"/>
+
+  <!-- Card (secondary wobble) -->
+  <g class="wob">
+    <rect x="82" y="298" width="256" height="330" rx="20" fill="url(#cardg)" stroke="url(#cardborder)" stroke-width="2" filter="url(#cardShadow)"/>
+    <!-- slot -->
+    <rect x="180" y="310" width="60" height="10" rx="5" fill="#060b14" stroke="#173049" stroke-width="1"/>
+
+    <g clip-path="url(#cardclip)">
+      <!-- header band -->
+      <rect x="82" y="298" width="256" height="34" fill="#0f2033" opacity=".7"/>
+      <text x="98" y="345" font-size="9" fill="#8b949e" letter-spacing="1.5">DEVELOPER ID</text>
+      <text x="322" y="345" text-anchor="end" font-size="9" fill="#22d3ee" letter-spacing="1.5">SKI-5701</text>
+
+      <!-- avatar -->
+      <circle cx="210" cy="412" r="59" fill="none" stroke="url(#cardborder)" stroke-width="2.5"/>
+      <image x="151" y="353" width="118" height="118" href="data:image/webp;base64,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"/>
+
+      <!-- name -->
+      <text x="210" y="510" text-anchor="middle" font-size="26" font-weight="bold" fill="url(#nameg2)" filter="url(#glow2)" letter-spacing="1.5">S K ISMAIL</text>
+      <text x="210" y="540" text-anchor="middle" font-size="11" fill="#67e8f9" font-weight="bold" letter-spacing="2.5">BACKEND DEVELOPER</text>
+      <text x="210" y="558" text-anchor="middle" font-size="10.5" fill="#8b949e">@Skismail57</text>
+
+      <line x1="100" y1="572" x2="320" y2="572" stroke="#173049" stroke-width="1"/>
+
+      <!-- barcode + tag -->
+      <g transform="translate(100,584)"><rect x="0" y="0" width="2.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="5.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="9.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="12.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="16.0" y="0" width="4" height="26" fill="#e6edf3" opacity=".85"/><rect x="21.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="26.0" y="0" width="4" height="26" fill="#e6edf3" opacity=".85"/><rect x="31.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="34.5" y="0" width="4" height="26" fill="#e6edf3" opacity=".85"/><rect x="41.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="45.5" y="0" width="2.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="50.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="54.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="58.5" y="0" width="2.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="63.5" y="0" width="2.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="67.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="72.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="76.5" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="81.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="84.0" y="0" width="2.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="89.0" y="0" width="1.5" height="26" fill="#e6edf3" opacity=".85"/><rect x="93.5" y="0" width="4" height="26" fill="#e6edf3" opacity=".85"/></g>
+      <text x="320" y="600" text-anchor="end" font-size="8.5" fill="#8b949e">PYTHON • AI/ML</text>
+      <text x="320" y="612" text-anchor="end" font-size="8.5" fill="#8b949e">DOCKER • AWS</text>
+
+      <!-- holo shine sweep -->
+      <rect class="shine" x="82" y="288" width="120" height="360" fill="url(#shineg)"/>
+    </g>
+  </g>
+</g></g>
+
+<text x="210" y="652" text-anchor="middle" font-size="10" fill="#8b949e" opacity="0" style="animation:fadeIn .6s ease 3.6s forwards">— drag me… just kidding, I'm an SVG ⚡ —</text>
+</svg>
