@@ -229,13 +229,13 @@ I enjoy solving complex engineering challenges by combining software development
 <a title="Tableau — Business Intelligence & dashboards"><img src="https://skillicons.dev/icons?i=tableau" alt="Tableau" width="42"/></a><br/><sub>Tableau</sub>
 </td>
 <td align="center" width="72px">
-<a title="Power BI — Business Intelligence & reporting"><img src="https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" alt="Power BI" width="68" height="42"/></a><br/><sub>Power BI</sub>
+<a title="Power BI — Business Intelligence & reporting"><img src="https://cdn.simpleicons.org/powerbi/F2C811/0d1117" alt="Power BI" width="42"/></a><br/><sub>Power BI</sub>
 </td>
 <td align="center" width="72px">
-<a title="Excel — Data Analyst spreadsheets & analysis"><img src="https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white" alt="Excel" width="68" height="42"/></a><br/><sub>Excel</sub>
+<a title="Excel — Data Analyst spreadsheets & analysis"><img src="https://cdn.simpleicons.org/microsoftexcel/217346/0d1117" alt="Excel" width="42"/></a><br/><sub>Excel</sub>
 </td>
 <td align="center" width="72px">
-<a title="Looker — Business Intelligence & analytics"><img src="https://img.shields.io/badge/Looker-4285F4?style=for-the-badge&logo=looker&logoColor=white" alt="Looker" width="68" height="42"/></a><br/><sub>Looker (BI)</sub>
+<a title="Looker — Business Intelligence & analytics"><img src="https://cdn.simpleicons.org/looker/4285F4/0d1117" alt="Looker" width="42"/></a><br/><sub>Looker (BI)</sub>
 </td>
 <td align="center" width="72px">
 <a title="MongoDB — NoSQL document database"><img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="42"/></a><br/><sub>MongoDB</sub>
