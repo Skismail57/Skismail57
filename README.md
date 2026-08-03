@@ -56,7 +56,42 @@ I enjoy solving complex engineering challenges by combining software development
 ## `$` live-terminal
 
 <div align="center">
-<img src="./assets/terminal.svg?v=4" alt="terminal status" width="90%"/>
+<svg width="760" height="330" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" style="width:90%;max-width:860px">
+  <defs>
+    <linearGradient id="tbg_lt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f1a"/>
+      <stop offset="100%" stop-color="#060811"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="760" height="330" rx="14" fill="url(#tbg_lt)" stroke="#1c2b4a" stroke-width="1.4"/>
+
+  <rect width="760" height="34" rx="14" fill="#0d1424"/>
+  <rect y="20" width="760" height="14" fill="#0d1424"/>
+  <circle cx="24" cy="17" r="6" fill="#ff5f57"/>
+  <circle cx="46" cy="17" r="6" fill="#febc2e"/>
+  <circle cx="68" cy="17" r="6" fill="#28c840"/>
+  <text x="380" y="21" text-anchor="middle" font-family="Consolas,monospace" font-size="12" fill="#8aa4d1">ismail@backend: ~</text>
+
+  <g font-family="Consolas,'Courier New',monospace" font-size="15">
+    <text x="24" y="68" fill="#39ff88">$ whoami</text>
+    <text x="24" y="96" fill="#8fe8ff">S K Ismail — Backend Developer</text>
+    <text x="24" y="124" fill="#8fe8ff">AI/ML Engineer · Cloud &amp; DevOps Enthusiast</text>
+    <text x="24" y="156" fill="#39ff88">$ ./deploy.sh --stack production</text>
+    <text x="24" y="182" fill="#9fb6d9">Building scalable backend systems...</text>
+    <text x="24" y="206" fill="#9fb6d9">Deploying Docker containers...</text>
+    <text x="24" y="230" fill="#9fb6d9">Starting Kubernetes cluster...</text>
+    <text x="24" y="254" fill="#9fb6d9">Loading FastAPI &amp; Spring Boot services...</text>
+    <text x="24" y="278" fill="#9fb6d9">AI models ready...</text>
+    <text x="24" y="304" font-weight="700" fill="#39ff88">System healthy ✔</text>
+  </g>
+
+  <rect x="270" y="292" width="9" height="16" fill="#39ff88"/>
+</svg>
+</div>
+
+<div align="center" style="display:none">
+<img src="./assets/terminal.svg?v=5" alt="terminal status fallback" width="90%"/>
 </div>
 
 <br/>
