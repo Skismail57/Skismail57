@@ -74,24 +74,46 @@ I enjoy solving complex engineering challenges by combining software development
   <text x="380" y="21" text-anchor="middle" font-family="Consolas,monospace" font-size="12" fill="#8aa4d1">ismail@backend: ~</text>
 
   <g font-family="Consolas,'Courier New',monospace" font-size="15">
-    <text x="24" y="68" fill="#39ff88">$ whoami</text>
-    <text x="24" y="96" fill="#8fe8ff">S K Ismail — Backend Developer</text>
-    <text x="24" y="124" fill="#8fe8ff">AI/ML Engineer · Cloud &amp; DevOps Enthusiast</text>
-    <text x="24" y="156" fill="#39ff88">$ ./deploy.sh --stack production</text>
-    <text x="24" y="182" fill="#9fb6d9">Building scalable backend systems...</text>
-    <text x="24" y="206" fill="#9fb6d9">Deploying Docker containers...</text>
-    <text x="24" y="230" fill="#9fb6d9">Starting Kubernetes cluster...</text>
-    <text x="24" y="254" fill="#9fb6d9">Loading FastAPI &amp; Spring Boot services...</text>
-    <text x="24" y="278" fill="#9fb6d9">AI models ready...</text>
-    <text x="24" y="304" font-weight="700" fill="#39ff88">System healthy ✔</text>
+    <text x="24" y="68" fill="#39ff88">$ whoami
+      <animate attributeName="opacity" values="1;1;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="96" fill="#8fe8ff" opacity="0">S K Ismail — Backend Developer
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.1;0.12;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="124" fill="#8fe8ff" opacity="0">AI/ML Engineer · Cloud &amp; DevOps Enthusiast
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.18;0.2;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="156" fill="#39ff88" opacity="0">$ ./deploy.sh --stack production
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.28;0.3;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="182" fill="#9fb6d9" opacity="0">Building scalable backend systems...
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.36;0.38;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="206" fill="#9fb6d9" opacity="0">Deploying Docker containers...
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.42;0.44;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="230" fill="#9fb6d9" opacity="0">Starting Kubernetes cluster...
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.48;0.5;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="254" fill="#9fb6d9" opacity="0">Loading FastAPI &amp; Spring Boot services...
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.54;0.56;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="278" fill="#9fb6d9" opacity="0">AI models ready...
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.6;0.62;0.7;0.9;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
+    <text x="24" y="304" font-weight="700" fill="#39ff88" opacity="0">System healthy ✔
+      <animate attributeName="opacity" values="0;0;1;1;1;1" keyTimes="0;0.68;0.7;0.95;0.98;1" dur="8s" begin="0s" repeatCount="indefinite"/>
+    </text>
   </g>
 
-  <rect x="270" y="292" width="9" height="16" fill="#39ff88"/>
+  <rect x="270" y="292" width="9" height="16" fill="#39ff88">
+    <animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>
+  </rect>
 </svg>
 </div>
 
 <div align="center" style="display:none">
-<img src="./assets/terminal.svg?v=5" alt="terminal status fallback" width="90%"/>
+<img src="./assets/terminal.svg?v=6" alt="terminal status animated fallback" width="90%"/>
 </div>
 
 <br/>
