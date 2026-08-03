@@ -350,16 +350,19 @@ I enjoy solving complex engineering challenges by combining software development
 </div>
 
 ## `$` contribution-animation
+## `$` contribution-graph
 
 <div align="center">
-<a href="https://github.com/Skismail57/Skismail57/actions/workflows/snake.yml" title="🐍 Generate contribution snake — green/black tech palette (Platane/snk/svg-only@v3)">
-<object data="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-snake-tech.svg?v=20260804E" type="image/svg+xml" width="100%">
-  <img src="https://ghchart.rshah.org/16a34a/Skismail57?_v=20260804E" alt="Contribution heatmap (tech green snake #16a34a — workflow runs on push + daily midnight UTC + manual dispatch)" width="100%"/>
-</object>
-</a>
+<img src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/snake-dark.svg" alt="contribution snake animation" width="100%"/>
 </div>
 
-> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` (name: **Generate contribution snake 🐍**). Uses `Platane/snk/svg-only@v3` with tech colors: **`color_snake=#16a34a`** (dark green snake) + **`color_dots=#000000,#1f2937,#166534,#16a34a,#4ade80`** (black → dark slate → deep green → emerald → lime gradient contribution dots). Triggers on push to `main` + daily at **00:00 UTC (midnight)** + manual `workflow_dispatch`. Pushes to the `output` branch as `github-snake.svg` (github-dark default) and **`github-snake-tech.svg`** (the custom green/black variant shown above). The green heatmap above shows live data until the snake renders.
+> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` — it renders on the `output` branch after your first push/scheduled run.
+
+<br/>
+
+<div align="center">
+<img src="./assets/footer.svg" alt="footer" width="100%"/>
+</div>
 
 <br/>
 
