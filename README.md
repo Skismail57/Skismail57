@@ -272,39 +272,94 @@ I enjoy solving complex engineering challenges by combining software development
 
 <div align="center">
 
-### 📊 GitHub Stats & Graphs
+### 📊 GitHub Tech Dashboard — Live Data
 
-<!-- Live stats — uses stable rho-five fork + date cache-bust to bypass GitHub camo proxy caching -->
-<img src="https://github-readme-stats-rho-five.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=1800&rank_icon=github&_v=20260803" alt="Live GitHub Stats (Commits / Stars / Repos / Followers / Rank)" height="190"/>
-<!-- Live top languages used across all public repos -->
-<img src="https://github-readme-stats-rho-five.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=1800&_v=20260803" alt="Live Most Used Languages" height="190"/>
+<table border="0" align="center">
+<tr>
+<td valign="top" align="center">
+
+<!-- Stats Card — uses ORGS-team deployment (largest rate-limit pool) with guaranteed local fallback -->
+<a href="https://github.com/Skismail57?tab=repositories" title="Open S K Ismail's repositories">
+<object data="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=1800&rank_icon=github&_v=20260804A" type="image/svg+xml" height="190">
+  <img src="./assets/fallback-stats.svg?v=20260804" alt="S K Ismail's GitHub Stats fallback" height="190"/>
+</object>
+</a>
+
+</td>
+<td valign="top" align="center">
+
+<!-- Top Languages Card — same ORGS deployment + fallback -->
+<a href="https://github.com/Skismail57?tab=repositories" title="Open S K Ismail's language breakdown">
+<object data="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=1800&_v=20260804A" type="image/svg+xml" height="190">
+  <img src="./assets/fallback-toplangs.svg?v=20260804" alt="Most used languages fallback" height="190"/>
+</object>
+</a>
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+<!-- ═══════════════════════════════════════════════════
+     GITHUB METRICS — full professional tech dashboard
+     Rendered by metrics.lecoq.io — very reliable host
+     ═══════════════════════════════════════════════════ -->
+
+<a href="https://github.com/Skismail57" title="Open S K Ismail's GitHub profile">
+<object data="https://metrics.lecoq.io/Skismail57?template=classic&base.header=0&gists=1&lines=1&config.timezone=Asia%2FCalcutta&config.twemoji=true&config.display=large&base.indepth=false&base.hireable=false&config.palette=indigo&_v=20260804A" type="image/svg+xml" width="95%">
+  <img src="https://ghchart.rshah.org/8b5cf6/Skismail57?_v=20260804A" alt="Contribution heatmap fallback" width="95%"/>
+</object>
+</a>
 
 <br/><br/>
 
-<!-- Live current / longest commit streak — demolab deployment is the most reliable -->
-<img src="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=1800&_v=20260803" alt="Live GitHub Commit Streak (Current & Longest)"/>
+<!-- Commit Streak Card — demolab is stable; double-fallback to local inline SVG if it fails -->
+<a href="https://github.com/Skismail57" title="S K Ismail commit streak history">
+<object data="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=1800&_v=20260804A" type="image/svg+xml">
+  <svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a1424"/><stop offset="100%" stop-color="#0f1f3d"/></linearGradient></defs><rect width="520" height="180" rx="14" fill="url(#sb)"/><g font-family="Consolas,monospace"><text x="30" y="34" font-size="14" font-weight="700" fill="#00eaff">GitHub Commit Streak</text><text x="110" y="108" text-anchor="middle" font-size="44" font-weight="800" fill="#22d3ee">2</text><text x="110" y="138" text-anchor="middle" font-size="12" fill="#60a5fa">Current Streak</text><text x="260" y="78" text-anchor="middle" font-size="40" font-weight="800" fill="#8b5cf6">194</text><text x="260" y="108" text-anchor="middle" font-size="12" fill="#93c5fd">Total Contributions</text><text x="260" y="130" text-anchor="middle" font-size="10" fill="#64748b">Oct 16, 2024 — Present · excluding Sun</text><text x="410" y="78" text-anchor="middle" font-size="40" font-weight="800" fill="#f472b6">5</text><text x="410" y="108" text-anchor="middle" font-size="12" fill="#93c5fd">Longest Streak</text><text x="410" y="130" text-anchor="middle" font-size="10" fill="#64748b">Oct 08, 2025 — Oct 12, 2025</text></g><g transform="translate(30,150)"><rect width="460" height="8" rx="4" fill="#1e293b"/><rect width="410" height="8" rx="4" fill="#22d3ee"/></g></svg>
+</object>
+</a>
 
 <br/><br/>
 
-<!-- 52-week contribution heatmap — ghchart.rshah.org directly reads GitHub profile data (no API rate limits!) -->
-<img src="https://ghchart.rshah.org/8b5cf6/Skismail57?_v=20260803" alt="Live GitHub Contribution Heatmap" width="95%"/>
+<!-- ═══════════════════════════════════════════════════
+     REALISTIC CONTRIBUTION ACTIVITY GRAPH
+     NOT a basic heatmap — smooth line + filled area
+     Primary:  activity-graph (reliable ashutosh00710 deployment)
+     Fallback: custom dashboard SVG with live date (always renders)
+     ═══════════════════════════════════════════════════ -->
+
+<a href="https://github.com/Skismail57" title="Live contribution activity">
+<object data="https://github-readme-activity-graph-git-main-ashutosh00710.vercel.app/graph?username=Skismail57&bg_color=0a1424&color=22d3ee&line=8b5cf6&point=60a5fa&area=true&area_color=22d3ee&hide_border=true&custom_title=Contribution%20Activity%20%F0%9F%9A%80&days=365&cache_seconds=1800&_v=20260804A" type="image/svg+xml" width="95%">
+  <img src="./assets/fallback-activity-graph.svg?v=20260804" alt="Contribution activity graph fallback" width="95%"/>
+</object>
+</a>
 
 <br/><br/>
 
-<!-- Live GitHub profile trophies pulled from real achievements -->
-<img src="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=1800&_v=20260803" alt="Live GitHub Trophies & Achievements" width="95%"/>
+<!-- Trophies grid → double-fallback local trophies SVG -->
+<a href="https://github.com/Skismail57" title="GitHub achievements &amp; trophies">
+<object data="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=1800&_v=20260804A" type="image/svg+xml" width="95%">
+  <img src="./assets/fallback-trophies.svg?v=20260804" alt="Trophies fallback" width="95%"/>
+</object>
+</a>
 
 <br/><br/>
 
 </div>
 
-## `$` contribution-graph
+## `$` contribution-animation
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/snake-dark.svg" alt="contribution snake animation" width="100%"/>
+<a href="https://github.com/Skismail57/Skismail57/actions/workflows/snake.yml" title="Snake animation generated by GitHub Actions workflow">
+<object data="https://raw.githubusercontent.com/Skismail57/Skismail57/output/snake-dark.svg" type="image/svg+xml" width="100%">
+  <img src="https://ghchart.rshah.org/06b6d4/Skismail57?_v=20260804A" alt="Contribution heatmap (snake workflow pending first run)" width="100%"/>
+</object>
+</a>
 </div>
 
-> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` — it renders on the `output` branch after your first push/scheduled run.
+> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` — it renders on the `output` branch after your first push/scheduled run. The heatmap above shows live data in the meantime.
 
 <br/>
 
