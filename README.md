@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/banner.svg?v=1" alt="S K Ismail banner" width="100%"/>
+<img src="./assets/banner.svg?v=3" alt="S K Ismail banner" width="100%"/>
 
 <img src="https://readme-typing-svg.demolab.com?font=Consolas&weight=600&size=22&duration=3000&pause=900&color=00EAFF&center=true&vCenter=true&width=650&lines=Backend+Developer;AI%2FML+Engineer;Cloud+Native+Developer;Building+scalable+systems...;Deploying+containers+%F0%9F%9A%80" alt="Typing SVG"/>
 
@@ -20,7 +20,7 @@
 <td width="34%" align="center" valign="top">
 
 <!-- 🪪 Swinging Lanyard ID Card (pure SVG) -->
-<img src="./lanyard.svg?v=1" alt="S K Ismail ID badge" width="330"/>
+<img src="./lanyard.svg?v=3" alt="S K Ismail ID badge" width="330"/>
 
 </td>
 <td width="66%" valign="top">
@@ -56,7 +56,7 @@ I enjoy solving complex engineering challenges by combining software development
 ## `$` live-terminal
 
 <div align="center">
-<img src="./assets/live-terminal.svg?v=1" alt="live terminal animation" width="90%"/>
+<img src="./assets/live-terminal.svg?v=3" alt="live terminal animation" width="90%"/>
 </div>
 
 <br/>
@@ -150,13 +150,13 @@ I enjoy solving complex engineering challenges by combining software development
 <a title="Scikit-learn — ML algorithms & modeling"><img src="https://skillicons.dev/icons?i=sklearn" alt="Scikit-learn" width="42"/></a><br/><sub>Scikit-learn</sub>
 </td>
 <td align="center" width="72px">
-<a title="Pandas — Data Science / data wrangling"><img src="./assets/icons/pandas.svg?v=1" alt="Pandas" width="42" height="42"/></a><br/><sub>Pandas</sub>
+<a title="Pandas — Data Science / data wrangling"><img src="./assets/icons/pandas.svg?v=3" alt="Pandas" width="42" height="42"/></a><br/><sub>Pandas</sub>
 </td>
 <td align="center" width="72px">
-<a title="NumPy — Data Science / numerical computing"><img src="./assets/icons/numpy.svg?v=1" alt="NumPy" width="42" height="42"/></a><br/><sub>NumPy</sub>
+<a title="NumPy — Data Science / numerical computing"><img src="./assets/icons/numpy.svg?v=3" alt="NumPy" width="42" height="42"/></a><br/><sub>NumPy</sub>
 </td>
 <td align="center" width="72px">
-<a title="Jupyter — Data Science & ML notebooks"><img src="./assets/icons/jupyter.svg?v=1" alt="Jupyter" width="42" height="42"/></a><br/><sub>Jupyter</sub>
+<a title="Jupyter — Data Science & ML notebooks"><img src="./assets/icons/jupyter.svg?v=3" alt="Jupyter" width="42" height="42"/></a><br/><sub>Jupyter</sub>
 </td>
 </tr>
 </table>
@@ -168,22 +168,22 @@ I enjoy solving complex engineering challenges by combining software development
 <table>
 <tr>
 <td align="center" width="72px">
-<a title="Tableau — Business Intelligence & dashboards"><img src="./assets/icons/tableau.svg?v=1" alt="Tableau" width="42" height="42"/></a><br/><sub>Tableau</sub>
+<a title="Tableau — Business Intelligence & dashboards"><img src="./assets/icons/tableau.svg?v=3" alt="Tableau" width="42" height="42"/></a><br/><sub>Tableau</sub>
 </td>
 <td align="center" width="72px">
-<a title="Power BI — Business Intelligence & reporting"><img src="./assets/icons/powerbi.svg?v=1" alt="Power BI" width="42" height="42"/></a><br/><sub>Power BI</sub>
+<a title="Power BI — Business Intelligence & reporting"><img src="./assets/icons/powerbi.svg?v=3" alt="Power BI" width="42" height="42"/></a><br/><sub>Power BI</sub>
 </td>
 <td align="center" width="72px">
-<a title="Excel — Data Analyst spreadsheets & analysis"><img src="./assets/icons/microsoftexcel.svg?v=1" alt="Excel" width="42" height="42"/></a><br/><sub>Excel</sub>
+<a title="Excel — Data Analyst spreadsheets & analysis"><img src="./assets/icons/microsoftexcel.svg?v=3" alt="Excel" width="42" height="42"/></a><br/><sub>Excel</sub>
 </td>
 <td align="center" width="72px">
-<a title="Looker — Business Intelligence & analytics"><img src="./assets/icons/looker.svg?v=1" alt="Looker" width="42" height="42"/></a><br/><sub>Looker (BI)</sub>
+<a title="Looker — Business Intelligence & analytics"><img src="./assets/icons/looker.svg?v=3" alt="Looker" width="42" height="42"/></a><br/><sub>Looker (BI)</sub>
 </td>
 <td align="center" width="72px">
 <a title="MongoDB — NoSQL document database"><img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" width="42"/></a><br/><sub>MongoDB</sub>
 </td>
 <td align="center" width="72px">
-<a title="Hadoop — Big Data distributed processing"><img src="./assets/icons/apachehadoop.svg?v=1" alt="Hadoop" width="42" height="42"/></a><br/><sub>Hadoop</sub>
+<a title="Hadoop — Big Data distributed processing"><img src="./assets/icons/apachehadoop.svg?v=3" alt="Hadoop" width="42" height="42"/></a><br/><sub>Hadoop</sub>
 </td>
 </tr>
 </table>
@@ -221,40 +221,19 @@ I enjoy solving complex engineering challenges by combining software development
 <br/>
 
 <a href="https://github.com/Skismail57" title="Full live dashboard — regenerated daily by .github/workflows/auto-dashboard.yml">
-  <img src="./dashboard.svg?v=auto-daily" alt="Live GitHub profile dashboard (KPIs, top langs, quick stats) — auto-updated" width="100%"/>
+  <img src="./dashboard.svg?v=4" alt="Live GitHub profile dashboard (KPIs, top langs, quick stats) — auto-updated" width="100%"/>
 </a>
 
 <br/><br/>
 
-<table border="0" align="center">
-<tr>
-<td valign="top" align="center" width="50%">
-
-<a href="https://github.com/Skismail57?tab=repositories" title="Live stats card — repos / stars / followers / commits / PRs / issues / streaks / forks">
-  <img src="./stats.svg?v=auto-daily" alt="Live stats (auto-generated)" width="100%"/>
-</a>
-
-</td>
-<td valign="top" align="center" width="50%">
-
-<a href="https://github.com/Skismail57?tab=repositories" title="Live most-used languages card (bytes across public repos)">
-  <img src="./langs.svg?v=auto-daily" alt="Live languages (auto-generated)" width="100%"/>
-</a>
-
-</td>
-</tr>
-</table>
-
-<br/><br/>
-
-<a href="https://github.com/Skismail57" title="Live contribution activity heatmap (auto-generated daily)">
-  <img src="./activity.svg?v=auto-daily" alt="Live contribution activity (auto-generated)" width="100%"/>
+<a href="https://github.com/Skismail57" title="Live contribution activity advanced analytics (auto-generated daily)">
+  <img src="./activity.svg?v=4" alt="Live contribution activity (auto-generated)" width="100%"/>
 </a>
 
 <br/><br/>
 
 <a href="https://github.com/Skismail57" title="Live achievement trophies (repos / stars / followers / commits / PRs / streaks / contribs / issues)">
-  <img src="./trophies.svg?v=auto-daily" alt="Live trophies (auto-generated)" width="100%"/>
+  <img src="./trophies.svg?v=4" alt="Live trophies (auto-generated)" width="100%"/>
 </a>
 
 <br/><br/>
@@ -279,5 +258,5 @@ I enjoy solving complex engineering challenges by combining software development
 <br/>
 
 <div align="center">
-<img src="./assets/footer.svg?v=2" alt="footer banner" width="100%"/>
+<img src="./assets/footer.svg?v=4" alt="footer banner" width="100%"/>
 </div>
