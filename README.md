@@ -371,7 +371,6 @@ I enjoy solving complex engineering challenges by combining software development
 | Default | `github-contribution-grid-snake.svg` |
 | Dark GitHub | `github-contribution-grid-snake-dark.svg` |
 | Purple Theme ⭐ | `github-contribution-grid-snake-purple.svg` |
-| Cyan Theme | `github-contribution-grid-snake-cyan.svg` |
 
 ### Repository Structure
 
@@ -385,16 +384,17 @@ Skismail57/
         └── github-snake.yml
 ```
 
-### After Uploading
+### How to run it
 
-1. Commit `github-snake.yml`.
-2. Go to **Actions** in your repository.
-3. Enable workflows if prompted.
-4. Open **Generate GitHub Snake**.
-5. Click **Run workflow**.
-6. Wait about a minute.
+1. Push the file to your GitHub repository.
+2. Open your repository.
+3. Click **Actions**.
+4. If prompted, click **I understand my workflows, go ahead and enable them**.
+5. In the left sidebar, click **Generate GitHub Snake**.
+6. Click **Run workflow**.
+7. Click the green **Run workflow** button.
 
-The workflow will create an `output` branch containing the generated snake SVGs, and they'll update automatically every day.
+After about 30–60 seconds, GitHub will create an `output` branch containing the generated snake SVGs, and they'll update automatically every day.
 
 <br/>
 
