@@ -1,0 +1,39 @@
+name: Auto-Generate Dashboard SVGs
+
+on:
+  schedule:
+    - cron: "7 1 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Regenerate dashboard SVGs (stats / langs / trophies / activity / dashboard)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: node .github/scripts/generate-dashboard.cjs
+
+      - name: Commit & push updated SVGs
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f stats.svg langs.svg trophies.svg activity.svg dashboard.svg
+          git diff --cached --quiet || (git commit -m "chore(dashboard): auto-update SVGs — $(date -u +%Y-%m-%dT%H:%M:%SZ)" && git push)

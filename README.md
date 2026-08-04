@@ -214,69 +214,47 @@ I enjoy solving complex engineering challenges by combining software development
 
 <div align="center">
 
-### 📊 GitHub Tech Dashboard — Live Data
+### ⚡ Live Self-Updating Dashboard — 100% GitHub Actions
+
+> Stats, languages, activity, trophies, and KPIs below are regenerated **every day by a GitHub Action** using the GitHub GraphQL API and committed back to the repo as local SVGs. No external rate-limited Vercel services — always renders.
+
+<br/>
+
+<a href="https://github.com/Skismail57" title="Full live dashboard — regenerated daily by .github/workflows/auto-dashboard.yml">
+  <img src="./dashboard.svg?v=auto-daily" alt="Live GitHub profile dashboard (KPIs, top langs, quick stats) — auto-updated" width="100%"/>
+</a>
+
+<br/><br/>
 
 <table border="0" align="center">
 <tr>
-<td valign="top" align="center">
+<td valign="top" align="center" width="50%">
 
-<!-- Stats Card — uses ORGS-team deployment (largest rate-limit pool) with guaranteed local fallback (custom animated green/black Megha-style card) -->
-<a href="https://github.com/Skismail57?tab=repositories" title="Open S K Ismail's repositories">
-<object data="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=Skismail57&show_icons=true&include_all_commits=true&count_private=true&theme=radical&bg_color=0a1424&title_color=00eaff&icon_color=8b5cf6&text_color=93c5fd&border_color=1c2b4a&ring_color=22d3ee&hide_border=true&custom_title=S%20K%20Ismail%27s%20GitHub%20Stats&cache_seconds=1800&rank_icon=github&_v=20260804B" type="image/svg+xml" width="98%">
-  <img src="./assets/fallback-stats.svg?v=20260804B" alt="S K Ismail's GitHub Stats fallback (custom animated tech green/black card)" width="98%"/>
-</object>
+<a href="https://github.com/Skismail57?tab=repositories" title="Live stats card — repos / stars / followers / commits / PRs / issues / streaks / forks">
+  <img src="./stats.svg?v=auto-daily" alt="Live stats (auto-generated)" width="100%"/>
 </a>
 
 </td>
-<td valign="top" align="center">
+<td valign="top" align="center" width="50%">
 
-<!-- Top Languages Card — same ORGS deployment + fallback -->
-<a href="https://github.com/Skismail57?tab=repositories" title="Open S K Ismail's language breakdown">
-<object data="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=Skismail57&layout=compact&langs_count=8&theme=radical&bg_color=0a1424&title_color=00eaff&text_color=93c5fd&border_color=1c2b4a&hide_border=true&cache_seconds=1800&_v=20260804B" type="image/svg+xml" width="98%">
-  <img src="./assets/fallback-toplangs.svg?v=20260804B" alt="Most used languages fallback" width="98%"/>
-</object>
+<a href="https://github.com/Skismail57?tab=repositories" title="Live most-used languages card (bytes across public repos)">
+  <img src="./langs.svg?v=auto-daily" alt="Live languages (auto-generated)" width="100%"/>
 </a>
 
 </td>
 </tr>
 </table>
 
-<br/>
+<br/><br/>
 
-<!-- ═══════════════════════════════════════════════════
-     GITHUB METRICS — full professional tech dashboard
-     Rendered by metrics.lecoq.io — very reliable host
-     ═══════════════════════════════════════════════════ -->
-
-<a href="https://github.com/Skismail57" title="Open S K Ismail's GitHub profile">
-<object data="https://metrics.lecoq.io/Skismail57?template=classic&base.header=0&gists=1&lines=1&config.timezone=Asia%2FCalcutta&config.twemoji=true&config.display=large&base.indepth=false&base.hireable=false&config.palette=indigo&_v=20260804A" type="image/svg+xml" width="95%">
-</object>
+<a href="https://github.com/Skismail57" title="Live contribution activity heatmap (auto-generated daily)">
+  <img src="./activity.svg?v=auto-daily" alt="Live contribution activity (auto-generated)" width="100%"/>
 </a>
 
 <br/><br/>
 
-
-
-<!-- ═══════════════════════════════════════════════════
-     REALISTIC CONTRIBUTION ACTIVITY GRAPH
-     NOT a basic heatmap — smooth line + filled area
-     Primary:  activity-graph (reliable ashutosh00710 deployment)
-     Fallback: custom dashboard SVG with live date (always renders)
-     ═══════════════════════════════════════════════════ -->
-
-<a href="https://github.com/Skismail57" title="Live contribution activity">
-<object data="https://github-readme-activity-graph-git-main-ashutosh00710.vercel.app/graph?username=Skismail57&bg_color=0a1424&color=22d3ee&line=8b5cf6&point=60a5fa&area=true&area_color=22d3ee&hide_border=true&custom_title=Contribution%20Activity%20%F0%9F%9A%80&days=365&cache_seconds=1800&_v=20260804A" type="image/svg+xml" width="95%">
-  <img src="./assets/fallback-activity-graph.svg?v=20260804" alt="Contribution activity graph fallback" width="95%"/>
-</object>
-</a>
-
-<br/><br/>
-
-<!-- Trophies grid → double-fallback local trophies SVG -->
-<a href="https://github.com/Skismail57" title="GitHub achievements &amp; trophies">
-<object data="https://github-profile-trophy.vercel.app/?username=Skismail57&theme=radical&no-frame=true&no-bg=true&bg_color=0a1424&title_color=00eaff&column=7&margin-w=12&margin-h=12&cache_seconds=1800&_v=20260804A" type="image/svg+xml" width="95%">
-  <img src="./assets/fallback-trophies.svg?v=20260804" alt="Trophies fallback" width="95%"/>
-</object>
+<a href="https://github.com/Skismail57" title="Live achievement trophies (repos / stars / followers / commits / PRs / streaks / contribs / issues)">
+  <img src="./trophies.svg?v=auto-daily" alt="Live trophies (auto-generated)" width="100%"/>
 </a>
 
 <br/><br/>
