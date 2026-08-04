@@ -56,65 +56,7 @@ I enjoy solving complex engineering challenges by combining software development
 ## `$` live-terminal
 
 <div align="center">
-<svg width="760" height="330" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" style="width:90%;max-width:860px">
-  <defs>
-    <linearGradient id="tbg_lt" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f1a"/>
-      <stop offset="100%" stop-color="#060811"/>
-    </linearGradient>
-    <style>
-      .t{font-family:Consolas,'Courier New',monospace;font-size:15px;opacity:0}
-      @keyframes f0{0%,11%{opacity:0}12%,100%{opacity:1}}
-      @keyframes f1{0%,20%{opacity:0}21%,100%{opacity:1}}
-      @keyframes f2{0%,28%{opacity:0}29%,100%{opacity:1}}
-      @keyframes f3{0%,34%{opacity:0}35%,100%{opacity:1}}
-      @keyframes f4{0%,40%{opacity:0}41%,100%{opacity:1}}
-      @keyframes f5{0%,46%{opacity:0}47%,100%{opacity:1}}
-      @keyframes f6{0%,52%{opacity:0}53%,100%{opacity:1}}
-      @keyframes f7{0%,58%{opacity:0}59%,100%{opacity:1}}
-      @keyframes f8{0%,64%{opacity:0}65%,100%{opacity:1}}
-      @keyframes f9{0%,70%{opacity:0}71%,100%{opacity:1}}
-      @keyframes bk{0%,49%{opacity:1}50%,100%{opacity:0}}
-      .l0{animation:f0 8s ease-in-out 0s infinite forwards}
-      .l1{animation:f1 8s ease-in-out 0s infinite forwards}
-      .l2{animation:f2 8s ease-in-out 0s infinite forwards}
-      .l3{animation:f3 8s ease-in-out 0s infinite forwards}
-      .l4{animation:f4 8s ease-in-out 0s infinite forwards}
-      .l5{animation:f5 8s ease-in-out 0s infinite forwards}
-      .l6{animation:f6 8s ease-in-out 0s infinite forwards}
-      .l7{animation:f7 8s ease-in-out 0s infinite forwards}
-      .l8{animation:f8 8s ease-in-out 0s infinite forwards}
-      .l9{animation:f9 8s ease-in-out 0s infinite forwards}
-      .cur{animation:bk 0.9s step-end 0s infinite}
-    </style>
-  </defs>
-
-  <rect width="760" height="330" rx="14" fill="url(#tbg_lt)" stroke="#1c2b4a" stroke-width="1.4"/>
-
-  <rect width="760" height="34" rx="14" fill="#0d1424"/>
-  <rect y="20" width="760" height="14" fill="#0d1424"/>
-  <circle cx="24" cy="17" r="6" fill="#ff5f57"/>
-  <circle cx="46" cy="17" r="6" fill="#febc2e"/>
-  <circle cx="68" cy="17" r="6" fill="#28c840"/>
-  <text x="380" y="21" text-anchor="middle" font-family="Consolas,monospace" font-size="12" fill="#8aa4d1">ismail@backend: ~</text>
-
-  <text class="t l0" x="24" y="68" fill="#39ff88" style="opacity:1">$ whoami</text>
-  <text class="t l1" x="24" y="96" fill="#8fe8ff">S K Ismail — Backend Developer</text>
-  <text class="t l2" x="24" y="124" fill="#8fe8ff">AI/ML Engineer · Cloud &amp; DevOps Enthusiast</text>
-  <text class="t l3" x="24" y="156" fill="#39ff88">$ ./deploy.sh --stack production</text>
-  <text class="t l4" x="24" y="182" fill="#9fb6d9">Building scalable backend systems...</text>
-  <text class="t l5" x="24" y="206" fill="#9fb6d9">Deploying Docker containers...</text>
-  <text class="t l6" x="24" y="230" fill="#9fb6d9">Starting Kubernetes cluster...</text>
-  <text class="t l7" x="24" y="254" fill="#9fb6d9">Loading FastAPI &amp; Spring Boot services...</text>
-  <text class="t l8" x="24" y="278" fill="#9fb6d9">AI models ready...</text>
-  <text class="t l9" x="24" y="304" font-weight="700" fill="#39ff88">System healthy ✔</text>
-
-  <rect class="cur" x="270" y="292" width="9" height="16" fill="#39ff88"/>
-</svg>
-</div>
-
-<div align="center" style="display:none">
-<img src="./assets/terminal.svg?v=7" alt="terminal status animated fallback" width="90%"/>
+<img src="./assets/live-terminal.svg?v=1" alt="live terminal animation" width="90%"/>
 </div>
 
 <br/>
@@ -308,20 +250,12 @@ I enjoy solving complex engineering challenges by combining software development
 
 <a href="https://github.com/Skismail57" title="Open S K Ismail's GitHub profile">
 <object data="https://metrics.lecoq.io/Skismail57?template=classic&base.header=0&gists=1&lines=1&config.timezone=Asia%2FCalcutta&config.twemoji=true&config.display=large&base.indepth=false&base.hireable=false&config.palette=indigo&_v=20260804A" type="image/svg+xml" width="95%">
-  <img src="https://ghchart.rshah.org/8b5cf6/Skismail57?_v=20260804A" alt="Contribution heatmap fallback" width="95%"/>
 </object>
 </a>
 
 <br/><br/>
 
-<!-- Commit Streak Card — demolab is stable; double-fallback to local inline SVG if it fails -->
-<a href="https://github.com/Skismail57" title="S K Ismail commit streak history">
-<object data="https://streak-stats.demolab.com?user=Skismail57&theme=radical&hide_border=true&background=0a1424&ring=22d3ee&fire=8b5cf6&currStreakLabel=60a5fa&sideLabels=93c5fd&dates=7dd3fc&exclude_days=Sun&cache_seconds=1800&_v=20260804A" type="image/svg+xml">
-  <svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180"><defs><linearGradient id="sb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a1424"/><stop offset="100%" stop-color="#0f1f3d"/></linearGradient></defs><rect width="520" height="180" rx="14" fill="url(#sb)"/><g font-family="Consolas,monospace"><text x="30" y="34" font-size="14" font-weight="700" fill="#00eaff">GitHub Commit Streak</text><text x="110" y="108" text-anchor="middle" font-size="44" font-weight="800" fill="#22d3ee">2</text><text x="110" y="138" text-anchor="middle" font-size="12" fill="#60a5fa">Current Streak</text><text x="260" y="78" text-anchor="middle" font-size="40" font-weight="800" fill="#8b5cf6">194</text><text x="260" y="108" text-anchor="middle" font-size="12" fill="#93c5fd">Total Contributions</text><text x="260" y="130" text-anchor="middle" font-size="10" fill="#64748b">Oct 16, 2024 — Present · excluding Sun</text><text x="410" y="78" text-anchor="middle" font-size="40" font-weight="800" fill="#f472b6">5</text><text x="410" y="108" text-anchor="middle" font-size="12" fill="#93c5fd">Longest Streak</text><text x="410" y="130" text-anchor="middle" font-size="10" fill="#64748b">Oct 08, 2025 — Oct 12, 2025</text></g><g transform="translate(30,150)"><rect width="460" height="8" rx="4" fill="#1e293b"/><rect width="410" height="8" rx="4" fill="#22d3ee"/></g></svg>
-</object>
-</a>
 
-<br/><br/>
 
 <!-- ═══════════════════════════════════════════════════
      REALISTIC CONTRIBUTION ACTIVITY GRAPH
@@ -364,46 +298,8 @@ I enjoy solving complex engineering challenges by combining software development
 </picture>
 </div>
 
-### Available Snake Variants
-
-| Variant | File |
-|---------|------|
-| Default | `github-contribution-grid-snake.svg` |
-| Dark GitHub | `github-contribution-grid-snake-dark.svg` |
-| Green Theme ⭐ | `github-contribution-grid-snake-green.svg` |
-
-### Repository Structure
-
-```
-Skismail57/
-│
-├── README.md
-│
-└── .github/
-    └── workflows/
-        └── github-snake.yml
-```
-
-### How to run it
-
-1. Push the file to your GitHub repository.
-2. Open your repository.
-3. Click **Actions**.
-4. If prompted, click **I understand my workflows, go ahead and enable them**.
-5. In the left sidebar, click **Generate GitHub Snake**.
-6. Click **Run workflow**.
-7. Click the green **Run workflow** button.
-
-After about 30–60 seconds, GitHub will create an `output` branch containing the generated snake SVGs, and they'll update automatically every day.
-
 <br/>
 
 <div align="center">
-<img src="./assets/footer.svg" alt="footer" width="100%"/>
-</div>
-
-<br/>
-
-<div align="center">
-<img src="./assets/footer.svg?v=1" alt="footer banner" width="100%"/>
+<img src="./assets/footer.svg?v=2" alt="footer banner" width="100%"/>
 </div>
