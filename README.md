@@ -350,13 +350,51 @@ I enjoy solving complex engineering challenges by combining software development
 </div>
 
 ## `$` contribution-animation
-## `$` contribution-graph
+
+### Dark Mode
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/snake-dark.svg" alt="contribution snake animation" width="100%"/>
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-contribution-grid-snake-purple.svg">
+  <img
+    alt="GitHub Contribution Snake"
+    src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-contribution-grid-snake.svg">
+</picture>
 </div>
 
-> Snake animation is generated automatically by the workflow in `.github/workflows/snake.yml` — it renders on the `output` branch after your first push/scheduled run.
+### Available Snake Variants
+
+| Variant | File |
+|---------|------|
+| Default | `github-contribution-grid-snake.svg` |
+| Dark GitHub | `github-contribution-grid-snake-dark.svg` |
+| Purple Theme ⭐ | `github-contribution-grid-snake-purple.svg` |
+| Cyan Theme | `github-contribution-grid-snake-cyan.svg` |
+
+### Repository Structure
+
+```
+Skismail57/
+│
+├── README.md
+│
+└── .github/
+    └── workflows/
+        └── github-snake.yml
+```
+
+### After Uploading
+
+1. Commit `github-snake.yml`.
+2. Go to **Actions** in your repository.
+3. Enable workflows if prompted.
+4. Open **Generate GitHub Snake**.
+5. Click **Run workflow**.
+6. Wait about a minute.
+
+The workflow will create an `output` branch containing the generated snake SVGs, and they'll update automatically every day.
 
 <br/>
 
