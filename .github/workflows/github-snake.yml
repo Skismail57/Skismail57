@@ -20,7 +20,7 @@ jobs:
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-            dist/github-contribution-grid-snake-purple.svg?color_snake=%238B5CF6&color_dots=%23161B22,%23312E81,%234F46E5,%237C3AED,%23A855F7
+            dist/github-contribution-grid-snake-green.svg?color_snake=%2322C55E&color_dots=%23161B22,%23052E16,%2314532D,%2316A34A,%234ADE80
 
       - name: Deploy snake
         uses: crazy-max/ghaction-github-pages@v4

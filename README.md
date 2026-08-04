@@ -357,7 +357,7 @@ I enjoy solving complex engineering challenges by combining software development
 <picture>
   <source
     media="(prefers-color-scheme: dark)"
-    srcset="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-contribution-grid-snake-purple.svg">
+    srcset="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-contribution-grid-snake-green.svg">
   <img
     alt="GitHub Contribution Snake"
     src="https://raw.githubusercontent.com/Skismail57/Skismail57/output/github-contribution-grid-snake.svg">
@@ -370,7 +370,7 @@ I enjoy solving complex engineering challenges by combining software development
 |---------|------|
 | Default | `github-contribution-grid-snake.svg` |
 | Dark GitHub | `github-contribution-grid-snake-dark.svg` |
-| Purple Theme ⭐ | `github-contribution-grid-snake-purple.svg` |
+| Green Theme ⭐ | `github-contribution-grid-snake-green.svg` |
 
 ### Repository Structure
 
