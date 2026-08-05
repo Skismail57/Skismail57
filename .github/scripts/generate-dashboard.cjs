@@ -455,7 +455,7 @@ function buildTrophies(d) {
   body += foot; return body;
 }
 function buildActivity(d) {
-  const W = 920, H = 680, id = 'a';
+  const W = 980, H = 860, id = 'a';
   const weeks = d.weeks || [];
   const ws = weeks.slice(-52);
   const weeksN = ws.length;
@@ -467,9 +467,10 @@ function buildActivity(d) {
   let cum = 0;
   const cumulative = values.map(v => { cum += v; return cum; });
 
-  const padL = 56, padR = 72, padT = 76, padB = 20;
-  const chartW = W - padL - padR, chartH = 238;
+  const padL = 64, padR = 104, padT = 96, padB = 24;
+  const chartW = W - padL - padR, chartH = 230;
   const chartBottom = padT + chartH;
+  const chartRight = W - padR;
 
   const rollAvg = values.map((_, i) => {
     const window = values.slice(Math.max(0, i - 3), i + 1);
@@ -541,9 +542,18 @@ function buildActivity(d) {
   const maxBucket = Math.max(1, ...buckets.map(b => b.count));
 
   const heatRows = 7, heatCols = Math.min(53, ws.length);
-  const heatCellW = Math.floor((W - 516) / Math.max(1, heatCols));
-  const heatCellH = Math.floor(210 / heatRows);
-  const heatX0 = 486, heatY0 = 374;
+  const pan4X = 504, pan4Y = 370, pan4W = 452, pan4H = 440;
+  const pan4BottomY = pan4Y + pan4H;
+  const pan4InnerL = pan4X + 18, pan4InnerR = pan4X + pan4W - 18;
+  const heatCellW = Math.max(3, Math.floor((pan4InnerR - pan4InnerL) / Math.max(1, heatCols)));
+  const kpiTileH = 30;
+  const kpiRowsHeight = 2 * kpiTileH + 14;
+  const legendLineH = 24;
+  const reservedAfterHeat = legendLineH + 14 + kpiRowsHeight + 10;
+  const heatMaxH = Math.max(heatRows * 12, (pan4BottomY - 20) - (pan4Y + 76) - reservedAfterHeat);
+  const heatCellH = Math.max(6, Math.floor(heatMaxH / heatRows));
+  const heatX0 = pan4InnerL;
+  const heatY0 = pan4Y + 76;
 
   const heatLevelColors = ['#0b1e33', '#1a3a1a', '#2d6a2d', '#3fa34d', '#22c55e'];
   function heatLevel(c) {
@@ -699,23 +709,61 @@ function buildActivity(d) {
     body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#0a1424" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
   }
 
+  const calloutH = 28;
+  const calloutGap = 16;
+  const placed = [];
+  function overlapsAny(bx, by, bw, bh) {
+    for (const p of placed) {
+      if (bx < p.x + p.w + calloutGap && bx + bw + calloutGap > p.x && by < p.y + p.h + calloutGap && by + bh + calloutGap > p.y) return true;
+    }
+    return false;
+  }
+  function findCalloutPos(anchorX, anchorY, width, preferLeft) {
+    const options = [];
+    const leftX = Math.max(padL + 8, anchorX - width - 18);
+    const rightX = Math.min(chartRight - width - 8, anchorX + 18);
+    const midX = Math.max(padL + 8, Math.min(chartRight - width - 8, anchorX - width / 2));
+    const ys = [
+      Math.max(padT + 16, anchorY - calloutH - 28),
+      Math.max(padT + 16, anchorY - calloutH - 14),
+      Math.max(padT + 16, anchorY + 14),
+      Math.max(padT + 16, anchorY + calloutH + 6),
+      padT + 20,
+      padT + 20 + calloutH + 8,
+      padT + 20 + 2 * (calloutH + 8),
+    ];
+    if (preferLeft) {
+      for (const y of ys) options.push([leftX, y]);
+      for (const y of ys) options.push([midX, y]);
+      for (const y of ys) options.push([rightX, y]);
+    } else {
+      for (const y of ys) options.push([rightX, y]);
+      for (const y of ys) options.push([midX, y]);
+      for (const y of ys) options.push([leftX, y]);
+    }
+    for (const [x, y] of options) {
+      if (!overlapsAny(x, y, width, calloutH)) return [x, y];
+    }
+    return options[0];
+  }
+
   if (peakIdx >= 0 && valuePts[peakIdx]) {
-    const [x, y] = valuePts[peakIdx];
+    const [px, py] = valuePts[peakIdx];
     const lbl = `🏆 Peak ${numFmt(peak)}`;
-    const lblW = 112;
-    const boxX = Math.min(W - padR - lblW, Math.max(padL, x - lblW / 2));
-    const boxY = Math.max(padT + 18, y - 40);
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="24" rx="8" fill="${C.bg2}" stroke="#f472b6" stroke-width="1.3"/>`;
-    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 16).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#f472b6">${lbl}</text>`;
+    const lblW = 120;
+    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.6 ? true : false);
+    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="${C.bg2}" stroke="#f472b6" stroke-width="1.3"/>`;
+    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#f472b6">${lbl}</text>`;
   }
   if (valuePts.length) {
     const [cx, cy] = valuePts[valuePts.length - 1];
     const lbl = `This wk ${numFmt(values[values.length - 1])}`;
-    const lblW = 118;
-    const boxX = Math.min(W - padR - lblW, Math.max(padL, cx - lblW + 10));
-    const boxY = Math.max(padT + 20, cy - 42);
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="24" rx="8" fill="${C.bg2}" stroke="#39ff88" stroke-width="1.3"/>`;
-    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 16).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#39ff88">${lbl}</text>`;
+    const lblW = 132;
+    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, false);
+    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="${C.bg2}" stroke="#39ff88" stroke-width="1.3"/>`;
+    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#39ff88">${lbl}</text>`;
   }
 
   const xLabelsCount = Math.min(6, ws.length);
@@ -747,11 +795,11 @@ function buildActivity(d) {
     <text x="${(lgX + 418).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Streak</text>
   </g>`;
 
-  const pan2Y = 346, pan2H = 150, pan2X = 28, pan2W = 430;
-  body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="12" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan2X + 14}" y="${pan2Y + 22}" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${C.cyan}">📅 Weekday Activity Profile</text>`;
-  body += `<text x="${pan2X + 14}" y="${pan2Y + 38}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">average contributions per day · n=${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
-  const wkPadL = 52, wkPadR = 16, wkPadT = 56, wkPadB = 28;
+  const pan2X = 24, pan2Y = 370, pan2W = 456, pan2H = 170;
+  body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
+  body += `<text x="${pan2X + 16}" y="${pan2Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.cyan}">📅 Weekday Activity Profile</text>`;
+  body += `<text x="${pan2X + 16}" y="${pan2Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">average contributions per day · n=${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
+  const wkPadL = 56, wkPadR = 20, wkPadT = 60, wkPadB = 30;
   const wkChartW = pan2W - wkPadL - wkPadR, wkChartH = pan2H - wkPadT - wkPadB;
   for (let i = 0; i <= 3; i++) {
     const y = pan2Y + wkPadT + (wkChartH / 3) * (3 - i);
@@ -763,21 +811,21 @@ function buildActivity(d) {
   const mostActiveWd = weekdayAvg.indexOf(Math.max(...weekdayAvg));
   for (let wd = 0; wd < 7; wd++) {
     const cx = pan2X + wkPadL + wkStep * (wd + 0.5);
-    const bw = Math.max(8, wkStep * 0.62);
+    const bw = Math.max(10, wkStep * 0.62);
     const bh = Math.max(1, (weekdayAvg[wd] / maxWkAvg) * wkChartH);
     const by = pan2Y + wkPadT + wkChartH - bh;
     const isTop = wd === mostActiveWd;
-    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(5, bw / 2).toFixed(1)}" fill="${isTop ? '#f472b6' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.9}"/>`;
-    body += `<text x="${cx.toFixed(1)}" y="${(by - 5).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="700" fill="${isTop ? '#f472b6' : C.cyan}">${weekdayAvg[wd].toFixed(1)}</text>`;
-    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 16}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#f472b6' : C.text}">${weekdayLabels[wd]}</text>`;
+    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="${isTop ? '#f472b6' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.9}"/>`;
+    body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="700" fill="${isTop ? '#f472b6' : C.cyan}">${weekdayAvg[wd].toFixed(1)}</text>`;
+    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#f472b6' : C.text}">${weekdayLabels[wd]}</text>`;
   }
-  body += `<text x="${pan2X + 16}" y="${(pan2Y + pan2H - 6).toFixed(1)}" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">total: ${weekdayTotals.reduce((s,v)=>s+v,0)} · best day: ${weekdayLabels[mostActiveWd]} avg ${weekdayAvg[mostActiveWd].toFixed(2)}</text>`;
+  body += `<text x="${pan2X + 18}" y="${(pan2Y + pan2H - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total: ${weekdayTotals.reduce((s,v)=>s+v,0)} · best day: ${weekdayLabels[mostActiveWd]} avg ${weekdayAvg[mostActiveWd].toFixed(2)}</text>`;
 
-  const pan3Y = 512, pan3H = pan2H, pan3X = pan2X, pan3W = pan2W;
-  body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="12" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan3X + 14}" y="${pan3Y + 22}" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${C.purple}">📊 Weekly Contribution Distribution</text>`;
-  body += `<text x="${pan3X + 14}" y="${pan3Y + 38}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">frequency histogram · ${weeksN} weeks sampled</text>`;
-  const bkPadL = 52, bkPadR = 16, bkPadT = 56, bkPadB = 28;
+  const pan3X = pan2X, pan3Y = 562, pan3W = pan2W, pan3H = 188;
+  body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
+  body += `<text x="${pan3X + 16}" y="${pan3Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.purple}">📊 Weekly Contribution Distribution</text>`;
+  body += `<text x="${pan3X + 16}" y="${pan3Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">frequency histogram · ${weeksN} weeks sampled</text>`;
+  const bkPadL = 56, bkPadR = 20, bkPadT = 62, bkPadB = 32;
   const bkChartW = pan3W - bkPadL - bkPadR, bkChartH = pan3H - bkPadT - bkPadB;
   for (let i = 0; i <= 3; i++) {
     const y = pan3Y + bkPadT + (bkChartH / 3) * (3 - i);
@@ -787,25 +835,22 @@ function buildActivity(d) {
   }
   const bkN = buckets.length;
   const bkStep = bkChartW / bkN;
-  let cumulativePct = 0;
   for (let bi = 0; bi < bkN; bi++) {
     const b = buckets[bi];
     const cx = pan3X + bkPadL + bkStep * (bi + 0.5);
-    const bw = Math.max(10, bkStep * 0.72);
+    const bw = Math.max(12, bkStep * 0.72);
     const bh = Math.max(1, (b.count / maxBucket) * bkChartH);
     const by = pan3Y + bkPadT + bkChartH - bh;
-    cumulativePct += (b.count / weeksN) * 100;
-    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(5, bw / 2).toFixed(1)}" fill="url(#g-buck-${id})" opacity="0.95"/>`;
-    body += `<text x="${cx.toFixed(1)}" y="${(by - 5).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${C.pink}">${b.count}</text>`;
-    body += `<text x="${cx.toFixed(1)}" y="${pan3Y + bkPadT + bkChartH + 16}" text-anchor="middle" font-family="Consolas,monospace" font-size="9" font-weight="600" fill="${C.text}">${b.label}/wk</text>`;
+    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="url(#g-buck-${id})" opacity="0.95"/>`;
+    body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${C.pink}">${b.count}</text>`;
+    body += `<text x="${cx.toFixed(1)}" y="${pan3Y + bkPadT + bkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="600" fill="${C.text}">${b.label}/wk</text>`;
   }
-  const zeroPct = (buckets[0].count / weeksN * 100).toFixed(0);
-  body += `<text x="${pan3X + 16}" y="${(pan3Y + pan3H - 6).toFixed(1)}" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${zeroPct}% idle weeks · median bucket: ${buckets.find(b => b.count > 0) ? buckets.find(b => b.count > 0).label : '0'}/wk · active rate ${((1 - buckets[0].count / Math.max(1,weeksN)) * 100).toFixed(0)}%</text>`;
+  const zeroPct = (buckets[0].count / Math.max(1, weeksN) * 100).toFixed(0);
+  body += `<text x="${pan3X + 18}" y="${(pan3Y + pan3H - 10).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${zeroPct}% idle weeks · active rate ${((1 - buckets[0].count / Math.max(1, weeksN)) * 100).toFixed(0)}% · median ${buckets.slice().reverse().find(b => b.count > 0) ? buckets.slice().reverse().find(b => b.count > 0).label : '0'}/wk</text>`;
 
-  const pan4Y = 346, pan4H = 316, pan4X = 478, pan4W = 414;
-  body += `<rect x="${pan4X}" y="${pan4Y}" width="${pan4W}" height="${pan4H}" rx="12" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan4X + 14}" y="${pan4Y + 22}" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${C.green}">🔥 Contribution Intensity · Daily Mini Heatmap</text>`;
-  body += `<text x="${pan4X + 14}" y="${pan4Y + 38}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">52w × 7d grid · ${daysArr.filter(x=>(x.contributionCount||0)>0).length} active days</text>`;
+  body += `<rect x="${pan4X}" y="${pan4Y}" width="${pan4W}" height="${pan4H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
+  body += `<text x="${pan4InnerL}" y="${pan4Y + 26}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.green}">🔥 Contribution Intensity · Daily Mini Heatmap</text>`;
+  body += `<text x="${pan4InnerL}" y="${pan4Y + 44}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">52w × 7d grid · ${daysArr.filter(x=>(x.contributionCount||0)>0).length} active days</text>`;
 
   for (let wc = 0; wc < heatCols; wc++) {
     const w = ws[ws.length - heatCols + wc];
@@ -819,14 +864,15 @@ function buildActivity(d) {
       body += `<rect x="${x}" y="${y}" width="${heatCellW - 1}" height="${heatCellH - 1}" rx="1" fill="${heatLevelColors[lvl]}" stroke="${lvl > 0 ? 'rgba(34,197,94,0.18)' : C.bg0}" stroke-width="0.5"/>`;
     }
   }
-  const legendX = pan4X + 14, legendY = heatY0 + heatCellH * heatRows + 18;
-  body += `<text x="${legendX}" y="${legendY + 3}" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">Less</text>`;
+  const heatBottomY = heatY0 + heatRows * heatCellH;
+  const legendX = pan4InnerL, legendY = heatBottomY + 10;
+  body += `<text x="${legendX}" y="${legendY + 4}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">Less</text>`;
   for (let li = 0; li < heatLevelColors.length; li++) {
-    body += `<rect x="${legendX + 28 + li * 16}" y="${legendY - 7}" width="12" height="12" rx="2" fill="${heatLevelColors[li]}" stroke="${C.border}" stroke-width="0.5"/>`;
+    body += `<rect x="${legendX + 32 + li * 18}" y="${legendY - 8}" width="14" height="14" rx="3" fill="${heatLevelColors[li]}" stroke="${C.border}" stroke-width="0.5"/>`;
   }
-  body += `<text x="${legendX + 28 + heatLevelColors.length * 16 + 6}" y="${legendY + 3}" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">More</text>`;
+  body += `<text x="${legendX + 32 + heatLevelColors.length * 18 + 8}" y="${legendY + 4}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">More</text>`;
 
-  const sY = legendY + 28;
+  const sY = legendY + legendLineH + 8;
   const activeDays = daysArr.filter(x => (x.contributionCount || 0) > 0).length;
   const totalDays = daysArr.length || 1;
   const sumC = daysArr.reduce((s, x) => s + (x.contributionCount || 0), 0);
@@ -835,27 +881,32 @@ function buildActivity(d) {
   const kpiItems = [
     ['Active days', `${activeDays}/${totalDays}`, C.cyan],
     ['Active rate', `${((activeDays / totalDays) * 100).toFixed(0)}%`, C.purple],
-    ['Avg / active day', avgDay.toFixed(1), C.green],
+    ['Avg / active', avgDay.toFixed(1), C.green],
     ['Best day', String(maxC), C.pink],
   ];
+  const kpiInnerW = pan4InnerR - pan4InnerL;
+  const kpiTileW = Math.min(208, Math.floor((kpiInnerW - 16) / 2));
+  const kpiGap = kpiInnerW - 2 * kpiTileW;
   for (let ki = 0; ki < kpiItems.length; ki++) {
     const [lbl, val, col] = kpiItems[ki];
-    const kx = pan4X + 14 + (ki % 2) * 200;
-    const ky = sY + Math.floor(ki / 2) * 36;
-    body += `<g filter="url(#g-shadow-${id})"><rect x="${kx}" y="${ky}" width="188" height="30" rx="8" fill="${C.bg0}" stroke="${C.border}"/></g>`;
-    body += `<text x="${kx + 10}" y="${ky + 13}" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${lbl}</text>`;
-    body += `<text x="${kx + 178}" y="${ky + 22}" text-anchor="end" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${col}">${val}</text>`;
+    const colIdx = ki % 2;
+    const rowIdx = Math.floor(ki / 2);
+    const kx = pan4InnerL + colIdx * (kpiTileW + kpiGap);
+    const ky = sY + rowIdx * (kpiTileH + 14);
+    body += `<g filter="url(#g-shadow-${id})"><rect x="${kx}" y="${ky}" width="${kpiTileW}" height="${kpiTileH}" rx="9" fill="${C.bg0}" stroke="${C.border}"/></g>`;
+    body += `<text x="${kx + 10}" y="${ky + 12}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${lbl}</text>`;
+    body += `<text x="${kx + kpiTileW - 10}" y="${ky + 23}" text-anchor="end" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${col}">${val}</text>`;
   }
 
   body += foot;
   return body;
 }
 function buildDashboard(d) {
-  const W = 900, H = 600, id = 'd';
+  const W = 960, H = 640, id = 'd';
   let body = head(W, H, id) + cardBg(id, W, H, 22);
-  body += `<rect x="0" y="0" width="${W}" height="92" rx="22" fill="url(#g-title-${id})" opacity="0.08"/>`;
-  body += `<text x="32" y="46" font-family="Consolas,monospace" font-size="24" font-weight="800" fill="url(#g-title-${id})">⚡ ${esc(d.user.name)} — Live GitHub Dashboard</text>`;
-  body += `<text x="32" y="72" font-family="Consolas,monospace" font-size="12" fill="${C.textDim}">@${esc(d.user.login)} · auto-generated · ${NOW_LOCAL} (${TZ}) · auth: ${GITHUB_TOKEN ? 'GITHUB_TOKEN' : 'public REST'}</text>`;
+  body += `<rect x="0" y="0" width="${W}" height="96" rx="22" fill="url(#g-title-${id})" opacity="0.08"/>`;
+  body += `<text x="36" y="48" font-family="Consolas,monospace" font-size="25" font-weight="800" fill="url(#g-title-${id})">⚡ ${esc(d.user.name)} — Live GitHub Dashboard</text>`;
+  body += `<text x="36" y="76" font-family="Consolas,monospace" font-size="12" fill="${C.textDim}">@${esc(d.user.login)} · auto-generated · ${NOW_LOCAL} (${TZ}) · auth: ${GITHUB_TOKEN ? 'GITHUB_TOKEN' : 'public REST'}</text>`;
   const kpis = [
     ['📦 Repositories', d.repos, C.cyan],
     ['⭐ Total Stars', d.stars, C.pink],
@@ -870,20 +921,20 @@ function buildDashboard(d) {
   ];
   for (let i = 0; i < kpis.length; i++) {
     const [label, val, color] = kpis[i];
-    const cx = 28 + ((i % 5) * 170);
-    const cy = 118 + (Math.floor(i / 5) * 74);
-    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 10}" width="156" height="60" rx="12" fill="${C.bg2}" stroke="${C.border}"/></g>`;
-    body += `<text x="${cx + 12}" y="${cy + 12}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
-    body += `<text x="${cx + 12}" y="${cy + 40}" font-family="Consolas,monospace" font-size="22" font-weight="800" fill="${color}">${esc(numFmt(val))}</text>`;
+    const cx = 32 + ((i % 5) * 182);
+    const cy = 122 + (Math.floor(i / 5) * 78);
+    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 10}" width="168" height="62" rx="13" fill="${C.bg2}" stroke="${C.border}"/></g>`;
+    body += `<text x="${cx + 14}" y="${cy + 13}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
+    body += `<text x="${cx + 14}" y="${cy + 42}" font-family="Consolas,monospace" font-size="23" font-weight="800" fill="${color}">${esc(numFmt(val))}</text>`;
   }
-  const by = 284;
-  body += `<text x="28" y="${by}" font-family="Consolas,monospace" font-size="14" font-weight="700" fill="${C.title}">💻 Top Languages</text>`;
+  const by = 300;
+  body += `<text x="32" y="${by}" font-family="Consolas,monospace" font-size="15" font-weight="700" fill="${C.title}">💻 Top Languages</text>`;
   const topN = d.langs.slice(0, 8);
   const palette = [C.cyan, C.purple, C.pink, C.green, C.emerald, C.accent, '#facc15', '#fb923c', '#a855f7', '#f97316'];
-  const langBarW = 340;
-  const langStartX = 164;
-  const langPctX = langStartX + langBarW + 4;
-  const lineH = 28;
+  const langBarW = 360;
+  const langStartX = 176;
+  const langPctX = langStartX + langBarW + 6;
+  const lineH = 30;
   for (let i = 0; i < topN.length; i++) {
     const l = topN[i]; if (!l) break;
     const yy = by + 22 + i * lineH;
@@ -894,10 +945,12 @@ function buildDashboard(d) {
     body += `<text x="${langPctX}" y="${yy + 4}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${palette[i % palette.length]}">${(l.pct || 0).toFixed(1)}%</text>`;
   }
   const qsBy = by;
-  const qsH = 284;
+  const qsH = 304;
   const qsBoxBottom = qsBy - 6 + qsH;
-  body += `<rect x="620" y="${qsBy - 6}" width="252" height="${qsH}" rx="14" fill="${C.bg2}" stroke="${C.border}"/>`;
-  body += `<text x="636" y="${qsBy + 16}" font-family="Consolas,monospace" font-size="14" font-weight="700" fill="${C.title}">🚀 Quick Stats</text>`;
+  const qsX = 648, qsW = 284;
+  const qsTextR = qsX + qsW - 18;
+  body += `<rect x="${qsX}" y="${qsBy - 6}" width="${qsW}" height="${qsH}" rx="14" fill="${C.bg2}" stroke="${C.border}"/>`;
+  body += `<text x="${qsX + 18}" y="${qsBy + 18}" font-family="Consolas,monospace" font-size="15" font-weight="700" fill="${C.title}">🚀 Quick Stats</text>`;
   const activeDays = d.days.filter(x => (x.contributionCount || 0) > 0).length;
   const quick = [
     ['Public gists:', d.gists, C.cyan],
@@ -909,12 +962,12 @@ function buildDashboard(d) {
   ];
   for (let i = 0; i < quick.length; i++) {
     const [label, val, color] = quick[i];
-    const yy = qsBy + 46 + i * 30;
-    body += `<text x="636" y="${yy}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
-    body += `<text x="856" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="800" fill="${color}">${numFmt(val)}</text>`;
+    const yy = qsBy + 52 + i * 32;
+    body += `<text x="${qsX + 18}" y="${yy}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
+    body += `<text x="${qsTextR}" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${color}">${numFmt(val)}</text>`;
   }
-  const footerY = qsBoxBottom - 20;
-  body += `<text x="636" y="${footerY}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">Auto refresh via GitHub Actions every day</text>`;
+  const footerY = qsBoxBottom - 22;
+  body += `<text x="${qsX + 18}" y="${footerY}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">Auto refresh via GitHub Actions every day</text>`;
   body += foot; return body;
 }
 
