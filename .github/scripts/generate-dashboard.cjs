@@ -737,15 +737,9 @@ function buildActivity(d) {
       body += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="#030712" stroke="url(#g-line-${id})" stroke-width="2"/>`;
     }
   }
-  if (cumPts.length) {
-    const [lx, ly] = cumPts[cumPts.length - 1];
-    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
-    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
-    body += `<text x="${(lx + 8).toFixed(1)}" y="${(ly - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">Σ ${cumulative[cumulative.length - 1]}</text>`;
-  }
 
-  const calloutH = 30;
-  const calloutGap = 18;
+  const calloutH = 32;
+  const calloutGap = 22;
   const placed = [];
   function overlapsAny(bx, by, bw, bh) {
     for (const p of placed) {
@@ -755,66 +749,134 @@ function buildActivity(d) {
   }
   function findCalloutPos(anchorX, anchorY, width, preferLeft) {
     const options = [];
-    const leftX = Math.max(padL + 10, anchorX - width - 22);
-    const rightX = Math.min(chartRight - width - 10, anchorX + 18);
-    const midX = Math.max(padL + 10, Math.min(chartRight - width - 10, anchorX - width / 2));
-    const ys = [
-      Math.max(padT + 38, anchorY - calloutH - 30),
-      Math.max(padT + 38, anchorY - calloutH - 16),
-      Math.max(padT + 38, anchorY + 14),
-      Math.max(padT + 38, anchorY + calloutH + 8),
-      padT + 38,
-      padT + 38 + calloutH + 9,
-      padT + 38 + 2 * (calloutH + 9),
+    const xCands = [
+      Math.min(chartRight - width - 10, anchorX + 18),
+      Math.min(chartRight - width - 10, anchorX + 48),
+      Math.max(padL + 10, Math.min(chartRight - width - 10, anchorX - width / 2)),
+      Math.max(padL + 10, anchorX - width - 22),
+      Math.max(padL + 10, anchorX - width - 56),
+      Math.min(chartRight - width - 10, padL + 14),
+      Math.max(padL + 10, chartRight - width - 14),
     ];
-    if (preferLeft) {
-      for (const y of ys) options.push([leftX, y]);
-      for (const y of ys) options.push([midX, y]);
-      for (const y of ys) options.push([rightX, y]);
-    } else {
-      for (const y of ys) options.push([rightX, y]);
-      for (const y of ys) options.push([midX, y]);
-      for (const y of ys) options.push([leftX, y]);
+    const yCands = [
+      Math.max(72, anchorY - calloutH - 56),
+      Math.max(72, anchorY - calloutH - 38),
+      Math.max(72, anchorY - calloutH - 22),
+      Math.max(padT + 44, anchorY - calloutH - 8),
+      Math.max(padT + 44, anchorY + 12),
+      Math.max(padT + 44, anchorY + calloutH + 10),
+      Math.max(padT + 44, anchorY + 2 * (calloutH + 10)),
+      padT + 44,
+      padT + 44 + calloutH + 9,
+      padT + 44 + 2 * (calloutH + 9),
+      76,
+      76 + calloutH + 9,
+    ];
+    const leftFirst = preferLeft ? [0,1,2,3,4,5,6] : [0,1,2,3,4,6,5];
+    for (const xi of leftFirst) {
+      for (const y of yCands) options.push([xCands[xi], y]);
     }
     for (const [x, y] of options) {
+      if (x < 8 || x + width > W - 8) continue;
       if (!overlapsAny(x, y, width, calloutH)) return [x, y];
     }
-    return options[0];
+    return options.find(([x]) => x >= 8 && x + width <= W - 8) || options[0];
   }
   function leaderLine(fromX, fromY, toX, toY) {
     const mx = (fromX + toX) / 2;
     return `M ${fromX.toFixed(1)} ${fromY.toFixed(1)} C ${mx.toFixed(1)} ${fromY.toFixed(1)}, ${mx.toFixed(1)} ${toY.toFixed(1)}, ${toX.toFixed(1)} ${toY.toFixed(1)}`;
   }
 
+  if (cumPts.length) {
+    const [lx, ly] = cumPts[cumPts.length - 1];
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
+    const sigmaText = `Σ ${cumulative[cumulative.length - 1]}`;
+    let sx = lx + 8, sy = ly - 8;
+    const sW = 9 + sigmaText.length * 6.2, sH = 14;
+    if (sx + sW > W - 12) sx = Math.max(padL + 4, lx - sW - 4);
+    if (!overlapsAny(sx, sy - sH, sW, sH)) {
+      body += `<text x="${sx.toFixed(1)}" y="${sy.toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">${sigmaText}</text>`;
+      placed.push({ x: sx, y: sy - sH, w: sW, h: sH });
+    } else {
+      const altY = Math.max(72, ly - 26);
+      body += `<text x="${sx.toFixed(1)}" y="${altY.toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">${sigmaText}</text>`;
+      placed.push({ x: sx, y: altY - sH, w: sW, h: sH });
+    }
+  }
+
+  const topValueIdxs = values
+    .map((v, i) => ({ v, i }))
+    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)))
+    .sort((a, b) => b.v - a.v)
+    .slice(0, 5)
+    .map(x => x.i);
+  const labelSet = new Set([peakIdx, valuePts.length - 1, ...topValueIdxs].filter(x => x >= 0 && x < values.length));
+  const labelList = [...labelSet].sort((a, b) => values[b] - values[a]);
+  for (const li of labelList) {
+    const v = values[li]; if (v === 0) continue;
+    const isKey = li === peakIdx || li === valuePts.length - 1;
+    if (v < 3 && !isKey) continue;
+    const cx = xOf(li), by = yOf(v);
+    const str = String(v);
+    const lblW = Math.max(16, str.length * 7 + 8), lblH = 14;
+    const offsets = [
+      [cx - lblW / 2, by - lblH - 9],
+      [cx + 6, by - lblH - 2],
+      [cx - lblW - 6, by - lblH - 2],
+      [cx - lblW / 2, by - lblH - 22],
+      [cx + 10, by - lblH - 14],
+      [cx - lblW - 10, by - lblH - 14],
+      [cx - lblW / 2, by - lblH - 34],
+    ];
+    let picked = null;
+    for (const [ox, oy] of offsets) {
+      if (ox < padL + 2 || ox + lblW > chartRight - 2) continue;
+      if (oy < 66) continue;
+      if (!overlapsAny(ox, oy, lblW, lblH)) { picked = [ox, oy]; break; }
+    }
+    if (picked) {
+      const [ox, oy] = picked;
+      const col = isKey ? (li === peakIdx ? '#ff2e88' : '#00eaff') : '#c4b5fd';
+      const fsz = isKey ? 11 : 10;
+      const fwg = isKey ? '800' : '700';
+      if (isKey) {
+        body += `<rect x="${ox.toFixed(1)}" y="${oy.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH.toFixed(1)}" rx="4" fill="#030712" opacity="0.7" stroke="${col}" stroke-width="0.6"/>`;
+      }
+      body += `<text x="${(ox + lblW / 2).toFixed(1)}" y="${(oy + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="${fsz}" font-weight="${fwg}" fill="${col}" filter="${isKey ? `url(#g-glow-${id})` : ''}">${str}</text>`;
+      placed.push({ x: ox, y: oy, w: lblW, h: lblH });
+    }
+  }
+
   if (peakIdx >= 0 && valuePts[peakIdx]) {
     const [px, py] = valuePts[peakIdx];
     const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
     const valText = `⚡ all-time high`;
-    const lblW = 154;
-    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.6 ? true : false);
+    const lblW = 162;
+    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.55 ? true : false);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
     body += `<path d="${leaderLine(px, py, anchorX, anchorY)}" fill="none" stroke="#ff2e88" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
     body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#ff2e88"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 13).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 24).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 14).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 26).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
   }
   if (valuePts.length) {
     const [cx, cy] = valuePts[valuePts.length - 1];
     const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
     const valText = `✨ this week`;
-    const lblW = 164;
-    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, false);
+    const lblW = 170;
+    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
     body += `<path d="${leaderLine(cx, cy, anchorX, anchorY)}" fill="none" stroke="#00eaff" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
     body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#00eaff"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 13).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 24).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 14).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 26).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
   const xLabelsCount = Math.min(6, ws.length);
