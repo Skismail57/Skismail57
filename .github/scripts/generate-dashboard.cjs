@@ -670,10 +670,21 @@ function buildActivity(d) {
   body += `<rect x="${(W - padR - 76).toFixed(1)}" y="${(avgY - 12).toFixed(1)}" width="72" height="15" rx="4" fill="#051a26" opacity="0.9" stroke="#00eaff" stroke-width="0.5"/>`;
   body += `<text x="${(W - padR - 8).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
 
+  const calloutH = 34;
+  const calloutGap = 26;
+  const placed = [];
+  function overlapsAny(bx, by, bw, bh) {
+    for (const p of placed) {
+      if (bx < p.x + p.w + calloutGap && bx + bw + calloutGap > p.x && by < p.y + p.h + calloutGap && by + bh + calloutGap > p.y) return true;
+    }
+    return false;
+  }
+
   for (const s of streaks) {
     const x0 = xOf(s.start) - stepX / 2;
     const x1 = xOf(s.end) + stepX / 2;
     const midX = (x0 + x1) / 2;
+    placed.push({ x: x0, y: padT + 10, w: Math.max(1, x1 - x0), h: 14 });
     body += `<rect x="${x0.toFixed(1)}" y="${padT + 0.5}" width="${(x1 - x0).toFixed(1)}" height="${chartH - 1}" fill="url(#g-stripes-${id})" opacity="0.15"/>`;
     body += `<rect x="${x0.toFixed(1)}" y="${(padT + 10).toFixed(1)}" width="${(x1 - x0).toFixed(1)}" height="14" rx="4" fill="#0c1224" opacity="0.9" stroke="#fbbf24" stroke-width="0.5"/>`;
     body += `<text x="${midX.toFixed(1)}" y="${(padT + 20).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#fbbf24" font-weight="800" opacity="0.95">⚡ ${s.len}w streak</text>`;
@@ -738,16 +749,20 @@ function buildActivity(d) {
     }
   }
 
-  const calloutH = 32;
-  const calloutGap = 22;
-  const placed = [];
-  function overlapsAny(bx, by, bw, bh) {
-    for (const p of placed) {
-      if (bx < p.x + p.w + calloutGap && bx + bw + calloutGap > p.x && by < p.y + p.h + calloutGap && by + bh + calloutGap > p.y) return true;
-    }
-    return false;
+  if (cumPts.length) {
+    const [lx, ly] = cumPts[cumPts.length - 1];
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
+    const sigmaText = `Σ ${cumulative[cumulative.length - 1]}`;
+    const sW = 9 + sigmaText.length * 6.2, sH = 14;
+    const sx = W - padR + 12;
+    const sy = padT + 18;
+    placed.push({ x: sx, y: sy - sH, w: sW, h: sH });
+    body += `<rect x="${sx.toFixed(1)}" y="${(sy - sH).toFixed(1)}" width="${sW.toFixed(1)}" height="${sH.toFixed(1)}" rx="4" fill="#0f0520" stroke="#ff2e88" stroke-width="0.6" opacity="0.9"/>`;
+    body += `<text x="${(sx + sW / 2).toFixed(1)}" y="${(sy - 1).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
   }
-  function findCalloutPos(anchorX, anchorY, width, preferLeft) {
+
+  function findCalloutPos(anchorX, anchorY, width, preferLeft, forcedZone) {
     const options = [];
     const xCands = [
       Math.min(chartRight - width - 10, anchorX + 18),
@@ -757,82 +772,86 @@ function buildActivity(d) {
       Math.max(padL + 10, anchorX - width - 56),
       Math.min(chartRight - width - 10, padL + 14),
       Math.max(padL + 10, chartRight - width - 14),
+      Math.min(W - width - 10, chartRight + 14),
+      Math.min(W - width - 10, Math.max(chartRight + 14, anchorX + 4)),
     ];
-    const yCands = [
-      Math.max(72, anchorY - calloutH - 56),
-      Math.max(72, anchorY - calloutH - 38),
-      Math.max(72, anchorY - calloutH - 22),
-      Math.max(padT + 44, anchorY - calloutH - 8),
-      Math.max(padT + 44, anchorY + 12),
-      Math.max(padT + 44, anchorY + calloutH + 10),
-      Math.max(padT + 44, anchorY + 2 * (calloutH + 10)),
-      padT + 44,
-      padT + 44 + calloutH + 9,
-      padT + 44 + 2 * (calloutH + 9),
-      76,
-      76 + calloutH + 9,
+    const yCandsTop = [72, 108];
+    const yCandsMid = [
+      Math.max(padT + 48, anchorY - calloutH - 66),
+      Math.max(padT + 48, anchorY - calloutH - 46),
+      Math.max(padT + 48, anchorY - calloutH - 26),
+      Math.max(padT + 48, anchorY - calloutH - 8),
+      Math.max(padT + 48, anchorY + 14),
+      Math.max(padT + 48, anchorY + calloutH + 14),
+      Math.max(padT + 48, anchorY + 2 * (calloutH + 14)),
+      padT + 48,
+      padT + 48 + calloutH + 14,
+      padT + 48 + 2 * (calloutH + 14),
+      padT + 48 + 3 * (calloutH + 14),
     ];
-    const leftFirst = preferLeft ? [0,1,2,3,4,5,6] : [0,1,2,3,4,6,5];
+    const yCandsBottom = [370, 410 - calloutH];
+    let yCands;
+    if (forcedZone === 'top') yCands = [...yCandsTop, ...yCandsMid, ...yCandsBottom];
+    else if (forcedZone === 'bottom') yCands = [...yCandsBottom, ...yCandsMid, ...yCandsTop];
+    else yCands = [...yCandsMid, ...yCandsTop, ...yCandsBottom];
+    const leftFirst = preferLeft ? [0,1,2,3,4,5,6,7,8] : [7,8,1,0,2,4,3,5,6];
     for (const xi of leftFirst) {
       for (const y of yCands) options.push([xCands[xi], y]);
     }
     for (const [x, y] of options) {
       if (x < 8 || x + width > W - 8) continue;
+      if (y < 36 || y + calloutH > 400) continue;
       if (!overlapsAny(x, y, width, calloutH)) return [x, y];
     }
-    return options.find(([x]) => x >= 8 && x + width <= W - 8) || options[0];
+    const valid = options.filter(([x, y]) => x >= 8 && x + width <= W - 8 && y >= 36 && y + calloutH <= 400);
+    return valid[0] || options[0];
   }
   function leaderLine(fromX, fromY, toX, toY) {
     const mx = (fromX + toX) / 2;
     return `M ${fromX.toFixed(1)} ${fromY.toFixed(1)} C ${mx.toFixed(1)} ${fromY.toFixed(1)}, ${mx.toFixed(1)} ${toY.toFixed(1)}, ${toX.toFixed(1)} ${toY.toFixed(1)}`;
   }
 
-  if (cumPts.length) {
-    const [lx, ly] = cumPts[cumPts.length - 1];
-    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
-    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
-    const sigmaText = `Σ ${cumulative[cumulative.length - 1]}`;
-    let sx = lx + 8, sy = ly - 8;
-    const sW = 9 + sigmaText.length * 6.2, sH = 14;
-    if (sx + sW > W - 12) sx = Math.max(padL + 4, lx - sW - 4);
-    if (!overlapsAny(sx, sy - sH, sW, sH)) {
-      body += `<text x="${sx.toFixed(1)}" y="${sy.toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">${sigmaText}</text>`;
-      placed.push({ x: sx, y: sy - sH, w: sW, h: sH });
-    } else {
-      const altY = Math.max(72, ly - 26);
-      body += `<text x="${sx.toFixed(1)}" y="${altY.toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">${sigmaText}</text>`;
-      placed.push({ x: sx, y: altY - sH, w: sW, h: sH });
-    }
-  }
+  const lastIdx = valuePts.length - 1;
+  const clusterClose = lastIdx >= 0 && peakIdx >= 0 && Math.abs(lastIdx - peakIdx) <= 4;
+  const peakZone = clusterClose ? 'top' : null;
+  const nowZone = clusterClose ? 'bottom' : null;
 
+  let topExtraLabels = 2;
+  if (lastIdx >= 0 && peakIdx >= 0) {
+    const nearby = [...Array(Math.max(peakIdx, lastIdx) + 1).keys()].filter(i => values[i] >= Math.max(4, Math.floor(maxV * 0.22)) && i >= Math.min(peakIdx, lastIdx) - 2 && i <= Math.max(peakIdx, lastIdx) + 2);
+    if (nearby.length >= 3) topExtraLabels = 0;
+    else if (nearby.length >= 2) topExtraLabels = 1;
+  }
   const topValueIdxs = values
     .map((v, i) => ({ v, i }))
-    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)))
+    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)) && x.i !== peakIdx && x.i !== lastIdx)
     .sort((a, b) => b.v - a.v)
-    .slice(0, 5)
+    .slice(0, topExtraLabels)
     .map(x => x.i);
-  const labelSet = new Set([peakIdx, valuePts.length - 1, ...topValueIdxs].filter(x => x >= 0 && x < values.length));
+  const labelSet = new Set([peakIdx, lastIdx, ...topValueIdxs].filter(x => x >= 0 && x < values.length));
   const labelList = [...labelSet].sort((a, b) => values[b] - values[a]);
   for (const li of labelList) {
     const v = values[li]; if (v === 0) continue;
-    const isKey = li === peakIdx || li === valuePts.length - 1;
+    const isKey = li === peakIdx || li === lastIdx;
     if (v < 3 && !isKey) continue;
     const cx = xOf(li), by = yOf(v);
     const str = String(v);
-    const lblW = Math.max(16, str.length * 7 + 8), lblH = 14;
+    const lblW = Math.max(18, str.length * 7 + 10), lblH = 14;
     const offsets = [
-      [cx - lblW / 2, by - lblH - 9],
-      [cx + 6, by - lblH - 2],
-      [cx - lblW - 6, by - lblH - 2],
-      [cx - lblW / 2, by - lblH - 22],
-      [cx + 10, by - lblH - 14],
-      [cx - lblW - 10, by - lblH - 14],
-      [cx - lblW / 2, by - lblH - 34],
+      [cx - lblW / 2, by - lblH - 10],
+      [cx + 8, by - lblH - 3],
+      [cx - lblW - 8, by - lblH - 3],
+      [cx - lblW / 2, by - lblH - 26],
+      [cx + 14, by - lblH - 18],
+      [cx - lblW - 14, by - lblH - 18],
+      [cx - lblW / 2, by - lblH - 42],
+      [cx + 18, by - lblH - 30],
+      [cx - lblW - 18, by - lblH - 30],
     ];
     let picked = null;
     for (const [ox, oy] of offsets) {
       if (ox < padL + 2 || ox + lblW > chartRight - 2) continue;
-      if (oy < 66) continue;
+      if (oy < 68) continue;
       if (!overlapsAny(ox, oy, lblW, lblH)) { picked = [ox, oy]; break; }
     }
     if (picked) {
@@ -841,7 +860,7 @@ function buildActivity(d) {
       const fsz = isKey ? 11 : 10;
       const fwg = isKey ? '800' : '700';
       if (isKey) {
-        body += `<rect x="${ox.toFixed(1)}" y="${oy.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH.toFixed(1)}" rx="4" fill="#030712" opacity="0.7" stroke="${col}" stroke-width="0.6"/>`;
+        body += `<rect x="${ox.toFixed(1)}" y="${oy.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH.toFixed(1)}" rx="4" fill="#030712" opacity="0.8" stroke="${col}" stroke-width="0.6"/>`;
       }
       body += `<text x="${(ox + lblW / 2).toFixed(1)}" y="${(oy + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="${fsz}" font-weight="${fwg}" fill="${col}" filter="${isKey ? `url(#g-glow-${id})` : ''}">${str}</text>`;
       placed.push({ x: ox, y: oy, w: lblW, h: lblH });
@@ -852,31 +871,31 @@ function buildActivity(d) {
     const [px, py] = valuePts[peakIdx];
     const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
     const valText = `⚡ all-time high`;
-    const lblW = 162;
-    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.55 ? true : false);
+    const lblW = 172;
+    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.55 ? true : false, peakZone);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
     body += `<path d="${leaderLine(px, py, anchorX, anchorY)}" fill="none" stroke="#ff2e88" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
-    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#ff2e88"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 14).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 26).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#ff2e88"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
   }
   if (valuePts.length) {
     const [cx, cy] = valuePts[valuePts.length - 1];
     const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
     const valText = `✨ this week`;
-    const lblW = 170;
-    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true);
+    const lblW = 180;
+    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true, nowZone);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
     body += `<path d="${leaderLine(cx, cy, anchorX, anchorY)}" fill="none" stroke="#00eaff" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
-    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#00eaff"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 14).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 26).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#00eaff"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
   const xLabelsCount = Math.min(6, ws.length);
