@@ -671,13 +671,29 @@ function buildActivity(d) {
   body += `<text x="${(W - padR - 8).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
 
   const calloutH = 34;
-  const calloutGap = 26;
+  const calloutGap = 30;
   const placed = [];
   function overlapsAny(bx, by, bw, bh) {
     for (const p of placed) {
       if (bx < p.x + p.w + calloutGap && bx + bw + calloutGap > p.x && by < p.y + p.h + calloutGap && by + bh + calloutGap > p.y) return true;
     }
     return false;
+  }
+
+  const valuePts = values.map((v, i) => [xOf(i), yOf(v)]);
+  const lastIdx = valuePts.length - 1;
+  const clusterClose = lastIdx >= 0 && peakIdx >= 0 && Math.abs(lastIdx - peakIdx) <= 5;
+  const suppressLabelWindow = clusterClose ? 5 : 0;
+  const peakClusterStart = Math.max(0, Math.min(peakIdx, lastIdx) - suppressLabelWindow);
+  const peakClusterEnd = Math.min(weeksN - 1, Math.max(peakIdx, lastIdx) + suppressLabelWindow);
+
+  let fixedSlots = null;
+  if (clusterClose) {
+    fixedSlots = {
+      peak: [80, 70],
+      now:  [292, 70],
+      alt:  [padL + 20, 70],
+    };
   }
 
   for (const s of streaks) {
@@ -724,7 +740,6 @@ function buildActivity(d) {
     }
     return d;
   }
-  const valuePts = values.map((v, i) => [xOf(i), yOf(v)]);
   const lineD = smoothPath(valuePts);
   const firstX = valuePts.length ? valuePts[0][0] : padL;
   const lastX = valuePts.length ? valuePts[valuePts.length - 1][0] : padL;
@@ -762,9 +777,14 @@ function buildActivity(d) {
     body += `<text x="${(sx + sW / 2).toFixed(1)}" y="${(sy - 1).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
   }
 
-  function findCalloutPos(anchorX, anchorY, width, preferLeft, forcedZone) {
+  function findCalloutPos(anchorX, anchorY, width, preferLeft, forcedZone, fixedCandidate) {
+    if (fixedCandidate) {
+      const [fx, fy] = fixedCandidate;
+      if (!overlapsAny(fx, fy, width, calloutH)) return [fx, fy];
+    }
     const options = [];
     const xCands = [
+      80, 292, 504, 716,
       Math.min(chartRight - width - 10, anchorX + 18),
       Math.min(chartRight - width - 10, anchorX + 48),
       Math.max(padL + 10, Math.min(chartRight - width - 10, anchorX - width / 2)),
@@ -775,8 +795,9 @@ function buildActivity(d) {
       Math.min(W - width - 10, chartRight + 14),
       Math.min(W - width - 10, Math.max(chartRight + 14, anchorX + 4)),
     ];
-    const yCandsTop = [72, 108];
+    const yCandsTop = [66, 112, 158];
     const yCandsMid = [
+      Math.max(padT + 48, anchorY - calloutH - 86),
       Math.max(padT + 48, anchorY - calloutH - 66),
       Math.max(padT + 48, anchorY - calloutH - 46),
       Math.max(padT + 48, anchorY - calloutH - 26),
@@ -789,21 +810,21 @@ function buildActivity(d) {
       padT + 48 + 2 * (calloutH + 14),
       padT + 48 + 3 * (calloutH + 14),
     ];
-    const yCandsBottom = [370, 410 - calloutH];
+    const yCandsBottom = [358, 320, 282];
     let yCands;
     if (forcedZone === 'top') yCands = [...yCandsTop, ...yCandsMid, ...yCandsBottom];
     else if (forcedZone === 'bottom') yCands = [...yCandsBottom, ...yCandsMid, ...yCandsTop];
     else yCands = [...yCandsMid, ...yCandsTop, ...yCandsBottom];
-    const leftFirst = preferLeft ? [0,1,2,3,4,5,6,7,8] : [7,8,1,0,2,4,3,5,6];
+    const leftFirst = preferLeft ? [0,1,2,3,9,6,7,8,10,4,5,11,12] : [11,12,4,5,6,3,2,1,10,7,8,9,0];
     for (const xi of leftFirst) {
       for (const y of yCands) options.push([xCands[xi], y]);
     }
     for (const [x, y] of options) {
       if (x < 8 || x + width > W - 8) continue;
-      if (y < 36 || y + calloutH > 400) continue;
+      if (y < 46 || y + calloutH > 400) continue;
       if (!overlapsAny(x, y, width, calloutH)) return [x, y];
     }
-    const valid = options.filter(([x, y]) => x >= 8 && x + width <= W - 8 && y >= 36 && y + calloutH <= 400);
+    const valid = options.filter(([x, y]) => x >= 8 && x + width <= W - 8 && y >= 46 && y + calloutH <= 400);
     return valid[0] || options[0];
   }
   function leaderLine(fromX, fromY, toX, toY) {
@@ -811,24 +832,56 @@ function buildActivity(d) {
     return `M ${fromX.toFixed(1)} ${fromY.toFixed(1)} C ${mx.toFixed(1)} ${fromY.toFixed(1)}, ${mx.toFixed(1)} ${toY.toFixed(1)}, ${toX.toFixed(1)} ${toY.toFixed(1)}`;
   }
 
-  const lastIdx = valuePts.length - 1;
-  const clusterClose = lastIdx >= 0 && peakIdx >= 0 && Math.abs(lastIdx - peakIdx) <= 4;
   const peakZone = clusterClose ? 'top' : null;
-  const nowZone = clusterClose ? 'bottom' : null;
+  const nowZone = clusterClose ? 'top' : null;
 
-  let topExtraLabels = 2;
-  if (lastIdx >= 0 && peakIdx >= 0) {
+  if (peakIdx >= 0 && valuePts[peakIdx]) {
+    const [px, py] = valuePts[peakIdx];
+    const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
+    const valText = `⚡ all-time high`;
+    const lblW = 180;
+    const fix = fixedSlots ? fixedSlots.peak : null;
+    const [boxX, boxY] = findCalloutPos(px, py, lblW, true, peakZone, fix);
+    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
+    const anchorX = (boxX + lblW / 2);
+    const anchorY = boxY + calloutH / 2;
+    body += `<path d="${leaderLine(px, py, anchorX, anchorY)}" fill="none" stroke="#ff2e88" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#ff2e88"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
+  }
+  if (valuePts.length) {
+    const [cx, cy] = valuePts[valuePts.length - 1];
+    const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
+    const valText = `✨ this week`;
+    const lblW = 188;
+    const fix = fixedSlots ? fixedSlots.now : null;
+    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true, nowZone, fix);
+    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
+    const anchorX = (boxX + lblW / 2);
+    const anchorY = boxY + calloutH / 2;
+    body += `<path d="${leaderLine(cx, cy, anchorX, anchorY)}" fill="none" stroke="#00eaff" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#00eaff"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
+  }
+
+  let topExtraLabels = clusterClose ? 1 : 2;
+  if (lastIdx >= 0 && peakIdx >= 0 && !clusterClose) {
     const nearby = [...Array(Math.max(peakIdx, lastIdx) + 1).keys()].filter(i => values[i] >= Math.max(4, Math.floor(maxV * 0.22)) && i >= Math.min(peakIdx, lastIdx) - 2 && i <= Math.max(peakIdx, lastIdx) + 2);
     if (nearby.length >= 3) topExtraLabels = 0;
     else if (nearby.length >= 2) topExtraLabels = 1;
   }
   const topValueIdxs = values
     .map((v, i) => ({ v, i }))
-    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)) && x.i !== peakIdx && x.i !== lastIdx)
+    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)) && x.i !== peakIdx && x.i !== lastIdx && !(clusterClose && x.i >= peakClusterStart && x.i <= peakClusterEnd))
     .sort((a, b) => b.v - a.v)
     .slice(0, topExtraLabels)
     .map(x => x.i);
-  const labelSet = new Set([peakIdx, lastIdx, ...topValueIdxs].filter(x => x >= 0 && x < values.length));
+  const labelSet = new Set([...topValueIdxs].filter(x => x >= 0 && x < values.length));
+  if (!clusterClose) { if (peakIdx >= 0) labelSet.add(peakIdx); if (lastIdx >= 0) labelSet.add(lastIdx); }
   const labelList = [...labelSet].sort((a, b) => values[b] - values[a]);
   for (const li of labelList) {
     const v = values[li]; if (v === 0) continue;
@@ -865,37 +918,6 @@ function buildActivity(d) {
       body += `<text x="${(ox + lblW / 2).toFixed(1)}" y="${(oy + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="${fsz}" font-weight="${fwg}" fill="${col}" filter="${isKey ? `url(#g-glow-${id})` : ''}">${str}</text>`;
       placed.push({ x: ox, y: oy, w: lblW, h: lblH });
     }
-  }
-
-  if (peakIdx >= 0 && valuePts[peakIdx]) {
-    const [px, py] = valuePts[peakIdx];
-    const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
-    const valText = `⚡ all-time high`;
-    const lblW = 172;
-    const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.55 ? true : false, peakZone);
-    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
-    const anchorX = (boxX + lblW / 2);
-    const anchorY = boxY + calloutH / 2;
-    body += `<path d="${leaderLine(px, py, anchorX, anchorY)}" fill="none" stroke="#ff2e88" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
-    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#ff2e88"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
-  }
-  if (valuePts.length) {
-    const [cx, cy] = valuePts[valuePts.length - 1];
-    const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
-    const valText = `✨ this week`;
-    const lblW = 180;
-    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true, nowZone);
-    placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
-    const anchorX = (boxX + lblW / 2);
-    const anchorY = boxY + calloutH / 2;
-    body += `<path d="${leaderLine(cx, cy, anchorX, anchorY)}" fill="none" stroke="#00eaff" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
-    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#00eaff"/>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
   const xLabelsCount = Math.min(6, ws.length);
