@@ -468,7 +468,7 @@ function buildTrophies(d) {
   body += foot; return body;
 }
 function buildActivity(d) {
-  const W = 980, H = 860, id = 'a';
+  const W = 980, H = 900, id = 'a';
   const weeks = d.weeks || [];
   const ws = weeks.slice(-52);
   const weeksN = ws.length;
@@ -510,6 +510,17 @@ function buildActivity(d) {
   function xOf(i) { return padL + stepX * i; }
   function yOf(v) { return padT + (1 - (v / maxV)) * chartH; }
   function yOfCum(v) { return padT + (1 - (v / maxCum)) * chartH; }
+
+  const valuePts = values.map((v, i) => [xOf(i), yOf(v)]);
+  const lastIdx = valuePts.length - 1;
+  const clusterClose = lastIdx >= 0 && peakIdx >= 0 && Math.abs(lastIdx - peakIdx) <= 6;
+  const tailStart = Math.max(0, weeksN - 8);
+  const peakOnRight = peakIdx >= 0 && peakIdx >= tailStart;
+  const suppressLabelWindow = clusterClose ? 6 : 0;
+  const peakClusterStart = Math.max(0, Math.min(peakIdx, lastIdx) - suppressLabelWindow);
+  const peakClusterEnd = Math.min(weeksN - 1, Math.max(peakIdx, lastIdx) + suppressLabelWindow);
+  const hardSuppressStart = clusterClose || peakOnRight ? Math.min(peakClusterStart, tailStart) : weeksN;
+  const hardSuppressEnd = clusterClose || peakOnRight ? Math.max(peakClusterEnd, lastIdx) : -1;
 
   const monthBands = [];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -555,7 +566,7 @@ function buildActivity(d) {
   const maxBucket = Math.max(1, ...buckets.map(b => b.count));
 
   const heatRows = 7, heatCols = Math.min(53, ws.length);
-  const pan4X = 504, pan4Y = 406, pan4W = 452, pan4H = 440;
+  const pan4X = 504, pan4Y = 444, pan4W = 452, pan4H = 442;
   const pan4BottomY = pan4Y + pan4H;
   const pan4InnerL = pan4X + 18, pan4InnerR = pan4X + pan4W - 18;
   const heatCellW = Math.max(3, Math.floor((pan4InnerR - pan4InnerL) / Math.max(1, heatCols)));
@@ -667,8 +678,8 @@ function buildActivity(d) {
 
   const avgY = yOf(avg);
   body += `<line x1="${padL + 0.5}" y1="${avgY.toFixed(1)}" x2="${W - padR - 0.5}" y2="${avgY.toFixed(1)}" stroke="#00eaff" stroke-width="1" stroke-dasharray="4 4" opacity="0.7"/>`;
-  body += `<rect x="${(W - padR - 76).toFixed(1)}" y="${(avgY - 12).toFixed(1)}" width="72" height="15" rx="4" fill="#051a26" opacity="0.9" stroke="#00eaff" stroke-width="0.5"/>`;
-  body += `<text x="${(W - padR - 8).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
+  body += `<rect x="${(padL + 4).toFixed(1)}" y="${(avgY - 12).toFixed(1)}" width="72" height="15" rx="4" fill="#051a26" opacity="0.95" stroke="#00eaff" stroke-width="0.5"/>`;
+  body += `<text x="${(padL + 12).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="start" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
 
   const calloutH = 34;
   const calloutGap = 30;
@@ -679,13 +690,6 @@ function buildActivity(d) {
     }
     return false;
   }
-
-  const valuePts = values.map((v, i) => [xOf(i), yOf(v)]);
-  const lastIdx = valuePts.length - 1;
-  const clusterClose = lastIdx >= 0 && peakIdx >= 0 && Math.abs(lastIdx - peakIdx) <= 5;
-  const suppressLabelWindow = clusterClose ? 5 : 0;
-  const peakClusterStart = Math.max(0, Math.min(peakIdx, lastIdx) - suppressLabelWindow);
-  const peakClusterEnd = Math.min(weeksN - 1, Math.max(peakIdx, lastIdx) + suppressLabelWindow);
 
   let fixedSlots = null;
   if (clusterClose) {
@@ -770,11 +774,11 @@ function buildActivity(d) {
     body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
     const sigmaText = `Σ ${cumulative[cumulative.length - 1]}`;
     const sW = 9 + sigmaText.length * 6.2, sH = 14;
-    const sx = W - padR + 12;
-    const sy = padT + 18;
-    placed.push({ x: sx, y: sy - sH, w: sW, h: sH });
-    body += `<rect x="${sx.toFixed(1)}" y="${(sy - sH).toFixed(1)}" width="${sW.toFixed(1)}" height="${sH.toFixed(1)}" rx="4" fill="#0f0520" stroke="#ff2e88" stroke-width="0.6" opacity="0.9"/>`;
-    body += `<text x="${(sx + sW / 2).toFixed(1)}" y="${(sy - 1).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
+    const sx = W - padR - sW - 8;
+    const sy = padT - 24;
+    placed.push({ x: sx, y: sy, w: sW, h: sH });
+    body += `<rect x="${sx.toFixed(1)}" y="${sy.toFixed(1)}" width="${sW.toFixed(1)}" height="${sH.toFixed(1)}" rx="4" fill="#0f0520" stroke="#ff2e88" stroke-width="0.6" opacity="0.92"/>`;
+    body += `<text x="${(sx + sW / 2).toFixed(1)}" y="${(sy + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
   }
 
   function findCalloutPos(anchorX, anchorY, width, preferLeft, forcedZone, fixedCandidate) {
@@ -868,20 +872,20 @@ function buildActivity(d) {
     body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
-  let topExtraLabels = clusterClose ? 1 : 2;
-  if (lastIdx >= 0 && peakIdx >= 0 && !clusterClose) {
+  let topExtraLabels = clusterClose || peakOnRight ? 0 : 2;
+  if (lastIdx >= 0 && peakIdx >= 0 && !(clusterClose || peakOnRight)) {
     const nearby = [...Array(Math.max(peakIdx, lastIdx) + 1).keys()].filter(i => values[i] >= Math.max(4, Math.floor(maxV * 0.22)) && i >= Math.min(peakIdx, lastIdx) - 2 && i <= Math.max(peakIdx, lastIdx) + 2);
     if (nearby.length >= 3) topExtraLabels = 0;
     else if (nearby.length >= 2) topExtraLabels = 1;
   }
   const topValueIdxs = values
     .map((v, i) => ({ v, i }))
-    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)) && x.i !== peakIdx && x.i !== lastIdx && !(clusterClose && x.i >= peakClusterStart && x.i <= peakClusterEnd))
+    .filter(x => x.v >= Math.max(4, Math.floor(maxV * 0.22)) && x.i !== peakIdx && x.i !== lastIdx && !(x.i >= hardSuppressStart && x.i <= hardSuppressEnd))
     .sort((a, b) => b.v - a.v)
     .slice(0, topExtraLabels)
     .map(x => x.i);
   const labelSet = new Set([...topValueIdxs].filter(x => x >= 0 && x < values.length));
-  if (!clusterClose) { if (peakIdx >= 0) labelSet.add(peakIdx); if (lastIdx >= 0) labelSet.add(lastIdx); }
+  if (!(clusterClose || peakOnRight)) { if (peakIdx >= 0) labelSet.add(peakIdx); if (lastIdx >= 0) labelSet.add(lastIdx); }
   const labelList = [...labelSet].sort((a, b) => values[b] - values[a]);
   for (const li of labelList) {
     const v = values[li]; if (v === 0) continue;
@@ -968,12 +972,12 @@ function buildActivity(d) {
     lgCursor += (it.label.length * 6.3) + 18;
   }
 
-  const pan2X = 24, pan2Y = 406, pan2W = 456, pan2H = 170;
+  const pan2X = 24, pan2Y = 444, pan2W = 456, pan2H = 196;
   body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
   body += `<rect x="${pan2X}" y="${pan2Y}" width="4" height="${pan2H}" rx="2" fill="${C.electric}" opacity="0.75"/>`;
   body += `<text x="${pan2X + 22}" y="${pan2Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.electric}" filter="url(#g-glow-${id})">📅 Weekday Activity Profile</text>`;
   body += `<text x="${pan2X + 22}" y="${pan2Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">avg contrib / day · sample n = ${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
-  const wkPadL = 60, wkPadR = 22, wkPadT = 60, wkPadB = 30;
+  const wkPadL = 60, wkPadR = 22, wkPadT = 88, wkPadB = 30;
   const wkChartW = pan2W - wkPadL - wkPadR, wkChartH = pan2H - wkPadT - wkPadB;
   for (let i = 0; i <= 3; i++) {
     const y = pan2Y + wkPadT + (wkChartH / 3) * (3 - i);
@@ -989,15 +993,26 @@ function buildActivity(d) {
     const bh = Math.max(1, (weekdayAvg[wd] / maxWkAvg) * wkChartH);
     const by = pan2Y + wkPadT + wkChartH - bh;
     const isTop = wd === mostActiveWd;
+    const nearMax = weekdayAvg[wd] >= 0.82 * maxWkAvg;
     body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="${isTop ? '#ff2e88' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.92}"/>`;
     if (weekdayAvg[wd] > 0) {
-      body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${weekdayAvg[wd].toFixed(1)}</text>`;
+      const lblText = weekdayAvg[wd].toFixed(1);
+      const lblW = Math.max(28, lblText.length * 6.5 + 10);
+      const lblH = 15;
+      if (nearMax) {
+        const lx = cx - lblW / 2;
+        const ly = by - lblH - 10;
+        body += `<rect x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH}" rx="5" fill="${isTop ? '#1a0310' : '#041424'}" stroke="${isTop ? '#ff2e88' : C.electric}" stroke-width="0.8" opacity="0.96"/>`;
+        body += `<text x="${cx.toFixed(1)}" y="${(ly + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${lblText}</text>`;
+      } else {
+        body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${lblText}</text>`;
+      }
     }
     body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#ff2e88' : C.text}">${weekdayLabels[wd]}</text>`;
   }
   body += `<text x="${pan2X + 22}" y="${(pan2Y + pan2H - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total ${weekdayTotals.reduce((s,v)=>s+v,0)} · best: ${weekdayLabels[mostActiveWd]} at ${weekdayAvg[mostActiveWd].toFixed(2)} avg</text>`;
 
-  const pan3X = pan2X, pan3Y = 598, pan3W = pan2W, pan3H = 188;
+  const pan3X = pan2X, pan3Y = 654, pan3W = pan2W, pan3H = 200;
   body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
   body += `<rect x="${pan3X}" y="${pan3Y}" width="4" height="${pan3H}" rx="2" fill="${C.violet}" opacity="0.75"/>`;
   body += `<text x="${pan3X + 22}" y="${pan3Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.violet}" filter="url(#g-glow-${id})">📊 Weekly Contribution Distribution</text>`;
