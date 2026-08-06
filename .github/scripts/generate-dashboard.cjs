@@ -26,10 +26,13 @@ function numFmt(n) {
 }
 
 const C = {
-  bg0: '#060811', bg1: '#0a1424', bg2: '#0f1f3d', border: '#1c2b4a',
-  cyan: '#22d3ee', purple: '#8b5cf6', pink: '#f472b6', green: '#22c55e',
-  emerald: '#39ff88', title: '#00eaff', text: '#93c5fd', textDim: '#64748b',
-  accent: '#60a5fa',
+  bg0: '#030712', bg1: '#0a0e1a', bg2: '#0f172a', bg3: '#1e1b4b',
+  border: '#1e293b', borderGlow: '#312e81',
+  cyan: '#22d3ee', electric: '#00eaff', purple: '#7b2ff7', violet: '#a855f7',
+  pink: '#ff2e88', magenta: '#ec4899', green: '#10b981', emerald: '#34d399',
+  title: '#00eaff', text: '#cbd5e1', textDim: '#64748b',
+  accent: '#60a5fa', gold: '#fbbf24',
+  gradStart: '#7b2ff7', gradMid: '#ff2e88', gradEnd: '#00eaff',
 };
 
 async function gql(query) {
@@ -350,16 +353,24 @@ function head(w, h, id) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
 <defs>
   <linearGradient id="g-bg-${id}" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="${C.bg1}"/><stop offset="100%" stop-color="${C.bg0}"/>
+    <stop offset="0%" stop-color="#0a0e1a"/><stop offset="50%" stop-color="#070a16"/><stop offset="100%" stop-color="#030712"/>
   </linearGradient>
   <linearGradient id="g-title-${id}" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stop-color="${C.cyan}"/><stop offset="100%" stop-color="${C.purple}"/>
+    <stop offset="0%" stop-color="#7b2ff7"/><stop offset="50%" stop-color="#ff2e88"/><stop offset="100%" stop-color="#00eaff"/>
   </linearGradient>
-  <filter id="g-shadow-${id}"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.35"/></filter>
+  <filter id="g-shadow-${id}"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/></filter>
+  <filter id="g-glow-${id}" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="3" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="g-glow-strong-${id}" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
 </defs>`;
 }
 const foot = '</svg>';
-function cardBg(id, w, h, r = 18) { return `<rect rx="${r}" width="${w}" height="${h}" fill="url(#g-bg-${id})" stroke="${C.border}" stroke-width="1.2"/>`; }
+function cardBg(id, w, h, r = 18) { return `<rect rx="${r}" width="${w}" height="${h}" fill="url(#g-bg-${id})" stroke="${C.border}" stroke-width="1"/>`; }
 
 function write(name, content) {
   const p = path.join(OUT_DIR, name);
@@ -370,33 +381,34 @@ function write(name, content) {
 function buildStats(d) {
   const W = 520, H = 220, id = 's';
   const items = [
-    ['Repos', d.repos, C.cyan],
+    ['Repos', d.repos, C.electric],
     ['Stars', d.stars, C.pink],
-    ['Followers', d.user.followers, C.purple],
-    ['Commits', d.commits, C.green],
-    ['PRs', d.prs, C.cyan],
+    ['Followers', d.user.followers, C.violet],
+    ['Commits', d.commits, C.emerald],
+    ['PRs', d.prs, C.electric],
     ['Issues', d.issues, C.accent],
-    ['Contribs', d.totalContribs, C.emerald],
+    ['Contribs', d.totalContribs, C.electric],
     ['Gists', d.gists, C.text],
   ];
   let body = head(W, H, id) + cardBg(id, W, H);
-  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})">${esc(d.user.name)} · @${esc(d.user.login)}</text>`;
+  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})" filter="url(#g-glow-${id})">${esc(d.user.name)} · @${esc(d.user.login)}</text>`;
   body += `<text x="28" y="58" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">auto-updated · ${NOW_LOCAL} (${TZ}) · ${GITHUB_TOKEN ? 'token auth' : 'public REST'}</text>`;
   for (let i = 0; i < items.length; i++) {
     const [label, val, color] = items[i];
     const cx = 28 + ((i % 4) * 120);
     const cy = 96 + (Math.floor(i / 4) * 62);
     body += `<g filter="url(#g-shadow-${id})"><rect x="${cx - 4}" y="${cy - 22}" width="110" height="54" rx="12" fill="${C.bg2}" stroke="${C.border}"/></g>`;
-    body += `<text x="${cx + 2}" y="${cy + 4}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${esc(label)}</text>`;
-    body += `<text x="${cx + 2}" y="${cy + 26}" font-family="Consolas,monospace" font-size="20" font-weight="800" fill="${color}">${esc(numFmt(val))}</text>`;
+    body += `<rect x="${cx - 4}" y="${cy - 22}" width="3" height="54" rx="1.5" fill="${color}" opacity="0.85"/>`;
+    body += `<text x="${cx + 6}" y="${cy + 4}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${esc(label)}</text>`;
+    body += `<text x="${cx + 6}" y="${cy + 26}" font-family="Consolas,monospace" font-size="20" font-weight="800" fill="${color}" filter="url(#g-glow-${id})">${esc(numFmt(val))}</text>`;
   }
-  body += `<text x="28" y="200" font-family="Consolas,monospace" font-size="12" fill="${C.text}">🔥 Current Streak: <tspan font-weight="800" fill="${C.cyan}">${d.currentStreak}</tspan>   ⭐ Longest: <tspan font-weight="800" fill="${C.purple}">${d.longestStreak}</tspan>   🍴 Forks: <tspan font-weight="800" fill="${C.pink}">${numFmt(d.forks)}</tspan>   Following: <tspan font-weight="800" fill="${C.green}">${d.user.following}</tspan></text>`;
+  body += `<text x="28" y="200" font-family="Consolas,monospace" font-size="12" fill="${C.text}">🔥 Current Streak: <tspan font-weight="800" fill="${C.electric}">${d.currentStreak}</tspan>   ⭐ Longest: <tspan font-weight="800" fill="${C.violet}">${d.longestStreak}</tspan>   🍴 Forks: <tspan font-weight="800" fill="${C.pink}">${numFmt(d.forks)}</tspan>   Following: <tspan font-weight="800" fill="${C.emerald}">${d.user.following}</tspan></text>`;
   body += foot;
   return body;
 }
 function buildLangs(d) {
   const W = 520, H = 338, id = 'l';
-  const palette = [C.cyan, C.purple, C.pink, C.green, C.emerald, C.accent, '#facc15', '#fb923c', '#a855f7', '#f97316'];
+  const palette = [C.electric, C.violet, C.pink, C.emerald, C.cyan, C.accent, C.gold, '#fb923c', C.purple, '#f97316'];
   const langs = d.langs.length ? d.langs : [{ name: 'No data', pct: 100, size: 1 }];
   let cum = 0; const segs = langs.map((l, i) => {
     const start = cum; cum += l.pct;
@@ -404,7 +416,7 @@ function buildLangs(d) {
   });
   const barY = 96, barH = 18, barX = 32, barW = W - 64;
   let body = head(W, H, id) + cardBg(id, W, H);
-  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})">Most Used Languages</text>`;
+  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})" filter="url(#g-glow-${id})">Most Used Languages</text>`;
   body += `<text x="28" y="58" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">bytes aggregated across ${d.repos} public repos · ${NOW_LOCAL}</text>`;
   for (const s of segs) {
     const x = barX + (s.start / 100) * barW;
@@ -419,8 +431,8 @@ function buildLangs(d) {
     const lx = 36 + col * 242; const yy = ly + row * rowH;
     if (yy + 14 > H - 16) break;
     body += `<rect x="${lx}" y="${yy - 10}" width="14" height="14" rx="3" fill="${s.color}"/>`;
-    body += `<text x="${lx + 22}" y="${yy}" font-family="Consolas,monospace" font-size="12" fill="${C.text}">${esc(s.name)}</text>`;
-    body += `<text x="${lx + 200}" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${s.color}">${s.pct.toFixed(1)}%</text>`;
+    body += `<text x="${lx + 22}" y="${yy}" font-family="Consolas,monospace" font-size="12" fill="${C.text}" font-weight="600">${esc(s.name)}</text>`;
+    body += `<text x="${lx + 200}" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="800" fill="${s.color}">${s.pct.toFixed(1)}%</text>`;
   }
   body += foot; return body;
 }
@@ -437,20 +449,21 @@ function buildTrophies(d) {
     { key: 'contribs', title: 'Contribs', value: d.totalContribs, t1: 25, t2: 100, t3: 500, icon: '✅' },
     { key: 'issues', title: 'Issues', value: d.issues, t1: 1, t2: 5, t3: 20, icon: '📋' },
   ];
-  const tierFills = [C.bg2, '#0b1e33', '#1a0f3a', '#2a0f1e'];
-  const tierColors = [C.textDim, C.green, C.cyan, C.pink];
+  const tierFills = [C.bg2, '#0a1226', '#1a0b33', '#2a0a22'];
+  const tierColors = [C.textDim, C.emerald, C.electric, C.pink];
   let body = head(W, H, id) + cardBg(id, W, H);
-  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})">Achievements &amp; Trophies</text>`;
+  body += `<text x="28" y="38" font-family="Consolas,monospace" font-size="18" font-weight="700" fill="url(#g-title-${id})" filter="url(#g-glow-${id})">Achievements &amp; Trophies</text>`;
   body += `<text x="28" y="58" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">TIER 1 → 2 → 3 at milestone thresholds · ${NOW_LOCAL}</text>`;
   for (let i = 0; i < defs.length; i++) {
     const t = defs[i];
     const tier = T(t.value, t.t1, t.t2, t.t3);
     const color = tierColors[tier]; const fill = tierFills[tier];
     const cx = 40 + (i * 102), cy = 110;
-    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 40}" width="88" height="92" rx="14" fill="${fill}" stroke="${color}" stroke-width="1.3"/></g>`;
+    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 40}" width="88" height="92" rx="14" fill="${fill}" stroke="${color}" stroke-width="1.2"/></g>`;
+    body += `<rect x="${cx}" y="${cy - 40}" width="4" height="92" rx="2" fill="${color}" opacity="0.85"/>`;
     body += `<text x="${cx + 44}" y="${cy - 6}" text-anchor="middle" font-size="24">${t.icon}</text>`;
     body += `<text x="${cx + 44}" y="${cy + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="${C.text}">${esc(t.title)} · ${esc(numFmt(t.value))}</text>`;
-    body += `<text x="${cx + 44}" y="${cy + 40}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${color}">TIER ${tier}</text>`;
+    body += `<text x="${cx + 44}" y="${cy + 40}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${color}" filter="url(#g-glow-${id})">TIER ${tier}</text>`;
   }
   body += foot; return body;
 }
@@ -467,8 +480,8 @@ function buildActivity(d) {
   let cum = 0;
   const cumulative = values.map(v => { cum += v; return cum; });
 
-  const padL = 64, padR = 104, padT = 96, padB = 24;
-  const chartW = W - padL - padR, chartH = 230;
+  const padL = 72, padR = 120, padT = 108, padB = 28;
+  const chartW = W - padL - padR, chartH = 256;
   const chartBottom = padT + chartH;
   const chartRight = W - padR;
 
@@ -542,7 +555,7 @@ function buildActivity(d) {
   const maxBucket = Math.max(1, ...buckets.map(b => b.count));
 
   const heatRows = 7, heatCols = Math.min(53, ws.length);
-  const pan4X = 504, pan4Y = 370, pan4W = 452, pan4H = 440;
+  const pan4X = 504, pan4Y = 406, pan4W = 452, pan4H = 440;
   const pan4BottomY = pan4Y + pan4H;
   const pan4InnerL = pan4X + 18, pan4InnerR = pan4X + pan4W - 18;
   const heatCellW = Math.max(3, Math.floor((pan4InnerR - pan4InnerL) / Math.max(1, heatCols)));
@@ -550,12 +563,12 @@ function buildActivity(d) {
   const kpiRowsHeight = 2 * kpiTileH + 14;
   const legendLineH = 24;
   const reservedAfterHeat = legendLineH + 14 + kpiRowsHeight + 10;
-  const heatMaxH = Math.max(heatRows * 12, (pan4BottomY - 20) - (pan4Y + 76) - reservedAfterHeat);
+  const heatMaxH = Math.max(heatRows * 12, (pan4BottomY - 20) - (pan4Y + 78) - reservedAfterHeat);
   const heatCellH = Math.max(6, Math.floor(heatMaxH / heatRows));
   const heatX0 = pan4InnerL;
-  const heatY0 = pan4Y + 76;
+  const heatY0 = pan4Y + 78;
 
-  const heatLevelColors = ['#0b1e33', '#1a3a1a', '#2d6a2d', '#3fa34d', '#22c55e'];
+  const heatLevelColors = ['#0a0f1c', '#1e1b4b', '#4c1d95', '#7b2ff7', '#ff2e88'];
   function heatLevel(c) {
     if (c === 0) return 0;
     if (c <= 2) return 1;
@@ -567,86 +580,103 @@ function buildActivity(d) {
   let body = head(W, H, id) + cardBg(id, W, H, 20);
   body += `<defs>
     <linearGradient id="g-area-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.65"/>
-      <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#0a1424" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#ff2e88" stop-opacity="0.28"/>
+      <stop offset="40%" stop-color="#7b2ff7" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#030712" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="g-line-${id}" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#f472b6"/>
+      <stop offset="0%" stop-color="#00eaff"/>
+      <stop offset="45%" stop-color="#7b2ff7"/>
+      <stop offset="100%" stop-color="#ff2e88"/>
     </linearGradient>
     <linearGradient id="g-bar-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#a78bfa"/>
-      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.55"/>
+      <stop offset="0%" stop-color="#7b2ff7" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.5"/>
     </linearGradient>
     <linearGradient id="g-bar-streak-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#f472b6"/>
-      <stop offset="100%" stop-color="#facc15" stop-opacity="0.7"/>
+      <stop offset="0%" stop-color="#ff2e88" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.78"/>
     </linearGradient>
     <linearGradient id="g-roll-${id}" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#39ff88"/>
-      <stop offset="100%" stop-color="#22d3ee"/>
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
     </linearGradient>
     <linearGradient id="g-cum-${id}" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#ef4444"/>
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ff2e88"/>
     </linearGradient>
     <linearGradient id="g-wk-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.75"/>
+      <stop offset="0%" stop-color="#00eaff"/>
+      <stop offset="100%" stop-color="#7b2ff7" stop-opacity="0.8"/>
     </linearGradient>
     <linearGradient id="g-buck-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#f472b6"/>
-      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.8"/>
+      <stop offset="0%" stop-color="#7b2ff7"/>
+      <stop offset="100%" stop-color="#ff2e88" stop-opacity="0.82"/>
     </linearGradient>
     <pattern id="g-stripes-${id}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="6" stroke="#facc15" stroke-width="2" opacity="0.35"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#fbbf24" stroke-width="1.2" opacity="0.22"/>
     </pattern>
-    <linearGradient id="g-month-${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#312e81" stop-opacity="0.15"/>
+    <linearGradient id="g-callout-peak-${id}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a0b2e"/>
+      <stop offset="100%" stop-color="#0f0520"/>
+    </linearGradient>
+    <linearGradient id="g-callout-live-${id}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#052e2b"/>
+      <stop offset="100%" stop-color="#021a18"/>
+    </linearGradient>
+    <linearGradient id="g-panel-glass-${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1226" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#070c1c" stop-opacity="0.8"/>
     </linearGradient>
   </defs>`;
 
-  body += `<text x="28" y="36" font-family="Consolas,monospace" font-size="19" font-weight="700" fill="url(#g-title-${id})">Contribution Activity — Advanced Live Analytics</text>`;
-  body += `<text x="28" y="54" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${numFmt(d.totalContribs)} total · ${weeksN}-wk trend · avg ${avg.toFixed(1)}/wk · streak ${d.currentStreak} (best ${d.longestStreak}) · ${NOW_LOCAL} (${TZ})</text>`;
+  body += `<text x="32" y="36" font-family="Consolas,monospace" font-size="20" font-weight="800" fill="url(#g-title-${id})" filter="url(#g-glow-${id})">Contribution Activity — Advanced Live Analytics</text>`;
+  body += `<text x="32" y="56" font-family="Consolas,monospace" font-size="11.5" fill="${C.textDim}">${numFmt(d.totalContribs)} total · ${weeksN}-wk trend · avg ${avg.toFixed(1)}/wk · streak ${d.currentStreak} (best ${d.longestStreak}) · ${NOW_LOCAL} (${TZ})</text>`;
+  body += `<line x1="32" y1="68" x2="${W - 32}" y2="68" stroke="${C.border}" stroke-width="0.8" opacity="0.6"/>`;
 
-  body += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${chartBottom}" stroke="${C.border}" stroke-width="1.2"/>`;
-  body += `<line x1="${W - padR}" y1="${padT}" x2="${W - padR}" y2="${chartBottom}" stroke="${C.border}" stroke-width="1.2"/>`;
-  body += `<line x1="${padL}" y1="${chartBottom}" x2="${W - padR}" y2="${chartBottom}" stroke="${C.border}" stroke-width="1.2"/>`;
+  body += `<rect x="${padL}" y="${padT}" width="${(W - padR - padL).toFixed(1)}" height="${chartH}" rx="10" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.8"/>`;
+  body += `<line x1="${padL}" y1="${chartBottom}" x2="${W - padR}" y2="${chartBottom}" stroke="#312e81" stroke-width="1.2"/>`;
 
-  for (let i = 0; i <= 4; i++) {
-    const y = padT + (chartH / 4) * (4 - i);
-    const v = Math.round((maxV / 4) * i);
-    const vc = Math.round((maxCum / 4) * i);
-    body += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="${C.bg2}" stroke-width="1" stroke-dasharray="3 4"/>`;
-    body += `<text x="${padL - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${numFmt(v)}</text>`;
-    body += `<text x="${W - padR + 8}" y="${(y + 4).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="#f59e0b">${numFmt(vc)}</text>`;
+  const gridSteps = 5;
+  for (let i = 0; i <= gridSteps; i++) {
+    const y = padT + (chartH / gridSteps) * (gridSteps - i);
+    const v = Math.round((maxV / gridSteps) * i);
+    const vc = Math.round((maxCum / gridSteps) * i);
+    const isMajor = (i % 2 === 0) || (i === gridSteps);
+    body += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="${isMajor ? '#1e293b' : C.bg2}" stroke-width="${isMajor ? 0.8 : 0.5}" stroke-dasharray="${isMajor ? '3 4' : '2 5'}" opacity="${isMajor ? 0.8 : 0.5}"/>`;
+    body += `<text x="${padL - 10}" y="${(y + 4).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}" font-weight="${isMajor ? '700' : '500'}">${numFmt(v)}</text>`;
+    body += `<text x="${W - padR + 10}" y="${(y + 4).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="#ff2e88" opacity="${isMajor ? 0.95 : 0.7}" font-weight="${isMajor ? '700' : '500'}">${numFmt(vc)}</text>`;
   }
 
   for (let mi = 0; mi < monthBands.length - 1; mi++) {
     const xStart = xOf(monthBands[mi].idx) - stepX / 2;
     const xEnd = xOf(monthBands[mi + 1].idx) - stepX / 2;
     if (mi % 2 === 1) {
-      body += `<rect x="${xStart.toFixed(1)}" y="${padT}" width="${(xEnd - xStart).toFixed(1)}" height="${chartH}" fill="${C.bg2}" opacity="0.28"/>`;
+      body += `<rect x="${xStart.toFixed(1)}" y="${padT + 0.5}" width="${(xEnd - xStart).toFixed(1)}" height="${chartH - 1}" fill="${C.bg3}" opacity="0.12"/>`;
     }
-    body += `<text x="${((xStart + xEnd) / 2).toFixed(1)}" y="${(padT - 10).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="${C.text}" font-weight="700">${months[monthBands[mi].m]}</text>`;
+    const midX = (xStart + xEnd) / 2;
+    body += `<line x1="${xStart.toFixed(1)}" y1="${padT}" x2="${xStart.toFixed(1)}" y2="${padT - 5}" stroke="${C.border}" stroke-width="0.6"/>`;
+    body += `<text x="${midX.toFixed(1)}" y="${(padT - 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="${C.text}" font-weight="700" letter-spacing="0.4">${months[monthBands[mi].m]}</text>`;
   }
   if (monthBands.length) {
     const last = monthBands[monthBands.length - 1];
     const xStart = xOf(last.idx) - stepX / 2;
-    body += `<text x="${((xStart + (W - padR)) / 2).toFixed(1)}" y="${(padT - 10).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="${C.text}" font-weight="700">${months[last.m]}</text>`;
+    const midX = (xStart + (W - padR)) / 2;
+    body += `<text x="${midX.toFixed(1)}" y="${(padT - 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="${C.text}" font-weight="700" letter-spacing="0.4">${months[last.m]}</text>`;
   }
 
   const avgY = yOf(avg);
-  body += `<line x1="${padL}" y1="${avgY.toFixed(1)}" x2="${W - padR}" y2="${avgY.toFixed(1)}" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="5 5" opacity="0.65"/>`;
-  body += `<text x="${(W - padR - 70).toFixed(1)}" y="${(avgY - 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="#22d3ee" opacity="0.9">μ ${avg.toFixed(1)}</text>`;
+  body += `<line x1="${padL + 0.5}" y1="${avgY.toFixed(1)}" x2="${W - padR - 0.5}" y2="${avgY.toFixed(1)}" stroke="#00eaff" stroke-width="1" stroke-dasharray="4 4" opacity="0.7"/>`;
+  body += `<rect x="${(W - padR - 76).toFixed(1)}" y="${(avgY - 12).toFixed(1)}" width="72" height="15" rx="4" fill="#051a26" opacity="0.9" stroke="#00eaff" stroke-width="0.5"/>`;
+  body += `<text x="${(W - padR - 8).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
 
   for (const s of streaks) {
     const x0 = xOf(s.start) - stepX / 2;
     const x1 = xOf(s.end) + stepX / 2;
-    body += `<rect x="${x0.toFixed(1)}" y="${padT}" width="${(x1 - x0).toFixed(1)}" height="${chartH}" fill="url(#g-stripes-${id})" opacity="0.2"/>`;
-    body += `<text x="${((x0 + x1) / 2).toFixed(1)}" y="${(padT + 12).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="8" fill="#facc15" font-weight="700" opacity="0.9">🔥${s.len}w</text>`;
+    const midX = (x0 + x1) / 2;
+    body += `<rect x="${x0.toFixed(1)}" y="${padT + 0.5}" width="${(x1 - x0).toFixed(1)}" height="${chartH - 1}" fill="url(#g-stripes-${id})" opacity="0.15"/>`;
+    body += `<rect x="${x0.toFixed(1)}" y="${(padT + 10).toFixed(1)}" width="${(x1 - x0).toFixed(1)}" height="14" rx="4" fill="#0c1224" opacity="0.9" stroke="#fbbf24" stroke-width="0.5"/>`;
+    body += `<text x="${midX.toFixed(1)}" y="${(padT + 20).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#fbbf24" font-weight="800" opacity="0.95">⚡ ${s.len}w streak</text>`;
   }
 
   for (let i = 0; i < weeksN; i++) {
@@ -657,9 +687,11 @@ function buildActivity(d) {
     const bh = chartBottom - by;
     const inStreak = streaks.some(s => i >= s.start && i <= s.end);
     const isPeak = i === peakIdx;
-    body += `<rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(3, barW / 2).toFixed(1)}" fill="url(#${isPeak ? 'g-bar-streak-' + id : (inStreak ? 'g-bar-streak-' + id : 'g-bar-' + id)})" opacity="${isPeak ? 1 : (inStreak ? 0.95 : 0.82)}"/>`;
+    const gradId = isPeak || inStreak ? 'g-bar-streak-' + id : 'g-bar-' + id;
+    const radius = Math.min(3, barW / 2);
+    body += `<rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" rx="${radius}" fill="url(#${gradId})" opacity="${isPeak ? 1 : (inStreak ? 0.92 : 0.72)}"/>`;
     if (isPeak) {
-      body += `<rect x="${(bx - 1).toFixed(1)}" y="${(by - 1).toFixed(1)}" width="${(barW + 2).toFixed(1)}" height="${(bh + 2).toFixed(1)}" rx="${Math.min(4, barW / 2 + 1).toFixed(1)}" fill="none" stroke="#f472b6" stroke-width="1.3" stroke-dasharray="3 3"/>`;
+      body += `<rect x="${(bx - 1).toFixed(1)}" y="${(by - 1).toFixed(1)}" width="${(barW + 2).toFixed(1)}" height="${(bh + 2).toFixed(1)}" rx="${(radius + 0.8).toFixed(1)}" fill="none" stroke="#ff2e88" stroke-width="1.2" stroke-dasharray="3 3"/>`;
     }
   }
 
@@ -685,32 +717,35 @@ function buildActivity(d) {
   const lineD = smoothPath(valuePts);
   const firstX = valuePts.length ? valuePts[0][0] : padL;
   const lastX = valuePts.length ? valuePts[valuePts.length - 1][0] : padL;
-  const areaD = lineD + ` L ${lastX.toFixed(1)} ${chartBottom} L ${firstX.toFixed(1)} ${chartBottom} Z`;
+  const areaD = lineD + ` L ${lastX.toFixed(1)} ${chartBottom - 0.5} L ${firstX.toFixed(1)} ${chartBottom - 0.5} Z`;
   body += `<path d="${areaD}" fill="url(#g-area-${id})"/>`;
-  body += `<path d="${lineD}" fill="none" stroke="url(#g-line-${id})" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>`;
+  body += `<path d="${lineD}" fill="none" stroke="url(#g-line-${id})" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#g-glow-${id})"/>`;
 
   const rollPts = rollAvg.map((v, i) => [xOf(i), yOf(v)]);
   const rollD = smoothPath(rollPts);
-  body += `<path d="${rollD}" fill="none" stroke="url(#g-roll-${id})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4" opacity="0.9"/>`;
+  body += `<path d="${rollD}" fill="none" stroke="url(#g-roll-${id})" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4" opacity="0.8"/>`;
 
   const cumPts = cumulative.map((v, i) => [xOf(i), yOfCum(v)]);
   const cumD = smoothPath(cumPts);
-  body += `<path d="${cumD}" fill="none" stroke="url(#g-cum-${id})" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>`;
+  body += `<path d="${cumD}" fill="none" stroke="url(#g-cum-${id})" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.82"/>`;
 
   for (let i = 0; i < valuePts.length; i++) {
-    if (i === peakIdx || i === valuePts.length - 1 || i % 8 === 0) {
+    if (i === peakIdx || i === valuePts.length - 1 || i % 10 === 0) {
       const [x, y] = valuePts[i];
-      const r = (i === peakIdx || i === valuePts.length - 1) ? 4.8 : 2.8;
-      body += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="#0a1424" stroke="url(#g-line-${id})" stroke-width="2"/>`;
+      const r = (i === peakIdx || i === valuePts.length - 1) ? 5 : 2.8;
+      body += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(r + 2).toFixed(1)}" fill="#00eaff" opacity="0.16"/>`;
+      body += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="#030712" stroke="url(#g-line-${id})" stroke-width="2"/>`;
     }
   }
   if (cumPts.length) {
     const [lx, ly] = cumPts[cumPts.length - 1];
-    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#0a1424" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
+    body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
+    body += `<text x="${(lx + 8).toFixed(1)}" y="${(ly - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88">Σ ${cumulative[cumulative.length - 1]}</text>`;
   }
 
-  const calloutH = 28;
-  const calloutGap = 16;
+  const calloutH = 30;
+  const calloutGap = 18;
   const placed = [];
   function overlapsAny(bx, by, bw, bh) {
     for (const p of placed) {
@@ -720,17 +755,17 @@ function buildActivity(d) {
   }
   function findCalloutPos(anchorX, anchorY, width, preferLeft) {
     const options = [];
-    const leftX = Math.max(padL + 8, anchorX - width - 18);
-    const rightX = Math.min(chartRight - width - 8, anchorX + 18);
-    const midX = Math.max(padL + 8, Math.min(chartRight - width - 8, anchorX - width / 2));
+    const leftX = Math.max(padL + 10, anchorX - width - 22);
+    const rightX = Math.min(chartRight - width - 10, anchorX + 18);
+    const midX = Math.max(padL + 10, Math.min(chartRight - width - 10, anchorX - width / 2));
     const ys = [
-      Math.max(padT + 16, anchorY - calloutH - 28),
-      Math.max(padT + 16, anchorY - calloutH - 14),
-      Math.max(padT + 16, anchorY + 14),
-      Math.max(padT + 16, anchorY + calloutH + 6),
-      padT + 20,
-      padT + 20 + calloutH + 8,
-      padT + 20 + 2 * (calloutH + 8),
+      Math.max(padT + 38, anchorY - calloutH - 30),
+      Math.max(padT + 38, anchorY - calloutH - 16),
+      Math.max(padT + 38, anchorY + 14),
+      Math.max(padT + 38, anchorY + calloutH + 8),
+      padT + 38,
+      padT + 38 + calloutH + 9,
+      padT + 38 + 2 * (calloutH + 9),
     ];
     if (preferLeft) {
       for (const y of ys) options.push([leftX, y]);
@@ -746,24 +781,40 @@ function buildActivity(d) {
     }
     return options[0];
   }
+  function leaderLine(fromX, fromY, toX, toY) {
+    const mx = (fromX + toX) / 2;
+    return `M ${fromX.toFixed(1)} ${fromY.toFixed(1)} C ${mx.toFixed(1)} ${fromY.toFixed(1)}, ${mx.toFixed(1)} ${toY.toFixed(1)}, ${toX.toFixed(1)} ${toY.toFixed(1)}`;
+  }
 
   if (peakIdx >= 0 && valuePts[peakIdx]) {
     const [px, py] = valuePts[peakIdx];
-    const lbl = `🏆 Peak ${numFmt(peak)}`;
-    const lblW = 120;
+    const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
+    const valText = `⚡ all-time high`;
+    const lblW = 154;
     const [boxX, boxY] = findCalloutPos(px, py, lblW, peakIdx >= weeksN * 0.6 ? true : false);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="${C.bg2}" stroke="#f472b6" stroke-width="1.3"/>`;
-    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#f472b6">${lbl}</text>`;
+    const anchorX = (boxX + lblW / 2);
+    const anchorY = boxY + calloutH / 2;
+    body += `<path d="${leaderLine(px, py, anchorX, anchorY)}" fill="none" stroke="#ff2e88" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#ff2e88"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 13).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 24).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
   }
   if (valuePts.length) {
     const [cx, cy] = valuePts[valuePts.length - 1];
-    const lbl = `This wk ${numFmt(values[values.length - 1])}`;
-    const lblW = 132;
+    const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
+    const valText = `✨ this week`;
+    const lblW = 164;
     const [boxX, boxY] = findCalloutPos(cx, cy, lblW, false);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
-    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="${C.bg2}" stroke="#39ff88" stroke-width="1.3"/>`;
-    body += `<text x="${(boxX + lblW / 2).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="#39ff88">${lbl}</text>`;
+    const anchorX = (boxX + lblW / 2);
+    const anchorY = boxY + calloutH / 2;
+    body += `<path d="${leaderLine(cx, cy, anchorX, anchorY)}" fill="none" stroke="#00eaff" stroke-width="0.9" stroke-dasharray="2.5 2.5" opacity="0.55"/>`;
+    body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
+    body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.5" height="${calloutH - 8}" rx="1.5" fill="#00eaff"/>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 13).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 24).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
   const xLabelsCount = Math.min(6, ws.length);
@@ -773,38 +824,58 @@ function buildActivity(d) {
     if (!first) continue;
     const d0 = new Date(first.date + 'T00:00:00Z');
     const x = xOf(idx);
-    body += `<text x="${x.toFixed(1)}" y="${chartBottom + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="${C.text}" font-weight="600">${months[d0.getUTCMonth()]} ${String(d0.getUTCDate()).padStart(2,'0')}</text>`;
-    body += `<line x1="${x.toFixed(1)}" y1="${chartBottom}" x2="${x.toFixed(1)}" y2="${chartBottom + 5}" stroke="${C.border}" stroke-width="1.2"/>`;
+    body += `<line x1="${x.toFixed(1)}" y1="${chartBottom}" x2="${x.toFixed(1)}" y2="${chartBottom + 5}" stroke="#1e293b" stroke-width="1"/>`;
+    body += `<rect x="${(x - 42).toFixed(1)}" y="${(chartBottom + 9).toFixed(1)}" width="84" height="18" rx="4" fill="${C.bg0}" opacity="0.75"/>`;
+    body += `<text x="${x.toFixed(1)}" y="${(chartBottom + 22).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10.5" fill="${C.text}" font-weight="700">${months[d0.getUTCMonth()]} ${String(d0.getUTCDate()).padStart(2,'0')}</text>`;
   }
-  body += `<text x="${(padL - 40).toFixed(1)}" y="${(padT + chartH / 2).toFixed(1)}" transform="rotate(-90 ${(padL - 40).toFixed(1)} ${(padT + chartH / 2).toFixed(1)})" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">contribs / week</text>`;
-  body += `<text x="${(W - padR + 52).toFixed(1)}" y="${(padT + chartH / 2).toFixed(1)}" transform="rotate(90 ${(W - padR + 52).toFixed(1)} ${(padT + chartH / 2).toFixed(1)})" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="#f59e0b">cumulative total</text>`;
+  body += `<rect x="${(padL - 54).toFixed(1)}" y="${(padT + chartH / 2 - 48).toFixed(1)}" width="22" height="96" rx="4" fill="${C.bg0}" opacity="0.75" stroke="${C.border}" stroke-width="0.5"/>`;
+  body += `<text x="${(padL - 43).toFixed(1)}" y="${(padT + chartH / 2).toFixed(1)}" transform="rotate(-90 ${(padL - 43).toFixed(1)} ${(padT + chartH / 2).toFixed(1)})" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="${C.electric}" font-weight="700" letter-spacing="0.4">/ wk</text>`;
+  body += `<rect x="${(W - padR + 32).toFixed(1)}" y="${(padT + chartH / 2 - 48).toFixed(1)}" width="22" height="96" rx="4" fill="${C.bg0}" opacity="0.75" stroke="${C.border}" stroke-width="0.5"/>`;
+  body += `<text x="${(W - padR + 43).toFixed(1)}" y="${(padT + chartH / 2).toFixed(1)}" transform="rotate(90 ${(W - padR + 43).toFixed(1)} ${(padT + chartH / 2).toFixed(1)})" text-anchor="middle" font-family="Consolas,monospace" font-size="9.5" fill="${C.pink}" font-weight="700" letter-spacing="0.3">Σ total</text>`;
 
-  const lgX = padL, lgY = chartBottom + 36;
-  body += `<g>
-    <rect x="${lgX}" y="${(lgY - 12).toFixed(1)}" width="10" height="10" rx="2" fill="url(#g-bar-${id})" opacity="0.9"/>
-    <text x="${(lgX + 16).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Weekly</text>
-    <line x1="${(lgX + 70).toFixed(1)}" y1="${(lgY - 7).toFixed(1)}" x2="${(lgX + 102).toFixed(1)}" y2="${(lgY - 7).toFixed(1)}" stroke="url(#g-line-${id})" stroke-width="2.2"/>
-    <text x="${(lgX + 108).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Spline</text>
-    <line x1="${(lgX + 158).toFixed(1)}" y1="${(lgY - 7).toFixed(1)}" x2="${(lgX + 190).toFixed(1)}" y2="${(lgY - 7).toFixed(1)}" stroke="url(#g-roll-${id})" stroke-width="2" stroke-dasharray="6 4"/>
-    <text x="${(lgX + 196).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Roll4</text>
-    <line x1="${(lgX + 242).toFixed(1)}" y1="${(lgY - 7).toFixed(1)}" x2="${(lgX + 274).toFixed(1)}" y2="${(lgY - 7).toFixed(1)}" stroke="url(#g-cum-${id})" stroke-width="2.2"/>
-    <text x="${(lgX + 280).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Cumul</text>
-    <line x1="${(lgX + 322).toFixed(1)}" y1="${(lgY - 7).toFixed(1)}" x2="${(lgX + 354).toFixed(1)}" y2="${(lgY - 7).toFixed(1)}" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="5 5"/>
-    <text x="${(lgX + 360).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Mean</text>
-    <rect x="${(lgX + 402).toFixed(1)}" y="${(lgY - 12).toFixed(1)}" width="10" height="10" rx="2" fill="url(#g-stripes-${id})" stroke="#facc15"/>
-    <text x="${(lgX + 418).toFixed(1)}" y="${(lgY - 3).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}">Streak</text>
-  </g>`;
+  const lgX = padL + 4;
+  const lgY = chartBottom + 46;
+  const lgW = W - padL - padR - 8;
+  body += `<rect x="${(lgX - 6).toFixed(1)}" y="${(lgY - 16).toFixed(1)}" width="${lgW + 12}" height="30" rx="7" fill="${C.bg0}" opacity="0.85" stroke="${C.border}" stroke-width="0.7"/>`;
+  const legendItems = [
+    { kind: 'bar', fill: `url(#g-bar-${id})`, label: 'Weekly', w: 14, extra: '' },
+    { kind: 'line', fill: `url(#g-line-${id})`, label: 'Spline', w: 30, extra: 'solid' },
+    { kind: 'line', fill: `url(#g-roll-${id})`, label: 'Roll4', w: 30, extra: 'dash' },
+    { kind: 'line', fill: `url(#g-cum-${id})`, label: 'Cumul', w: 30, extra: 'solid' },
+    { kind: 'line', fill: '#00eaff', label: 'Mean', w: 30, extra: 'mean' },
+    { kind: 'bar', fill: `url(#g-stripes-${id})`, label: 'Streak', w: 14, extra: 'streak' },
+  ];
+  let lgCursor = lgX + 8;
+  const lgMidY = lgY - 2;
+  for (const it of legendItems) {
+    if (it.kind === 'bar') {
+      body += `<rect x="${lgCursor.toFixed(1)}" y="${(lgMidY - 7).toFixed(1)}" width="12" height="12" rx="2.5" fill="${it.fill}" ${it.extra === 'streak' ? `stroke="#fbbf24" stroke-width="0.5"` : ''}/>`;
+      lgCursor += 16;
+    } else if (it.kind === 'line') {
+      if (it.extra === 'dash') {
+        body += `<line x1="${lgCursor.toFixed(1)}" y1="${lgMidY}" x2="${(lgCursor + it.w).toFixed(1)}" y2="${lgMidY}" stroke="${it.fill}" stroke-width="2" stroke-dasharray="5 4"/>`;
+      } else if (it.extra === 'mean') {
+        body += `<line x1="${lgCursor.toFixed(1)}" y1="${lgMidY}" x2="${(lgCursor + it.w).toFixed(1)}" y2="${lgMidY}" stroke="${it.fill}" stroke-width="1.4" stroke-dasharray="4 4"/>`;
+      } else {
+        body += `<line x1="${lgCursor.toFixed(1)}" y1="${lgMidY}" x2="${(lgCursor + it.w).toFixed(1)}" y2="${lgMidY}" stroke="${it.fill}" stroke-width="2.2" stroke-linecap="round"/>`;
+      }
+      lgCursor += it.w + 4;
+    }
+    body += `<text x="${lgCursor.toFixed(1)}" y="${(lgMidY + 3.5).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.text}" font-weight="600">${it.label}</text>`;
+    lgCursor += (it.label.length * 6.3) + 18;
+  }
 
-  const pan2X = 24, pan2Y = 370, pan2W = 456, pan2H = 170;
-  body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan2X + 16}" y="${pan2Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.cyan}">📅 Weekday Activity Profile</text>`;
-  body += `<text x="${pan2X + 16}" y="${pan2Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">average contributions per day · n=${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
-  const wkPadL = 56, wkPadR = 20, wkPadT = 60, wkPadB = 30;
+  const pan2X = 24, pan2Y = 406, pan2W = 456, pan2H = 170;
+  body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
+  body += `<rect x="${pan2X}" y="${pan2Y}" width="4" height="${pan2H}" rx="2" fill="${C.electric}" opacity="0.75"/>`;
+  body += `<text x="${pan2X + 22}" y="${pan2Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.electric}" filter="url(#g-glow-${id})">📅 Weekday Activity Profile</text>`;
+  body += `<text x="${pan2X + 22}" y="${pan2Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">avg contrib / day · sample n = ${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
+  const wkPadL = 60, wkPadR = 22, wkPadT = 60, wkPadB = 30;
   const wkChartW = pan2W - wkPadL - wkPadR, wkChartH = pan2H - wkPadT - wkPadB;
   for (let i = 0; i <= 3; i++) {
     const y = pan2Y + wkPadT + (wkChartH / 3) * (3 - i);
     const v = (maxWkAvg / 3) * i;
-    body += `<line x1="${pan2X + wkPadL}" y1="${y.toFixed(1)}" x2="${pan2X + pan2W - wkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="1" stroke-dasharray="2 3"/>`;
+    body += `<line x1="${pan2X + wkPadL}" y1="${y.toFixed(1)}" x2="${pan2X + pan2W - wkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.8"/>`;
     body += `<text x="${pan2X + wkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${v.toFixed(1)}</text>`;
   }
   const wkStep = wkChartW / 7;
@@ -815,22 +886,25 @@ function buildActivity(d) {
     const bh = Math.max(1, (weekdayAvg[wd] / maxWkAvg) * wkChartH);
     const by = pan2Y + wkPadT + wkChartH - bh;
     const isTop = wd === mostActiveWd;
-    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="${isTop ? '#f472b6' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.9}"/>`;
-    body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="700" fill="${isTop ? '#f472b6' : C.cyan}">${weekdayAvg[wd].toFixed(1)}</text>`;
-    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#f472b6' : C.text}">${weekdayLabels[wd]}</text>`;
+    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="${isTop ? '#ff2e88' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.92}"/>`;
+    if (weekdayAvg[wd] > 0) {
+      body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${weekdayAvg[wd].toFixed(1)}</text>`;
+    }
+    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#ff2e88' : C.text}">${weekdayLabels[wd]}</text>`;
   }
-  body += `<text x="${pan2X + 18}" y="${(pan2Y + pan2H - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total: ${weekdayTotals.reduce((s,v)=>s+v,0)} · best day: ${weekdayLabels[mostActiveWd]} avg ${weekdayAvg[mostActiveWd].toFixed(2)}</text>`;
+  body += `<text x="${pan2X + 22}" y="${(pan2Y + pan2H - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total ${weekdayTotals.reduce((s,v)=>s+v,0)} · best: ${weekdayLabels[mostActiveWd]} at ${weekdayAvg[mostActiveWd].toFixed(2)} avg</text>`;
 
-  const pan3X = pan2X, pan3Y = 562, pan3W = pan2W, pan3H = 188;
-  body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan3X + 16}" y="${pan3Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.purple}">📊 Weekly Contribution Distribution</text>`;
-  body += `<text x="${pan3X + 16}" y="${pan3Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">frequency histogram · ${weeksN} weeks sampled</text>`;
-  const bkPadL = 56, bkPadR = 20, bkPadT = 62, bkPadB = 32;
+  const pan3X = pan2X, pan3Y = 598, pan3W = pan2W, pan3H = 188;
+  body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
+  body += `<rect x="${pan3X}" y="${pan3Y}" width="4" height="${pan3H}" rx="2" fill="${C.violet}" opacity="0.75"/>`;
+  body += `<text x="${pan3X + 22}" y="${pan3Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.violet}" filter="url(#g-glow-${id})">📊 Weekly Contribution Distribution</text>`;
+  body += `<text x="${pan3X + 22}" y="${pan3Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">frequency histogram · ${weeksN} weeks sampled</text>`;
+  const bkPadL = 60, bkPadR = 22, bkPadT = 62, bkPadB = 32;
   const bkChartW = pan3W - bkPadL - bkPadR, bkChartH = pan3H - bkPadT - bkPadB;
   for (let i = 0; i <= 3; i++) {
     const y = pan3Y + bkPadT + (bkChartH / 3) * (3 - i);
     const v = Math.ceil((maxBucket / 3) * i);
-    body += `<line x1="${pan3X + bkPadL}" y1="${y.toFixed(1)}" x2="${pan3X + pan3W - bkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="1" stroke-dasharray="2 3"/>`;
+    body += `<line x1="${pan3X + bkPadL}" y1="${y.toFixed(1)}" x2="${pan3X + pan3W - bkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.8"/>`;
     body += `<text x="${pan3X + bkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${v}w</text>`;
   }
   const bkN = buckets.length;
@@ -841,15 +915,19 @@ function buildActivity(d) {
     const bw = Math.max(12, bkStep * 0.72);
     const bh = Math.max(1, (b.count / maxBucket) * bkChartH);
     const by = pan3Y + bkPadT + bkChartH - bh;
-    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="url(#g-buck-${id})" opacity="0.95"/>`;
-    body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${C.pink}">${b.count}</text>`;
+    body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="url(#g-buck-${id})" opacity="0.96"/>`;
+    if (b.count > 0) {
+      body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${C.violet}">${b.count}</text>`;
+    }
     body += `<text x="${cx.toFixed(1)}" y="${pan3Y + bkPadT + bkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="600" fill="${C.text}">${b.label}/wk</text>`;
   }
   const zeroPct = (buckets[0].count / Math.max(1, weeksN) * 100).toFixed(0);
-  body += `<text x="${pan3X + 18}" y="${(pan3Y + pan3H - 10).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${zeroPct}% idle weeks · active rate ${((1 - buckets[0].count / Math.max(1, weeksN)) * 100).toFixed(0)}% · median ${buckets.slice().reverse().find(b => b.count > 0) ? buckets.slice().reverse().find(b => b.count > 0).label : '0'}/wk</text>`;
+  const medBucket = buckets.slice().reverse().find(b => b.count > 0);
+  body += `<text x="${pan3X + 22}" y="${(pan3Y + pan3H - 10).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${zeroPct}% idle · active rate ${((1 - buckets[0].count / Math.max(1, weeksN)) * 100).toFixed(0)}% · median ${medBucket ? medBucket.label : '0'}/wk</text>`;
 
-  body += `<rect x="${pan4X}" y="${pan4Y}" width="${pan4W}" height="${pan4H}" rx="14" fill="${C.bg2}" stroke="${C.border}" stroke-width="1"/>`;
-  body += `<text x="${pan4InnerL}" y="${pan4Y + 26}" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="${C.green}">🔥 Contribution Intensity · Daily Mini Heatmap</text>`;
+  body += `<rect x="${pan4X}" y="${pan4Y}" width="${pan4W}" height="${pan4H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
+  body += `<rect x="${pan4X}" y="${pan4Y}" width="4" height="${pan4H}" rx="2" fill="${C.emerald}" opacity="0.78"/>`;
+  body += `<text x="${pan4InnerL}" y="${pan4Y + 26}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.emerald}" filter="url(#g-glow-${id})">🔥 Contribution Intensity · Daily Mini Heatmap</text>`;
   body += `<text x="${pan4InnerL}" y="${pan4Y + 44}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">52w × 7d grid · ${daysArr.filter(x=>(x.contributionCount||0)>0).length} active days</text>`;
 
   for (let wc = 0; wc < heatCols; wc++) {
@@ -861,7 +939,7 @@ function buildActivity(d) {
       const lvl = heatLevel(c);
       const x = heatX0 + wc * heatCellW;
       const y = heatY0 + wd * heatCellH;
-      body += `<rect x="${x}" y="${y}" width="${heatCellW - 1}" height="${heatCellH - 1}" rx="1" fill="${heatLevelColors[lvl]}" stroke="${lvl > 0 ? 'rgba(34,197,94,0.18)' : C.bg0}" stroke-width="0.5"/>`;
+      body += `<rect x="${x}" y="${y}" width="${heatCellW - 1}" height="${heatCellH - 1}" rx="1" fill="${heatLevelColors[lvl]}" stroke="${lvl > 0 ? 'rgba(123,47,247,0.22)' : C.bg0}" stroke-width="0.5"/>`;
     }
   }
   const heatBottomY = heatY0 + heatRows * heatCellH;
@@ -879,9 +957,9 @@ function buildActivity(d) {
   const maxC = daysArr.reduce((s, x) => Math.max(s, x.contributionCount || 0), 0);
   const avgDay = activeDays ? sumC / activeDays : 0;
   const kpiItems = [
-    ['Active days', `${activeDays}/${totalDays}`, C.cyan],
-    ['Active rate', `${((activeDays / totalDays) * 100).toFixed(0)}%`, C.purple],
-    ['Avg / active', avgDay.toFixed(1), C.green],
+    ['Active days', `${activeDays}/${totalDays}`, C.electric],
+    ['Active rate', `${((activeDays / totalDays) * 100).toFixed(0)}%`, C.violet],
+    ['Avg / active', avgDay.toFixed(1), C.emerald],
     ['Best day', String(maxC), C.pink],
   ];
   const kpiInnerW = pan4InnerR - pan4InnerL;
@@ -894,7 +972,8 @@ function buildActivity(d) {
     const kx = pan4InnerL + colIdx * (kpiTileW + kpiGap);
     const ky = sY + rowIdx * (kpiTileH + 14);
     body += `<g filter="url(#g-shadow-${id})"><rect x="${kx}" y="${ky}" width="${kpiTileW}" height="${kpiTileH}" rx="9" fill="${C.bg0}" stroke="${C.border}"/></g>`;
-    body += `<text x="${kx + 10}" y="${ky + 12}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${lbl}</text>`;
+    body += `<rect x="${kx}" y="${ky}" width="3" height="${kpiTileH}" rx="1.5" fill="${col}" opacity="0.85"/>`;
+    body += `<text x="${kx + 14}" y="${ky + 12}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${lbl}</text>`;
     body += `<text x="${kx + kpiTileW - 10}" y="${ky + 23}" text-anchor="end" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${col}">${val}</text>`;
   }
 
@@ -904,70 +983,96 @@ function buildActivity(d) {
 function buildDashboard(d) {
   const W = 960, H = 640, id = 'd';
   let body = head(W, H, id) + cardBg(id, W, H, 22);
-  body += `<rect x="0" y="0" width="${W}" height="96" rx="22" fill="url(#g-title-${id})" opacity="0.08"/>`;
-  body += `<text x="36" y="48" font-family="Consolas,monospace" font-size="25" font-weight="800" fill="url(#g-title-${id})">⚡ ${esc(d.user.name)} — Live GitHub Dashboard</text>`;
-  body += `<text x="36" y="76" font-family="Consolas,monospace" font-size="12" fill="${C.textDim}">@${esc(d.user.login)} · auto-generated · ${NOW_LOCAL} (${TZ}) · auth: ${GITHUB_TOKEN ? 'GITHUB_TOKEN' : 'public REST'}</text>`;
+  body += `<defs>
+    <linearGradient id="g-dash-header-${id}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7b2ff7" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#ff2e88" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#00eaff" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="g-kpi-glass-${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1226" stop-opacity="0.96"/>
+      <stop offset="100%" stop-color="#070c1c" stop-opacity="0.86"/>
+    </linearGradient>
+    <linearGradient id="g-qs-glass-${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1024" stop-opacity="0.97"/>
+      <stop offset="100%" stop-color="#060a18" stop-opacity="0.88"/>
+    </linearGradient>
+  </defs>`;
+  body += `<rect x="0" y="0" width="${W}" height="100" rx="22" fill="url(#g-dash-header-${id})"/>`;
+  body += `<line x1="0" y1="100" x2="${W}" y2="100" stroke="${C.border}" stroke-width="0.8"/>`;
+  body += `<text x="40" y="48" font-family="Consolas,monospace" font-size="25" font-weight="800" fill="url(#g-title-${id})" filter="url(#g-glow-${id})">⚡ ${esc(d.user.name)} — Live GitHub Dashboard</text>`;
+  body += `<text x="40" y="78" font-family="Consolas,monospace" font-size="12" fill="${C.textDim}">@${esc(d.user.login)} · auto-generated · ${NOW_LOCAL} (${TZ}) · auth: ${GITHUB_TOKEN ? 'GITHUB_TOKEN' : 'public REST'}</text>`;
   const kpis = [
-    ['📦 Repositories', d.repos, C.cyan],
+    ['📦 Repositories', d.repos, C.electric],
     ['⭐ Total Stars', d.stars, C.pink],
-    ['👥 Followers', d.user.followers, C.purple],
-    ['📈 Commits', d.commits, C.green],
+    ['👥 Followers', d.user.followers, C.violet],
+    ['📈 Commits', d.commits, C.emerald],
     ['🔀 Pull Requests', d.prs, C.accent],
-    ['✅ Contributions', d.totalContribs, C.emerald],
-    ['🔥 Current Streak', d.currentStreak, C.cyan],
-    ['📏 Longest Streak', d.longestStreak, C.purple],
-    ['🍴 Forks', d.forks, C.pink],
-    ['👤 Following', d.user.following, C.green],
+    ['✅ Contributions', d.totalContribs, C.electric],
+    ['🔥 Current Streak', d.currentStreak, C.violet],
+    ['📏 Longest Streak', d.longestStreak, C.pink],
+    ['🍴 Forks', d.forks, C.emerald],
+    ['👤 Following', d.user.following, C.accent],
   ];
   for (let i = 0; i < kpis.length; i++) {
     const [label, val, color] = kpis[i];
     const cx = 32 + ((i % 5) * 182);
-    const cy = 122 + (Math.floor(i / 5) * 78);
-    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 10}" width="168" height="62" rx="13" fill="${C.bg2}" stroke="${C.border}"/></g>`;
-    body += `<text x="${cx + 14}" y="${cy + 13}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
-    body += `<text x="${cx + 14}" y="${cy + 42}" font-family="Consolas,monospace" font-size="23" font-weight="800" fill="${color}">${esc(numFmt(val))}</text>`;
+    const cy = 126 + (Math.floor(i / 5) * 82);
+    body += `<g filter="url(#g-shadow-${id})"><rect x="${cx}" y="${cy - 12}" width="168" height="66" rx="13" fill="url(#g-kpi-glass-${id})" stroke="${C.border}" stroke-width="0.85"/></g>`;
+    body += `<rect x="${cx}" y="${cy - 12}" width="3.5" height="${66}" rx="1.8" fill="${color}" opacity="0.9"/>`;
+    body += `<text x="${cx + 16}" y="${cy + 12}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}" font-weight="600">${esc(label)}</text>`;
+    body += `<text x="${cx + 16}" y="${cy + 44}" font-family="Consolas,monospace" font-size="24" font-weight="800" fill="${color}" filter="url(#g-glow-${id})">${esc(numFmt(val))}</text>`;
   }
-  const by = 300;
-  body += `<text x="32" y="${by}" font-family="Consolas,monospace" font-size="15" font-weight="700" fill="${C.title}">💻 Top Languages</text>`;
+  const by = 310;
+  body += `<line x1="32" y1="${by - 2}" x2="580" y2="${by - 2}" stroke="${C.border}" stroke-width="0.6" opacity="0.6"/>`;
+  body += `<text x="32" y="${by + 14}" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="${C.electric}" filter="url(#g-glow-${id})">💻 Top Languages</text>`;
+  body += `<text x="32" y="${by + 32}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">distribution across public repos · backend multipliers applied for under-sampling languages</text>`;
   const topN = d.langs.slice(0, 8);
-  const palette = [C.cyan, C.purple, C.pink, C.green, C.emerald, C.accent, '#facc15', '#fb923c', '#a855f7', '#f97316'];
+  const palette = [C.electric, C.violet, C.pink, C.emerald, C.cyan, C.accent, C.gold, '#fb923c', C.purple, '#f97316'];
   const langBarW = 360;
   const langStartX = 176;
-  const langPctX = langStartX + langBarW + 6;
+  const langPctX = langStartX + langBarW + 8;
   const lineH = 30;
   for (let i = 0; i < topN.length; i++) {
     const l = topN[i]; if (!l) break;
-    const yy = by + 22 + i * lineH;
+    const yy = by + 52 + i * lineH;
     const pctW = Math.min(langBarW, ((l.pct || 0) / 100) * langBarW);
-    body += `<text x="40" y="${yy + 4}" font-family="Consolas,monospace" font-size="12" fill="${C.text}">${esc(l.name)}</text>`;
-    body += `<rect x="${langStartX}" y="${yy - 10}" width="${langBarW}" height="12" rx="6" fill="${C.bg2}"/>`;
-    body += `<rect x="${langStartX}" y="${yy - 10}" width="${pctW.toFixed(1)}" height="12" rx="6" fill="${palette[i % palette.length]}"/>`;
-    body += `<text x="${langPctX}" y="${yy + 4}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="${palette[i % palette.length]}">${(l.pct || 0).toFixed(1)}%</text>`;
+    const col = palette[i % palette.length];
+    body += `<text x="44" y="${yy + 4}" font-family="Consolas,monospace" font-size="12" fill="${C.text}" font-weight="600">${esc(l.name)}</text>`;
+    body += `<rect x="${langStartX}" y="${yy - 10}" width="${langBarW}" height="12" rx="6" fill="${C.bg2}" opacity="0.75"/>`;
+    body += `<rect x="${langStartX}" y="${yy - 10}" width="${pctW.toFixed(1)}" height="12" rx="6" fill="${col}" opacity="0.96"/>`;
+    body += `<rect x="${langStartX}" y="${yy - 10}" width="${pctW.toFixed(1)}" height="3" rx="1.5" fill="white" opacity="0.18"/>`;
+    body += `<text x="${langPctX}" y="${yy + 4}" text-anchor="end" font-family="Consolas,monospace" font-size="12" font-weight="800" fill="${col}">${(l.pct || 0).toFixed(1)}%</text>`;
   }
   const qsBy = by;
-  const qsH = 304;
+  const qsH = 314;
   const qsBoxBottom = qsBy - 6 + qsH;
-  const qsX = 648, qsW = 284;
-  const qsTextR = qsX + qsW - 18;
-  body += `<rect x="${qsX}" y="${qsBy - 6}" width="${qsW}" height="${qsH}" rx="14" fill="${C.bg2}" stroke="${C.border}"/>`;
-  body += `<text x="${qsX + 18}" y="${qsBy + 18}" font-family="Consolas,monospace" font-size="15" font-weight="700" fill="${C.title}">🚀 Quick Stats</text>`;
+  const qsX = 646, qsW = 286;
+  const qsTextR = qsX + qsW - 20;
+  body += `<g filter="url(#g-shadow-${id})"><rect x="${qsX}" y="${qsBy - 6}" width="${qsW}" height="${qsH}" rx="15" fill="url(#g-qs-glass-${id})" stroke="${C.border}" stroke-width="0.85"/></g>`;
+  body += `<rect x="${qsX}" y="${qsBy - 6}" width="4" height="${qsH}" rx="2" fill="${C.electric}" opacity="0.88"/>`;
+  body += `<line x1="${qsX + 18}" y1="${qsBy + 26}" x2="${qsX + qsW - 18}" y2="${qsBy + 26}" stroke="${C.border}" stroke-width="0.6"/>`;
+  body += `<text x="${qsX + 22}" y="${qsBy + 18}" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="${C.electric}" filter="url(#g-glow-${id})">🚀 Quick Stats</text>`;
   const activeDays = d.days.filter(x => (x.contributionCount || 0) > 0).length;
   const quick = [
-    ['Public gists:', d.gists, C.cyan],
-    ['PRs + Issues:', d.prs + d.issues, C.purple],
-    ['Active days:', activeDays, C.green],
+    ['Public gists:', d.gists, C.electric],
+    ['PRs + Issues:', d.prs + d.issues, C.violet],
+    ['Active days:', activeDays, C.emerald],
     ['Active repos:', d.repos, C.accent],
-    ['Avg contrib/day:', d.totalContribs > 0 && activeDays > 0 ? (d.totalContribs / Math.max(1, activeDays)).toFixed(1) : '0', C.emerald],
+    ['Avg contrib/day:', d.totalContribs > 0 && activeDays > 0 ? (d.totalContribs / Math.max(1, activeDays)).toFixed(1) : '0', C.electric],
     ['Follow ratio:', d.user.following > 0 ? ((d.user.followers / d.user.following)).toFixed(2) : '0', C.pink],
   ];
   for (let i = 0; i < quick.length; i++) {
     const [label, val, color] = quick[i];
-    const yy = qsBy + 52 + i * 32;
-    body += `<text x="${qsX + 18}" y="${yy}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}">${esc(label)}</text>`;
-    body += `<text x="${qsTextR}" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${color}">${numFmt(val)}</text>`;
+    const yy = qsBy + 54 + i * 34;
+    const rowY = yy - 16;
+    body += `<line x1="${qsX + 18}" y1="${rowY + 28}" x2="${qsX + qsW - 18}" y2="${rowY + 28}" stroke="${C.bg0}" stroke-width="0.6" opacity="0.7"/>`;
+    body += `<text x="${qsX + 22}" y="${yy}" font-family="Consolas,monospace" font-size="11" fill="${C.textDim}" font-weight="600">${esc(label)}</text>`;
+    body += `<text x="${qsTextR}" y="${yy}" text-anchor="end" font-family="Consolas,monospace" font-size="13.5" font-weight="800" fill="${color}" filter="url(#g-glow-${id})">${numFmt(val)}</text>`;
   }
-  const footerY = qsBoxBottom - 22;
-  body += `<text x="${qsX + 18}" y="${footerY}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">Auto refresh via GitHub Actions every day</text>`;
+  const footerY = qsBoxBottom - 20;
+  body += `<rect x="${qsX + 18}" y="${qsBoxBottom - 34}" width="${(qsW - 36)}" height="22" rx="4" fill="${C.bg0}" opacity="0.75"/>`;
+  body += `<text x="${qsX + 26}" y="${footerY}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">🔁 Auto refresh via GitHub Actions · every day at UTC 00:20</text>`;
   body += foot; return body;
 }
 
