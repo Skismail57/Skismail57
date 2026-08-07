@@ -468,7 +468,7 @@ function buildTrophies(d) {
   body += foot; return body;
 }
 function buildActivity(d) {
-  const W = 980, H = 900, id = 'a';
+  const W = 980, H = 960, id = 'a';
   const weeks = d.weeks || [];
   const ws = weeks.slice(-52);
   const weeksN = ws.length;
@@ -566,7 +566,7 @@ function buildActivity(d) {
   const maxBucket = Math.max(1, ...buckets.map(b => b.count));
 
   const heatRows = 7, heatCols = Math.min(53, ws.length);
-  const pan4X = 504, pan4Y = 444, pan4W = 452, pan4H = 442;
+  const pan4X = 504, pan4Y = 484, pan4W = 452, pan4H = 456;
   const pan4BottomY = pan4Y + pan4H;
   const pan4InnerL = pan4X + 18, pan4InnerR = pan4X + pan4W - 18;
   const heatCellW = Math.max(3, Math.floor((pan4InnerR - pan4InnerL) / Math.max(1, heatCols)));
@@ -681,23 +681,70 @@ function buildActivity(d) {
   body += `<rect x="${(padL + 4).toFixed(1)}" y="${(avgY - 12).toFixed(1)}" width="72" height="15" rx="4" fill="#051a26" opacity="0.95" stroke="#00eaff" stroke-width="0.5"/>`;
   body += `<text x="${(padL + 12).toFixed(1)}" y="${(avgY - 1).toFixed(1)}" text-anchor="start" font-family="Consolas,monospace" font-size="10" fill="#00eaff" opacity="0.95" font-weight="700">⌀ ${avg.toFixed(1)}</text>`;
 
-  const calloutH = 34;
-  const calloutGap = 30;
+  const calloutH = 36;
+  const calloutGap = 8;
   const placed = [];
-  function overlapsAny(bx, by, bw, bh) {
+  const monthLabelBoxes = [];
+  const calcMonthLabelX = (idx) => {
+    const xStart = xOf(idx) - stepX / 2;
+    const xEnd = (idx < monthBands.length - 1) ? (xOf(monthBands[idx + 1].idx) - stepX / 2) : (W - padR);
+    return (xStart + xEnd) / 2;
+  };
+  for (let mi = 0; mi < monthBands.length; mi++) {
+    const midX = calcMonthLabelX(mi);
+    const labelText = months[monthBands[mi].m];
+    const lblW = Math.max(30, labelText.length * 6.5 + 12);
+    const lblX = midX - lblW / 2;
+    const lblY = padT - 21;
+    monthLabelBoxes.push({ x: lblX - 6, y: lblY - 10, w: lblW + 12, h: 22 });
+  }
+  function overlapsAny(bx, by, bw, bh, includeMonth = true) {
+    if (includeMonth) for (const m of monthLabelBoxes) {
+      if (bx < m.x + m.w && bx + bw > m.x && by < m.y + m.h && by + bh > m.y) return true;
+    }
     for (const p of placed) {
       if (bx < p.x + p.w + calloutGap && bx + bw + calloutGap > p.x && by < p.y + p.h + calloutGap && by + bh + calloutGap > p.y) return true;
     }
     return false;
   }
 
-  let fixedSlots = null;
-  if (clusterClose) {
-    fixedSlots = {
-      peak: [80, 70],
-      now:  [292, 70],
-      alt:  [padL + 20, 70],
-    };
+  const topRowA_y = 72;
+  const topRowB_y = 118;
+  const topSlotGap = 8;
+  const topSlots = [
+    { x: 80,  w: 210, used: false },
+    { x: 310, w: 210, used: false },
+    { x: 540, w: 210, used: false },
+    { x: 770, w: 180, used: false },
+  ];
+  function grabSlot(width, preferRight = false) {
+    const order = preferRight ? [3, 2, 1, 0] : [0, 1, 2, 3];
+    for (const rowY of [topRowA_y, topRowB_y]) {
+      for (const si of order) {
+        const s = topSlots[si];
+        if (s.used) continue;
+        if (width > s.w + 4) continue;
+        const cx = s.x + s.w / 2 - width / 2;
+        const tryX = Math.max(12, Math.min(cx, W - width - 12));
+        if (!overlapsAny(tryX, rowY, width, calloutH)) {
+          s.used = true;
+          return [tryX, rowY];
+        }
+      }
+    }
+    for (const rowY of [topRowA_y, topRowB_y]) {
+      for (const si of order) {
+        const s = topSlots[si];
+        const cx = s.x + s.w / 2 - width / 2;
+        const tryX = Math.max(12, Math.min(cx, W - width - 12));
+        if (!overlapsAny(tryX, rowY, width, calloutH, false)) {
+          s.used = true;
+          return [tryX, rowY];
+        }
+      }
+    }
+    const fallback = preferRight ? [W - width - 20, topRowB_y] : [80, topRowB_y];
+    return fallback;
   }
 
   for (const s of streaks) {
@@ -773,79 +820,25 @@ function buildActivity(d) {
     body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6" fill="#a855f7" opacity="0.18"/>`;
     body += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="#030712" stroke="url(#g-cum-${id})" stroke-width="1.8"/>`;
     const sigmaText = `Σ ${cumulative[cumulative.length - 1]}`;
-    const sW = 9 + sigmaText.length * 6.2, sH = 14;
-    const sx = W - padR - sW - 8;
-    const sy = padT - 24;
+    const sW = 9 + sigmaText.length * 7.2, sH = 22;
+    const [sx, sy] = grabSlot(sW, true);
     placed.push({ x: sx, y: sy, w: sW, h: sH });
-    body += `<rect x="${sx.toFixed(1)}" y="${sy.toFixed(1)}" width="${sW.toFixed(1)}" height="${sH.toFixed(1)}" rx="4" fill="#0f0520" stroke="#ff2e88" stroke-width="0.6" opacity="0.92"/>`;
-    body += `<text x="${(sx + sW / 2).toFixed(1)}" y="${(sy + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
+    body += `<rect x="${sx.toFixed(1)}" y="${sy.toFixed(1)}" width="${sW.toFixed(1)}" height="${sH.toFixed(1)}" rx="6" fill="#0f0520" stroke="#ff2e88" stroke-width="0.9" opacity="0.94" filter="url(#g-glow-${id})"/>`;
+    body += `<rect x="${(sx + 4).toFixed(1)}" y="${(sy + 4).toFixed(1)}" width="2.4" height="${sH - 8}" rx="1.2" fill="#ff2e88"/>`;
+    body += `<text x="${(sx + sW / 2 + 4).toFixed(1)}" y="${(sy + sH / 2 + 4).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="12" font-weight="800" fill="#ff2e88" filter="url(#g-glow-${id})">${sigmaText}</text>`;
   }
 
-  function findCalloutPos(anchorX, anchorY, width, preferLeft, forcedZone, fixedCandidate) {
-    if (fixedCandidate) {
-      const [fx, fy] = fixedCandidate;
-      if (!overlapsAny(fx, fy, width, calloutH)) return [fx, fy];
-    }
-    const options = [];
-    const xCands = [
-      80, 292, 504, 716,
-      Math.min(chartRight - width - 10, anchorX + 18),
-      Math.min(chartRight - width - 10, anchorX + 48),
-      Math.max(padL + 10, Math.min(chartRight - width - 10, anchorX - width / 2)),
-      Math.max(padL + 10, anchorX - width - 22),
-      Math.max(padL + 10, anchorX - width - 56),
-      Math.min(chartRight - width - 10, padL + 14),
-      Math.max(padL + 10, chartRight - width - 14),
-      Math.min(W - width - 10, chartRight + 14),
-      Math.min(W - width - 10, Math.max(chartRight + 14, anchorX + 4)),
-    ];
-    const yCandsTop = [66, 112, 158];
-    const yCandsMid = [
-      Math.max(padT + 48, anchorY - calloutH - 86),
-      Math.max(padT + 48, anchorY - calloutH - 66),
-      Math.max(padT + 48, anchorY - calloutH - 46),
-      Math.max(padT + 48, anchorY - calloutH - 26),
-      Math.max(padT + 48, anchorY - calloutH - 8),
-      Math.max(padT + 48, anchorY + 14),
-      Math.max(padT + 48, anchorY + calloutH + 14),
-      Math.max(padT + 48, anchorY + 2 * (calloutH + 14)),
-      padT + 48,
-      padT + 48 + calloutH + 14,
-      padT + 48 + 2 * (calloutH + 14),
-      padT + 48 + 3 * (calloutH + 14),
-    ];
-    const yCandsBottom = [358, 320, 282];
-    let yCands;
-    if (forcedZone === 'top') yCands = [...yCandsTop, ...yCandsMid, ...yCandsBottom];
-    else if (forcedZone === 'bottom') yCands = [...yCandsBottom, ...yCandsMid, ...yCandsTop];
-    else yCands = [...yCandsMid, ...yCandsTop, ...yCandsBottom];
-    const leftFirst = preferLeft ? [0,1,2,3,9,6,7,8,10,4,5,11,12] : [11,12,4,5,6,3,2,1,10,7,8,9,0];
-    for (const xi of leftFirst) {
-      for (const y of yCands) options.push([xCands[xi], y]);
-    }
-    for (const [x, y] of options) {
-      if (x < 8 || x + width > W - 8) continue;
-      if (y < 46 || y + calloutH > 400) continue;
-      if (!overlapsAny(x, y, width, calloutH)) return [x, y];
-    }
-    const valid = options.filter(([x, y]) => x >= 8 && x + width <= W - 8 && y >= 46 && y + calloutH <= 400);
-    return valid[0] || options[0];
-  }
   function leaderLine(fromX, fromY, toX, toY) {
     const mx = (fromX + toX) / 2;
     return `M ${fromX.toFixed(1)} ${fromY.toFixed(1)} C ${mx.toFixed(1)} ${fromY.toFixed(1)}, ${mx.toFixed(1)} ${toY.toFixed(1)}, ${toX.toFixed(1)} ${toY.toFixed(1)}`;
   }
 
-  const peakZone = clusterClose ? 'top' : null;
-  const nowZone = clusterClose ? 'top' : null;
-
   if (peakIdx >= 0 && valuePts[peakIdx]) {
     const [px, py] = valuePts[peakIdx];
     const lbl = `PEAK  ·  ${numFmt(peak)} contribs`;
     const valText = `⚡ all-time high`;
-    const lblW = 180;
-    const fix = fixedSlots ? fixedSlots.peak : null;
-    const [boxX, boxY] = findCalloutPos(px, py, lblW, true, peakZone, fix);
+    const lblW = 210;
+    const [boxX, boxY] = grabSlot(lblW, false);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
@@ -853,15 +846,14 @@ function buildActivity(d) {
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-peak-${id})" stroke="#ff2e88" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
     body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#ff2e88"/>`;
     body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#f9a8d4" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 30).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#ff2e88">${lbl}</text>`;
   }
   if (valuePts.length) {
     const [cx, cy] = valuePts[valuePts.length - 1];
     const lbl = `NOW  ·  ${numFmt(values[values.length - 1])} contribs`;
     const valText = `✨ this week`;
-    const lblW = 188;
-    const fix = fixedSlots ? fixedSlots.now : null;
-    const [boxX, boxY] = findCalloutPos(cx, cy, lblW, true, nowZone, fix);
+    const lblW = 214;
+    const [boxX, boxY] = grabSlot(lblW, false);
     placed.push({ x: boxX, y: boxY, w: lblW, h: calloutH });
     const anchorX = (boxX + lblW / 2);
     const anchorY = boxY + calloutH / 2;
@@ -869,7 +861,7 @@ function buildActivity(d) {
     body += `<rect x="${boxX.toFixed(1)}" y="${boxY}" width="${lblW}" height="${calloutH}" rx="8" fill="url(#g-callout-live-${id})" stroke="#00eaff" stroke-width="1.2" filter="url(#g-glow-${id})"/>`;
     body += `<rect x="${boxX + 4}" y="${boxY + 4}" width="2.8" height="${calloutH - 8}" rx="1.6" fill="#00eaff"/>`;
     body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 15).toFixed(1)}" font-family="Consolas,monospace" font-size="9" font-weight="700" fill="#67e8f9" opacity="0.92">${valText}</text>`;
-    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 28).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
+    body += `<text x="${(boxX + 14).toFixed(1)}" y="${(boxY + 30).toFixed(1)}" font-family="Consolas,monospace" font-size="11.5" font-weight="800" fill="#00eaff">${lbl}</text>`;
   }
 
   let topExtraLabels = clusterClose || peakOnRight ? 0 : 2;
@@ -972,18 +964,22 @@ function buildActivity(d) {
     lgCursor += (it.label.length * 6.3) + 18;
   }
 
-  const pan2X = 24, pan2Y = 444, pan2W = 456, pan2H = 196;
+  const pan2X = 24, pan2Y = 484, pan2W = 456, pan2H = 220;
   body += `<rect x="${pan2X}" y="${pan2Y}" width="${pan2W}" height="${pan2H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
   body += `<rect x="${pan2X}" y="${pan2Y}" width="4" height="${pan2H}" rx="2" fill="${C.electric}" opacity="0.75"/>`;
   body += `<text x="${pan2X + 22}" y="${pan2Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.electric}" filter="url(#g-glow-${id})">📅 Weekday Activity Profile</text>`;
   body += `<text x="${pan2X + 22}" y="${pan2Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">avg contrib / day · sample n = ${weekdayCounts.reduce((s,v)=>s+v,0)} days</text>`;
-  const wkPadL = 60, wkPadR = 22, wkPadT = 88, wkPadB = 30;
+  const wkPadL = 66, wkPadR = 26, wkPadT = 100, wkPadB = 46;
   const wkChartW = pan2W - wkPadL - wkPadR, wkChartH = pan2H - wkPadT - wkPadB;
-  for (let i = 0; i <= 3; i++) {
-    const y = pan2Y + wkPadT + (wkChartH / 3) * (3 - i);
-    const v = (maxWkAvg / 3) * i;
+  const wkTicks = [0, 1, 2, 3];
+  const wkTickVal = (i) => Number(((maxWkAvg / 3) * i).toFixed(1));
+  const wkYAxisVals = wkTicks.map(wkTickVal).filter((v, i, a) => a.findIndex(x => Math.abs(x - v) < 0.01) === i);
+  const wkYSpan = wkChartH / Math.max(1, wkYAxisVals.length - 1);
+  const wkGlyphOfY = (y) => y - 6, wkGlyphBottomOfY = (y) => y + 5;
+  for (let t = 0; t < wkYAxisVals.length; t++) {
+    const y = pan2Y + wkPadT + wkYSpan * (wkYAxisVals.length - 1 - t);
     body += `<line x1="${pan2X + wkPadL}" y1="${y.toFixed(1)}" x2="${pan2X + pan2W - wkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.8"/>`;
-    body += `<text x="${pan2X + wkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${v.toFixed(1)}</text>`;
+    body += `<text x="${pan2X + wkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${wkYAxisVals[t].toFixed(1)}</text>`;
   }
   const wkStep = wkChartW / 7;
   const mostActiveWd = weekdayAvg.indexOf(Math.max(...weekdayAvg));
@@ -993,37 +989,48 @@ function buildActivity(d) {
     const bh = Math.max(1, (weekdayAvg[wd] / maxWkAvg) * wkChartH);
     const by = pan2Y + wkPadT + wkChartH - bh;
     const isTop = wd === mostActiveWd;
-    const nearMax = weekdayAvg[wd] >= 0.82 * maxWkAvg;
+    const lblText = weekdayAvg[wd].toFixed(1);
+    const numericVal = weekdayAvg[wd];
     body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="${isTop ? '#ff2e88' : `url(#g-wk-${id})`}" opacity="${isTop ? 1 : 0.92}"/>`;
-    if (weekdayAvg[wd] > 0) {
-      const lblText = weekdayAvg[wd].toFixed(1);
-      const lblW = Math.max(28, lblText.length * 6.5 + 10);
-      const lblH = 15;
-      if (nearMax) {
-        const lx = cx - lblW / 2;
-        const ly = by - lblH - 10;
-        body += `<rect x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH}" rx="5" fill="${isTop ? '#1a0310' : '#041424'}" stroke="${isTop ? '#ff2e88' : C.electric}" stroke-width="0.8" opacity="0.96"/>`;
-        body += `<text x="${cx.toFixed(1)}" y="${(ly + 11).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${lblText}</text>`;
-      } else {
-        body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${lblText}</text>`;
-      }
+    if (numericVal > 0) {
+      const baseLblW = Math.max(34, lblText.length * 7 + 14);
+      const lblH = 18;
+      let placedLy = by - lblH - 10;
+      let attempts = 0, bad = false;
+      do {
+        bad = false;
+        for (const tv of wkYAxisVals) {
+          const yGrid = pan2Y + wkPadT + wkYSpan * (wkYAxisVals.length - 1 - (wkYAxisVals.indexOf(tv)));
+          const tickTop = wkGlyphOfY(yGrid), tickBot = wkGlyphBottomOfY(yGrid);
+          const nearVal = Math.abs(tv - numericVal) < 0.08;
+          const overlapsVert = placedLy < tickBot + 3 && placedLy + lblH > tickTop - 3;
+          if (nearVal || overlapsVert) { bad = true; break; }
+        }
+        if (bad) { placedLy -= 10; attempts++; }
+      } while (bad && attempts < 6 && placedLy + lblH > pan2Y + 58);
+      const lx = cx - baseLblW / 2;
+      body += `<rect x="${lx.toFixed(1)}" y="${placedLy.toFixed(1)}" width="${baseLblW.toFixed(1)}" height="${lblH}" rx="6" fill="${isTop ? '#1a0310' : '#041424'}" stroke="${isTop ? '#ff2e88' : C.electric}" stroke-width="0.9" opacity="0.98"/>`;
+      body += `<text x="${cx.toFixed(1)}" y="${(placedLy + 13).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${isTop ? '#ff2e88' : C.electric}">${lblText}</text>`;
     }
-    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#ff2e88' : C.text}">${weekdayLabels[wd]}</text>`;
+    body += `<text x="${cx.toFixed(1)}" y="${pan2Y + wkPadT + wkChartH + 20}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="${isTop ? '800' : '600'}" fill="${isTop ? '#ff2e88' : C.text}">${weekdayLabels[wd]}</text>`;
   }
-  body += `<text x="${pan2X + 22}" y="${(pan2Y + pan2H - 8).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total ${weekdayTotals.reduce((s,v)=>s+v,0)} · best: ${weekdayLabels[mostActiveWd]} at ${weekdayAvg[mostActiveWd].toFixed(2)} avg</text>`;
+  body += `<text x="${pan2X + 22}" y="${(pan2Y + pan2H - 14).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">total ${weekdayTotals.reduce((s,v)=>s+v,0)} · best: ${weekdayLabels[mostActiveWd]} at ${weekdayAvg[mostActiveWd].toFixed(2)} avg</text>`;
 
-  const pan3X = pan2X, pan3Y = 654, pan3W = pan2W, pan3H = 200;
+  const pan3X = pan2X, pan3Y = 718, pan3W = pan2W, pan3H = 222;
   body += `<rect x="${pan3X}" y="${pan3Y}" width="${pan3W}" height="${pan3H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
   body += `<rect x="${pan3X}" y="${pan3Y}" width="4" height="${pan3H}" rx="2" fill="${C.violet}" opacity="0.75"/>`;
   body += `<text x="${pan3X + 22}" y="${pan3Y + 24}" font-family="Consolas,monospace" font-size="13" font-weight="800" fill="${C.violet}" filter="url(#g-glow-${id})">📊 Weekly Contribution Distribution</text>`;
   body += `<text x="${pan3X + 22}" y="${pan3Y + 42}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">frequency histogram · ${weeksN} weeks sampled</text>`;
-  const bkPadL = 60, bkPadR = 22, bkPadT = 62, bkPadB = 32;
+  const bkPadL = 66, bkPadR = 26, bkPadT = 78, bkPadB = 50;
   const bkChartW = pan3W - bkPadL - bkPadR, bkChartH = pan3H - bkPadT - bkPadB;
-  for (let i = 0; i <= 3; i++) {
-    const y = pan3Y + bkPadT + (bkChartH / 3) * (3 - i);
-    const v = Math.ceil((maxBucket / 3) * i);
+  const bkTicks = [0, 1, 2, 3];
+  const bkRawVals = bkTicks.map(i => Math.ceil((maxBucket / 3) * i));
+  const bkYAxisVals = bkRawVals.filter((v, i, a) => a.indexOf(v) === i);
+  const bkYSpan = bkChartH / Math.max(1, bkYAxisVals.length - 1);
+  for (let t = 0; t < bkYAxisVals.length; t++) {
+    const y = pan3Y + bkPadT + bkYSpan * (bkYAxisVals.length - 1 - t);
     body += `<line x1="${pan3X + bkPadL}" y1="${y.toFixed(1)}" x2="${pan3X + pan3W - bkPadR}" y2="${y.toFixed(1)}" stroke="${C.bg0}" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.8"/>`;
-    body += `<text x="${pan3X + bkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${v}w</text>`;
+    body += `<text x="${pan3X + bkPadL - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end" font-family="Consolas,monospace" font-size="9" fill="${C.textDim}">${bkYAxisVals[t]}w</text>`;
   }
   const bkN = buckets.length;
   const bkStep = bkChartW / bkN;
@@ -1035,13 +1042,31 @@ function buildActivity(d) {
     const by = pan3Y + bkPadT + bkChartH - bh;
     body += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(6, bw / 2).toFixed(1)}" fill="url(#g-buck-${id})" opacity="0.96"/>`;
     if (b.count > 0) {
-      body += `<text x="${cx.toFixed(1)}" y="${(by - 8).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${C.violet}">${b.count}</text>`;
+      const lblText = String(b.count);
+      const lblW = Math.max(30, lblText.length * 7 + 14);
+      const lblH = 18;
+      let placedLy = by - lblH - 10;
+      let attempts = 0, bad = false;
+      do {
+        bad = false;
+        for (let t = 0; t < bkYAxisVals.length; t++) {
+          if (bkYAxisVals[t] === b.count) {
+            const yGrid = pan3Y + bkPadT + bkYSpan * (bkYAxisVals.length - 1 - t);
+            const tickTop = yGrid - 6, tickBot = yGrid + 5;
+            if (placedLy < tickBot + 3 && placedLy + lblH > tickTop - 3) { bad = true; break; }
+          }
+        }
+        if (bad) { placedLy -= 10; attempts++; }
+      } while (bad && attempts < 6 && placedLy + lblH > pan3Y + 56);
+      const lx = cx - lblW / 2;
+      body += `<rect x="${lx.toFixed(1)}" y="${placedLy.toFixed(1)}" width="${lblW.toFixed(1)}" height="${lblH}" rx="6" fill="#140a2a" stroke="${C.violet}" stroke-width="0.9" opacity="0.98"/>`;
+      body += `<text x="${cx.toFixed(1)}" y="${(placedLy + 13).toFixed(1)}" text-anchor="middle" font-family="Consolas,monospace" font-size="11" font-weight="800" fill="${C.violet}">${lblText}</text>`;
     }
-    body += `<text x="${cx.toFixed(1)}" y="${pan3Y + bkPadT + bkChartH + 18}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="600" fill="${C.text}">${b.label}/wk</text>`;
+    body += `<text x="${cx.toFixed(1)}" y="${pan3Y + bkPadT + bkChartH + 20}" text-anchor="middle" font-family="Consolas,monospace" font-size="10" font-weight="600" fill="${C.text}">${b.label}/wk</text>`;
   }
   const zeroPct = (buckets[0].count / Math.max(1, weeksN) * 100).toFixed(0);
   const medBucket = buckets.slice().reverse().find(b => b.count > 0);
-  body += `<text x="${pan3X + 22}" y="${(pan3Y + pan3H - 10).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${zeroPct}% idle · active rate ${((1 - buckets[0].count / Math.max(1, weeksN)) * 100).toFixed(0)}% · median ${medBucket ? medBucket.label : '0'}/wk</text>`;
+  body += `<text x="${pan3X + 22}" y="${(pan3Y + pan3H - 16).toFixed(1)}" font-family="Consolas,monospace" font-size="10" fill="${C.textDim}">${zeroPct}% idle · active rate ${((1 - buckets[0].count / Math.max(1, weeksN)) * 100).toFixed(0)}% · median ${medBucket ? medBucket.label : '0'}/wk</text>`;
 
   body += `<rect x="${pan4X}" y="${pan4Y}" width="${pan4W}" height="${pan4H}" rx="14" fill="url(#g-panel-glass-${id})" stroke="${C.border}" stroke-width="0.9"/>`;
   body += `<rect x="${pan4X}" y="${pan4Y}" width="4" height="${pan4H}" rx="2" fill="${C.emerald}" opacity="0.78"/>`;
