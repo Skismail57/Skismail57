@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 28" width="188" height="28" role="img" aria-label="PROFILE VIEWS · 290">
+  <defs>
+    <clipPath id="r"><rect width="188" height="28" rx="4"/></clipPath>
+  </defs>
+  <g clip-path="url(#r)">
+    <rect width="122" height="28" fill="#060a12"/>
+    <rect x="122" width="66" height="28" fill="#00eaff"/>
+  </g>
+  <g font-family="'Segoe UI',Consolas,monospace" font-weight="600">
+    <text x="61" y="18" text-anchor="middle" font-size="10.5" letter-spacing="0.6" fill="#e6edf3">PROFILE VIEWS</text>
+    <text x="155" y="19" text-anchor="middle" font-size="12" font-weight="700" fill="#000000">290</text>
+  </g>
+</svg>
